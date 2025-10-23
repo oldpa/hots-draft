@@ -1,0 +1,427 @@
+[
+  {
+    "name": "Abathur",
+    "slug": "abathur",
+    "url": "https://www.heroescounters.com/hero/abathur"
+  },
+  {
+    "name": "Alarak",
+    "slug": "alarak",
+    "url": "https://www.heroescounters.com/hero/alarak"
+  },
+  {
+    "name": "Alexstrasza",
+    "slug": "alexstrasza",
+    "url": "https://www.heroescounters.com/hero/alexstrasza"
+  },
+  {
+    "name": "Ana",
+    "slug": "ana",
+    "url": "https://www.heroescounters.com/hero/ana"
+  },
+  {
+    "name": "Anduin",
+    "slug": "anduin",
+    "url": "https://www.heroescounters.com/hero/anduin"
+  },
+  {
+    "name": "Anub'arak",
+    "slug": "anubarak",
+    "url": "https://www.heroescounters.com/hero/anubarak"
+  },
+  {
+    "name": "Artanis",
+    "slug": "artanis",
+    "url": "https://www.heroescounters.com/hero/artanis"
+  },
+  {
+    "name": "Arthas",
+    "slug": "arthas",
+    "url": "https://www.heroescounters.com/hero/arthas"
+  },
+  {
+    "name": "Auriel",
+    "slug": "auriel",
+    "url": "https://www.heroescounters.com/hero/auriel"
+  },
+  {
+    "name": "Azmodan",
+    "slug": "azmodan",
+    "url": "https://www.heroescounters.com/hero/azmodan"
+  },
+  {
+    "name": "Blaze",
+    "slug": "blaze",
+    "url": "https://www.heroescounters.com/hero/blaze"
+  },
+  {
+    "name": "Brightwing",
+    "slug": "brightwing",
+    "url": "https://www.heroescounters.com/hero/brightwing"
+  },
+  {
+    "name": "Cassia",
+    "slug": "cassia",
+    "url": "https://www.heroescounters.com/hero/cassia"
+  },
+  {
+    "name": "Chen",
+    "slug": "chen",
+    "url": "https://www.heroescounters.com/hero/chen"
+  },
+  {
+    "name": "Cho'gall",
+    "slug": "chogall",
+    "url": "https://www.heroescounters.com/hero/chogall"
+  },
+  {
+    "name": "Chromie",
+    "slug": "chromie",
+    "url": "https://www.heroescounters.com/hero/chromie"
+  },
+  {
+    "name": "D.Va",
+    "slug": "dva",
+    "url": "https://www.heroescounters.com/hero/dva"
+  },
+  {
+    "name": "Deckard",
+    "slug": "deckard",
+    "url": "https://www.heroescounters.com/hero/deckard"
+  },
+  {
+    "name": "Dehaka",
+    "slug": "dehaka",
+    "url": "https://www.heroescounters.com/hero/dehaka"
+  },
+  {
+    "name": "Diablo",
+    "slug": "diablo",
+    "url": "https://www.heroescounters.com/hero/diablo"
+  },
+  {
+    "name": "E.T.C.",
+    "slug": "etc",
+    "url": "https://www.heroescounters.com/hero/etc"
+  },
+  {
+    "name": "Falstad",
+    "slug": "falstad",
+    "url": "https://www.heroescounters.com/hero/falstad"
+  },
+  {
+    "name": "Fenix",
+    "slug": "fenix",
+    "url": "https://www.heroescounters.com/hero/fenix"
+  },
+  {
+    "name": "Garrosh",
+    "slug": "garrosh",
+    "url": "https://www.heroescounters.com/hero/garrosh"
+  },
+  {
+    "name": "Gazlowe",
+    "slug": "gazlowe",
+    "url": "https://www.heroescounters.com/hero/gazlowe"
+  },
+  {
+    "name": "Genji",
+    "slug": "genji",
+    "url": "https://www.heroescounters.com/hero/genji"
+  },
+  {
+    "name": "Greymane",
+    "slug": "greymane",
+    "url": "https://www.heroescounters.com/hero/greymane"
+  },
+  {
+    "name": "Gul'dan",
+    "slug": "guldan",
+    "url": "https://www.heroescounters.com/hero/guldan"
+  },
+  {
+    "name": "Hanzo",
+    "slug": "hanzo",
+    "url": "https://www.heroescounters.com/hero/hanzo"
+  },
+  {
+    "name": "Illidan",
+    "slug": "illidan",
+    "url": "https://www.heroescounters.com/hero/illidan"
+  },
+  {
+    "name": "Imperius",
+    "slug": "imperius",
+    "url": "https://www.heroescounters.com/hero/imperius"
+  },
+  {
+    "name": "Jaina",
+    "slug": "jaina",
+    "url": "https://www.heroescounters.com/hero/jaina"
+  },
+  {
+    "name": "Johanna",
+    "slug": "johanna",
+    "url": "https://www.heroescounters.com/hero/johanna"
+  },
+  {
+    "name": "Junkrat",
+    "slug": "junkrat",
+    "url": "https://www.heroescounters.com/hero/junkrat"
+  },
+  {
+    "name": "Kael'thas",
+    "slug": "kaelthas",
+    "url": "https://www.heroescounters.com/hero/kaelthas"
+  },
+  {
+    "name": "Kel'Thuzad",
+    "slug": "kelthuzad",
+    "url": "https://www.heroescounters.com/hero/kelthuzad"
+  },
+  {
+    "name": "Kerrigan",
+    "slug": "kerrigan",
+    "url": "https://www.heroescounters.com/hero/kerrigan"
+  },
+  {
+    "name": "Kharazim",
+    "slug": "kharazim",
+    "url": "https://www.heroescounters.com/hero/kharazim"
+  },
+  {
+    "name": "Leoric",
+    "slug": "leoric",
+    "url": "https://www.heroescounters.com/hero/leoric"
+  },
+  {
+    "name": "Li Li",
+    "slug": "lili",
+    "url": "https://www.heroescounters.com/hero/lili"
+  },
+  {
+    "name": "Li-Ming",
+    "slug": "li-ming",
+    "url": "https://www.heroescounters.com/hero/li-ming"
+  },
+  {
+    "name": "Lt. Morales",
+    "slug": "ltmorales",
+    "url": "https://www.heroescounters.com/hero/ltmorales"
+  },
+  {
+    "name": "Lúcio",
+    "slug": "lucio",
+    "url": "https://www.heroescounters.com/hero/lucio"
+  },
+  {
+    "name": "Lunara",
+    "slug": "lunara",
+    "url": "https://www.heroescounters.com/hero/lunara"
+  },
+  {
+    "name": "Maiev",
+    "slug": "maiev",
+    "url": "https://www.heroescounters.com/hero/maiev"
+  },
+  {
+    "name": "Mal'Ganis",
+    "slug": "malganis",
+    "url": "https://www.heroescounters.com/hero/malganis"
+  },
+  {
+    "name": "Malfurion",
+    "slug": "malfurion",
+    "url": "https://www.heroescounters.com/hero/malfurion"
+  },
+  {
+    "name": "Malthael",
+    "slug": "malthael",
+    "url": "https://www.heroescounters.com/hero/malthael"
+  },
+  {
+    "name": "Medivh",
+    "slug": "medivh",
+    "url": "https://www.heroescounters.com/hero/medivh"
+  },
+  {
+    "name": "Mephisto",
+    "slug": "mephisto",
+    "url": "https://www.heroescounters.com/hero/mephisto"
+  },
+  {
+    "name": "Muradin",
+    "slug": "muradin",
+    "url": "https://www.heroescounters.com/hero/muradin"
+  },
+  {
+    "name": "Murky",
+    "slug": "murky",
+    "url": "https://www.heroescounters.com/hero/murky"
+  },
+  {
+    "name": "Nazeebo",
+    "slug": "nazeebo",
+    "url": "https://www.heroescounters.com/hero/nazeebo"
+  },
+  {
+    "name": "Nova",
+    "slug": "nova",
+    "url": "https://www.heroescounters.com/hero/nova"
+  },
+  {
+    "name": "Orphea",
+    "slug": "orphea",
+    "url": "https://www.heroescounters.com/hero/orphea"
+  },
+  {
+    "name": "Probius",
+    "slug": "probius",
+    "url": "https://www.heroescounters.com/hero/probius"
+  },
+  {
+    "name": "Ragnaros",
+    "slug": "ragnaros",
+    "url": "https://www.heroescounters.com/hero/ragnaros"
+  },
+  {
+    "name": "Raynor",
+    "slug": "raynor",
+    "url": "https://www.heroescounters.com/hero/raynor"
+  },
+  {
+    "name": "Rehgar",
+    "slug": "rehgar",
+    "url": "https://www.heroescounters.com/hero/rehgar"
+  },
+  {
+    "name": "Rexxar",
+    "slug": "rexxar",
+    "url": "https://www.heroescounters.com/hero/rexxar"
+  },
+  {
+    "name": "Samuro",
+    "slug": "samuro",
+    "url": "https://www.heroescounters.com/hero/samuro"
+  },
+  {
+    "name": "Sgt. Hammer",
+    "slug": "sgthammer",
+    "url": "https://www.heroescounters.com/hero/sgthammer"
+  },
+  {
+    "name": "Sonya",
+    "slug": "sonya",
+    "url": "https://www.heroescounters.com/hero/sonya"
+  },
+  {
+    "name": "Stitches",
+    "slug": "stitches",
+    "url": "https://www.heroescounters.com/hero/stitches"
+  },
+  {
+    "name": "Stukov",
+    "slug": "stukov",
+    "url": "https://www.heroescounters.com/hero/stukov"
+  },
+  {
+    "name": "Sylvanas",
+    "slug": "sylvanas",
+    "url": "https://www.heroescounters.com/hero/sylvanas"
+  },
+  {
+    "name": "Tassadar",
+    "slug": "tassadar",
+    "url": "https://www.heroescounters.com/hero/tassadar"
+  },
+  {
+    "name": "The Butcher",
+    "slug": "thebutcher",
+    "url": "https://www.heroescounters.com/hero/thebutcher"
+  },
+  {
+    "name": "The Lost Vikings",
+    "slug": "thelostvikings",
+    "url": "https://www.heroescounters.com/hero/thelostvikings"
+  },
+  {
+    "name": "Thrall",
+    "slug": "thrall",
+    "url": "https://www.heroescounters.com/hero/thrall"
+  },
+  {
+    "name": "Tracer",
+    "slug": "tracer",
+    "url": "https://www.heroescounters.com/hero/tracer"
+  },
+  {
+    "name": "Tychus",
+    "slug": "tychus",
+    "url": "https://www.heroescounters.com/hero/tychus"
+  },
+  {
+    "name": "Tyrael",
+    "slug": "tyrael",
+    "url": "https://www.heroescounters.com/hero/tyrael"
+  },
+  {
+    "name": "Tyrande",
+    "slug": "tyrande",
+    "url": "https://www.heroescounters.com/hero/tyrande"
+  },
+  {
+    "name": "Uther",
+    "slug": "uther",
+    "url": "https://www.heroescounters.com/hero/uther"
+  },
+  {
+    "name": "Valeera",
+    "slug": "valeera",
+    "url": "https://www.heroescounters.com/hero/valeera"
+  },
+  {
+    "name": "Valla",
+    "slug": "valla",
+    "url": "https://www.heroescounters.com/hero/valla"
+  },
+  {
+    "name": "Varian",
+    "slug": "varian",
+    "url": "https://www.heroescounters.com/hero/varian"
+  },
+  {
+    "name": "Whitemane",
+    "slug": "whitemane",
+    "url": "https://www.heroescounters.com/hero/whitemane"
+  },
+  {
+    "name": "Xul",
+    "slug": "xul",
+    "url": "https://www.heroescounters.com/hero/xul"
+  },
+  {
+    "name": "Yrel",
+    "slug": "yrel",
+    "url": "https://www.heroescounters.com/hero/yrel"
+  },
+  {
+    "name": "Zagara",
+    "slug": "zagara",
+    "url": "https://www.heroescounters.com/hero/zagara"
+  },
+  {
+    "name": "Zarya",
+    "slug": "zarya",
+    "url": "https://www.heroescounters.com/hero/zarya"
+  },
+  {
+    "name": "Zeratul",
+    "slug": "zeratul",
+    "url": "https://www.heroescounters.com/hero/zeratul"
+  },
+  {
+    "name": "Zul'jin",
+    "slug": "zuljin",
+    "url": "https://www.heroescounters.com/hero/zuljin"
+  }
+]

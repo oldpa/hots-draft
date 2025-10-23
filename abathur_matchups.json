@@ -1,0 +1,2036 @@
+{
+  "slug": "abathur",
+  "name": "Abathur",
+  "strong_against": [
+    {
+      "hero": "Tracer",
+      "score": 62,
+      "agree": 452,
+      "disagree": 237,
+      "total_votes": 689,
+      "agreement_percentage": 65.6
+    },
+    {
+      "hero": "Murky",
+      "score": 58,
+      "agree": 550,
+      "disagree": 341,
+      "total_votes": 891,
+      "agreement_percentage": 61.7
+    },
+    {
+      "hero": "Illidan",
+      "score": 52,
+      "agree": 353,
+      "disagree": 274,
+      "total_votes": 627,
+      "agreement_percentage": 56.3
+    },
+    {
+      "hero": "Hanzo",
+      "score": 49,
+      "agree": 62,
+      "disagree": 43,
+      "total_votes": 105,
+      "agreement_percentage": 59.0
+    },
+    {
+      "hero": "Valeera",
+      "score": 49,
+      "agree": 47,
+      "disagree": 31,
+      "total_votes": 78,
+      "agreement_percentage": 60.3
+    },
+    {
+      "hero": "Nova",
+      "score": 47,
+      "agree": 204,
+      "disagree": 188,
+      "total_votes": 392,
+      "agreement_percentage": 52.0
+    },
+    {
+      "hero": "Zeratul",
+      "score": 47,
+      "agree": 171,
+      "disagree": 158,
+      "total_votes": 329,
+      "agreement_percentage": 52.0
+    },
+    {
+      "hero": "Jaina",
+      "score": 46,
+      "agree": 72,
+      "disagree": 60,
+      "total_votes": 132,
+      "agreement_percentage": 54.5
+    },
+    {
+      "hero": "Greymane",
+      "score": 44,
+      "agree": 47,
+      "disagree": 40,
+      "total_votes": 87,
+      "agreement_percentage": 54.0
+    },
+    {
+      "hero": "Thrall",
+      "score": 40,
+      "agree": 72,
+      "disagree": 77,
+      "total_votes": 149,
+      "agreement_percentage": 48.3
+    },
+    {
+      "hero": "Genji",
+      "score": 40,
+      "agree": 34,
+      "disagree": 31,
+      "total_votes": 65,
+      "agreement_percentage": 52.3
+    },
+    {
+      "hero": "Malfurion",
+      "score": 40,
+      "agree": 42,
+      "disagree": 41,
+      "total_votes": 83,
+      "agreement_percentage": 50.6
+    },
+    {
+      "hero": "Kael'thas",
+      "score": 40,
+      "agree": 62,
+      "disagree": 66,
+      "total_votes": 128,
+      "agreement_percentage": 48.4
+    },
+    {
+      "hero": "Uther",
+      "score": 38,
+      "agree": 52,
+      "disagree": 58,
+      "total_votes": 110,
+      "agreement_percentage": 47.3
+    },
+    {
+      "hero": "Maiev",
+      "score": 36,
+      "agree": 8,
+      "disagree": 5,
+      "total_votes": 13,
+      "agreement_percentage": 61.5
+    },
+    {
+      "hero": "Arthas",
+      "score": 35,
+      "agree": 51,
+      "disagree": 65,
+      "total_votes": 116,
+      "agreement_percentage": 44.0
+    },
+    {
+      "hero": "Lunara",
+      "score": 34,
+      "agree": 20,
+      "disagree": 21,
+      "total_votes": 41,
+      "agreement_percentage": 48.8
+    },
+    {
+      "hero": "Lt. Morales",
+      "score": 33,
+      "agree": 21,
+      "disagree": 24,
+      "total_votes": 45,
+      "agreement_percentage": 46.7
+    },
+    {
+      "hero": "The Lost Vikings",
+      "score": 32,
+      "agree": 145,
+      "disagree": 246,
+      "total_votes": 391,
+      "agreement_percentage": 37.1
+    },
+    {
+      "hero": "Tassadar",
+      "score": 32,
+      "agree": 17,
+      "disagree": 19,
+      "total_votes": 36,
+      "agreement_percentage": 47.2
+    },
+    {
+      "hero": "Chromie",
+      "score": 31,
+      "agree": 12,
+      "disagree": 12,
+      "total_votes": 24,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Alarak",
+      "score": 31,
+      "agree": 14,
+      "disagree": 15,
+      "total_votes": 29,
+      "agreement_percentage": 48.3
+    },
+    {
+      "hero": "Cassia",
+      "score": 30,
+      "agree": 21,
+      "disagree": 28,
+      "total_votes": 49,
+      "agreement_percentage": 42.9
+    },
+    {
+      "hero": "Lúcio",
+      "score": 30,
+      "agree": 4,
+      "disagree": 2,
+      "total_votes": 6,
+      "agreement_percentage": 66.7
+    },
+    {
+      "hero": "Samuro",
+      "score": 30,
+      "agree": 15,
+      "disagree": 18,
+      "total_votes": 33,
+      "agreement_percentage": 45.5
+    },
+    {
+      "hero": "Varian",
+      "score": 30,
+      "agree": 15,
+      "disagree": 18,
+      "total_votes": 33,
+      "agreement_percentage": 45.5
+    },
+    {
+      "hero": "Raynor",
+      "score": 30,
+      "agree": 39,
+      "disagree": 62,
+      "total_votes": 101,
+      "agreement_percentage": 38.6
+    },
+    {
+      "hero": "Li-Ming",
+      "score": 30,
+      "agree": 24,
+      "disagree": 34,
+      "total_votes": 58,
+      "agreement_percentage": 41.4
+    },
+    {
+      "hero": "Leoric",
+      "score": 30,
+      "agree": 13,
+      "disagree": 15,
+      "total_votes": 28,
+      "agreement_percentage": 46.4
+    },
+    {
+      "hero": "Nazeebo",
+      "score": 29,
+      "agree": 29,
+      "disagree": 44,
+      "total_votes": 73,
+      "agreement_percentage": 39.7
+    },
+    {
+      "hero": "Garrosh",
+      "score": 29,
+      "agree": 7,
+      "disagree": 6,
+      "total_votes": 13,
+      "agreement_percentage": 53.8
+    },
+    {
+      "hero": "Muradin",
+      "score": 29,
+      "agree": 12,
+      "disagree": 14,
+      "total_votes": 26,
+      "agreement_percentage": 46.2
+    },
+    {
+      "hero": "Valla",
+      "score": 29,
+      "agree": 16,
+      "disagree": 21,
+      "total_votes": 37,
+      "agreement_percentage": 43.2
+    },
+    {
+      "hero": "Diablo",
+      "score": 28,
+      "agree": 13,
+      "disagree": 16,
+      "total_votes": 29,
+      "agreement_percentage": 44.8
+    },
+    {
+      "hero": "Sgt. Hammer",
+      "score": 28,
+      "agree": 8,
+      "disagree": 8,
+      "total_votes": 16,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Brightwing",
+      "score": 28,
+      "agree": 19,
+      "disagree": 28,
+      "total_votes": 47,
+      "agreement_percentage": 40.4
+    },
+    {
+      "hero": "Li Li",
+      "score": 27,
+      "agree": 18,
+      "disagree": 27,
+      "total_votes": 45,
+      "agreement_percentage": 40.0
+    },
+    {
+      "hero": "Sylvanas",
+      "score": 27,
+      "agree": 19,
+      "disagree": 29,
+      "total_votes": 48,
+      "agreement_percentage": 39.6
+    },
+    {
+      "hero": "Malthael",
+      "score": 27,
+      "agree": 7,
+      "disagree": 7,
+      "total_votes": 14,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "The Butcher",
+      "score": 27,
+      "agree": 5,
+      "disagree": 4,
+      "total_votes": 9,
+      "agreement_percentage": 55.6
+    },
+    {
+      "hero": "Cho'gall",
+      "score": 26,
+      "agree": 13,
+      "disagree": 18,
+      "total_votes": 31,
+      "agreement_percentage": 41.9
+    },
+    {
+      "hero": "Medivh",
+      "score": 26,
+      "agree": 15,
+      "disagree": 22,
+      "total_votes": 37,
+      "agreement_percentage": 40.5
+    },
+    {
+      "hero": "Tyrande",
+      "score": 26,
+      "agree": 11,
+      "disagree": 15,
+      "total_votes": 26,
+      "agreement_percentage": 42.3
+    },
+    {
+      "hero": "Stitches",
+      "score": 25,
+      "agree": 6,
+      "disagree": 6,
+      "total_votes": 12,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Falstad",
+      "score": 25,
+      "agree": 14,
+      "disagree": 22,
+      "total_votes": 36,
+      "agreement_percentage": 38.9
+    },
+    {
+      "hero": "Artanis",
+      "score": 23,
+      "agree": 6,
+      "disagree": 7,
+      "total_votes": 13,
+      "agreement_percentage": 46.2
+    },
+    {
+      "hero": "Auriel",
+      "score": 22,
+      "agree": 9,
+      "disagree": 14,
+      "total_votes": 23,
+      "agreement_percentage": 39.1
+    },
+    {
+      "hero": "Zul'jin",
+      "score": 22,
+      "agree": 4,
+      "disagree": 4,
+      "total_votes": 8,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Rehgar",
+      "score": 21,
+      "agree": 6,
+      "disagree": 8,
+      "total_votes": 14,
+      "agreement_percentage": 42.9
+    },
+    {
+      "hero": "Sonya",
+      "score": 21,
+      "agree": 5,
+      "disagree": 6,
+      "total_votes": 11,
+      "agreement_percentage": 45.5
+    },
+    {
+      "hero": "Alexstrasza",
+      "score": 21,
+      "agree": 2,
+      "disagree": 1,
+      "total_votes": 3,
+      "agreement_percentage": 66.7
+    },
+    {
+      "hero": "ETC",
+      "score": 21,
+      "agree": 8,
+      "disagree": 13,
+      "total_votes": 21,
+      "agreement_percentage": 38.1
+    },
+    {
+      "hero": "Probius",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Kel'Thuzad",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Junkrat",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Mephisto",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Ragnaros",
+      "score": 19,
+      "agree": 5,
+      "disagree": 7,
+      "total_votes": 12,
+      "agreement_percentage": 41.7
+    },
+    {
+      "hero": "Tyrael",
+      "score": 19,
+      "agree": 4,
+      "disagree": 5,
+      "total_votes": 9,
+      "agreement_percentage": 44.4
+    },
+    {
+      "hero": "Gul'dan",
+      "score": 19,
+      "agree": 4,
+      "disagree": 5,
+      "total_votes": 9,
+      "agreement_percentage": 44.4
+    },
+    {
+      "hero": "D.Va",
+      "score": 19,
+      "agree": 3,
+      "disagree": 3,
+      "total_votes": 6,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Orphea",
+      "score": 19,
+      "agree": 3,
+      "disagree": 3,
+      "total_votes": 6,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Kerrigan",
+      "score": 18,
+      "agree": 7,
+      "disagree": 13,
+      "total_votes": 20,
+      "agreement_percentage": 35.0
+    },
+    {
+      "hero": "Johanna",
+      "score": 15,
+      "agree": 6,
+      "disagree": 13,
+      "total_votes": 19,
+      "agreement_percentage": 31.6
+    },
+    {
+      "hero": "Anub'arak",
+      "score": 15,
+      "agree": 12,
+      "disagree": 35,
+      "total_votes": 47,
+      "agreement_percentage": 25.5
+    },
+    {
+      "hero": "Xul",
+      "score": 14,
+      "agree": 3,
+      "disagree": 5,
+      "total_votes": 8,
+      "agreement_percentage": 37.5
+    },
+    {
+      "hero": "Chen",
+      "score": 13,
+      "agree": 5,
+      "disagree": 12,
+      "total_votes": 17,
+      "agreement_percentage": 29.4
+    },
+    {
+      "hero": "Tychus",
+      "score": 13,
+      "agree": 8,
+      "disagree": 25,
+      "total_votes": 33,
+      "agreement_percentage": 24.2
+    },
+    {
+      "hero": "Gazlowe",
+      "score": 13,
+      "agree": 4,
+      "disagree": 9,
+      "total_votes": 13,
+      "agreement_percentage": 30.8
+    },
+    {
+      "hero": "Zagara",
+      "score": 13,
+      "agree": 6,
+      "disagree": 17,
+      "total_votes": 23,
+      "agreement_percentage": 26.1
+    },
+    {
+      "hero": "Kharazim",
+      "score": 12,
+      "agree": 3,
+      "disagree": 6,
+      "total_votes": 9,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Rexxar",
+      "score": 11,
+      "agree": 4,
+      "disagree": 11,
+      "total_votes": 15,
+      "agreement_percentage": 26.7
+    },
+    {
+      "hero": "Deckard",
+      "score": 10,
+      "agree": 2,
+      "disagree": 4,
+      "total_votes": 6,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Dehaka",
+      "score": 10,
+      "agree": 4,
+      "disagree": 13,
+      "total_votes": 17,
+      "agreement_percentage": 23.5
+    },
+    {
+      "hero": "Blaze",
+      "score": 9,
+      "agree": 1,
+      "disagree": 1,
+      "total_votes": 2,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Yrel",
+      "score": 9,
+      "agree": 1,
+      "disagree": 1,
+      "total_votes": 2,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Azmodan",
+      "score": 4,
+      "agree": 2,
+      "disagree": 13,
+      "total_votes": 15,
+      "agreement_percentage": 13.3
+    }
+  ],
+  "weak_against": [
+    {
+      "hero": "Dehaka",
+      "score": 89,
+      "agree": 811,
+      "disagree": 83,
+      "total_votes": 894,
+      "agreement_percentage": 90.7
+    },
+    {
+      "hero": "Zeratul",
+      "score": 88,
+      "agree": 1797,
+      "disagree": 222,
+      "total_votes": 2019,
+      "agreement_percentage": 89.0
+    },
+    {
+      "hero": "Azmodan",
+      "score": 84,
+      "agree": 801,
+      "disagree": 122,
+      "total_votes": 923,
+      "agreement_percentage": 86.8
+    },
+    {
+      "hero": "Nova",
+      "score": 84,
+      "agree": 1564,
+      "disagree": 263,
+      "total_votes": 1827,
+      "agreement_percentage": 85.6
+    },
+    {
+      "hero": "Tyrande",
+      "score": 84,
+      "agree": 1000,
+      "disagree": 166,
+      "total_votes": 1166,
+      "agreement_percentage": 85.8
+    },
+    {
+      "hero": "Medivh",
+      "score": 82,
+      "agree": 520,
+      "disagree": 91,
+      "total_votes": 611,
+      "agreement_percentage": 85.1
+    },
+    {
+      "hero": "Falstad",
+      "score": 76,
+      "agree": 359,
+      "disagree": 91,
+      "total_votes": 450,
+      "agreement_percentage": 79.8
+    },
+    {
+      "hero": "Sylvanas",
+      "score": 75,
+      "agree": 481,
+      "disagree": 134,
+      "total_votes": 615,
+      "agreement_percentage": 78.2
+    },
+    {
+      "hero": "Chromie",
+      "score": 72,
+      "agree": 381,
+      "disagree": 118,
+      "total_votes": 499,
+      "agreement_percentage": 76.4
+    },
+    {
+      "hero": "Fenix",
+      "score": 69,
+      "agree": 103,
+      "disagree": 31,
+      "total_votes": 134,
+      "agreement_percentage": 76.9
+    },
+    {
+      "hero": "Ragnaros",
+      "score": 69,
+      "agree": 162,
+      "disagree": 54,
+      "total_votes": 216,
+      "agreement_percentage": 75.0
+    },
+    {
+      "hero": "Mephisto",
+      "score": 66,
+      "agree": 57,
+      "disagree": 17,
+      "total_votes": 74,
+      "agreement_percentage": 77.0
+    },
+    {
+      "hero": "Tassadar",
+      "score": 66,
+      "agree": 381,
+      "disagree": 164,
+      "total_votes": 545,
+      "agreement_percentage": 69.9
+    },
+    {
+      "hero": "Zagara",
+      "score": 64,
+      "agree": 144,
+      "disagree": 59,
+      "total_votes": 203,
+      "agreement_percentage": 70.9
+    },
+    {
+      "hero": "Valeera",
+      "score": 64,
+      "agree": 196,
+      "disagree": 87,
+      "total_votes": 283,
+      "agreement_percentage": 69.3
+    },
+    {
+      "hero": "The Lost Vikings",
+      "score": 63,
+      "agree": 299,
+      "disagree": 145,
+      "total_votes": 444,
+      "agreement_percentage": 67.3
+    },
+    {
+      "hero": "Sgt. Hammer",
+      "score": 61,
+      "agree": 275,
+      "disagree": 144,
+      "total_votes": 419,
+      "agreement_percentage": 65.6
+    },
+    {
+      "hero": "Kel'Thuzad",
+      "score": 52,
+      "agree": 69,
+      "disagree": 43,
+      "total_votes": 112,
+      "agreement_percentage": 61.6
+    },
+    {
+      "hero": "Murky",
+      "score": 51,
+      "agree": 168,
+      "disagree": 130,
+      "total_votes": 298,
+      "agreement_percentage": 56.4
+    },
+    {
+      "hero": "Junkrat",
+      "score": 50,
+      "agree": 47,
+      "disagree": 30,
+      "total_votes": 77,
+      "agreement_percentage": 61.0
+    },
+    {
+      "hero": "Jaina",
+      "score": 49,
+      "agree": 185,
+      "disagree": 158,
+      "total_votes": 343,
+      "agreement_percentage": 53.9
+    },
+    {
+      "hero": "Cho'gall",
+      "score": 48,
+      "agree": 128,
+      "disagree": 106,
+      "total_votes": 234,
+      "agreement_percentage": 54.7
+    },
+    {
+      "hero": "Genji",
+      "score": 48,
+      "agree": 47,
+      "disagree": 33,
+      "total_votes": 80,
+      "agreement_percentage": 58.8
+    },
+    {
+      "hero": "Xul",
+      "score": 47,
+      "agree": 46,
+      "disagree": 33,
+      "total_votes": 79,
+      "agreement_percentage": 58.2
+    },
+    {
+      "hero": "Kael'thas",
+      "score": 45,
+      "agree": 86,
+      "disagree": 78,
+      "total_votes": 164,
+      "agreement_percentage": 52.4
+    },
+    {
+      "hero": "Illidan",
+      "score": 44,
+      "agree": 100,
+      "disagree": 96,
+      "total_votes": 196,
+      "agreement_percentage": 51.0
+    },
+    {
+      "hero": "Tychus",
+      "score": 43,
+      "agree": 22,
+      "disagree": 15,
+      "total_votes": 37,
+      "agreement_percentage": 59.5
+    },
+    {
+      "hero": "Samuro",
+      "score": 36,
+      "agree": 27,
+      "disagree": 28,
+      "total_votes": 55,
+      "agreement_percentage": 49.1
+    },
+    {
+      "hero": "Li-Ming",
+      "score": 36,
+      "agree": 66,
+      "disagree": 86,
+      "total_votes": 152,
+      "agreement_percentage": 43.4
+    },
+    {
+      "hero": "Gazlowe",
+      "score": 36,
+      "agree": 34,
+      "disagree": 39,
+      "total_votes": 73,
+      "agreement_percentage": 46.6
+    },
+    {
+      "hero": "Diablo",
+      "score": 35,
+      "agree": 70,
+      "disagree": 96,
+      "total_votes": 166,
+      "agreement_percentage": 42.2
+    },
+    {
+      "hero": "Lunara",
+      "score": 34,
+      "agree": 57,
+      "disagree": 77,
+      "total_votes": 134,
+      "agreement_percentage": 42.5
+    },
+    {
+      "hero": "Artanis",
+      "score": 34,
+      "agree": 44,
+      "disagree": 57,
+      "total_votes": 101,
+      "agreement_percentage": 43.6
+    },
+    {
+      "hero": "Varian",
+      "score": 34,
+      "agree": 36,
+      "disagree": 45,
+      "total_votes": 81,
+      "agreement_percentage": 44.4
+    },
+    {
+      "hero": "Nazeebo",
+      "score": 33,
+      "agree": 17,
+      "disagree": 18,
+      "total_votes": 35,
+      "agreement_percentage": 48.6
+    },
+    {
+      "hero": "Anub'arak",
+      "score": 31,
+      "agree": 51,
+      "disagree": 81,
+      "total_votes": 132,
+      "agreement_percentage": 38.6
+    },
+    {
+      "hero": "Rexxar",
+      "score": 30,
+      "agree": 13,
+      "disagree": 15,
+      "total_votes": 28,
+      "agreement_percentage": 46.4
+    },
+    {
+      "hero": "The Butcher",
+      "score": 28,
+      "agree": 18,
+      "disagree": 25,
+      "total_votes": 43,
+      "agreement_percentage": 41.9
+    },
+    {
+      "hero": "Tracer",
+      "score": 28,
+      "agree": 18,
+      "disagree": 25,
+      "total_votes": 43,
+      "agreement_percentage": 41.9
+    },
+    {
+      "hero": "Johanna",
+      "score": 28,
+      "agree": 16,
+      "disagree": 22,
+      "total_votes": 38,
+      "agreement_percentage": 42.1
+    },
+    {
+      "hero": "Chen",
+      "score": 27,
+      "agree": 13,
+      "disagree": 17,
+      "total_votes": 30,
+      "agreement_percentage": 43.3
+    },
+    {
+      "hero": "Lt. Morales",
+      "score": 27,
+      "agree": 12,
+      "disagree": 16,
+      "total_votes": 28,
+      "agreement_percentage": 42.9
+    },
+    {
+      "hero": "Thrall",
+      "score": 26,
+      "agree": 18,
+      "disagree": 28,
+      "total_votes": 46,
+      "agreement_percentage": 39.1
+    },
+    {
+      "hero": "Valla",
+      "score": 26,
+      "agree": 8,
+      "disagree": 9,
+      "total_votes": 17,
+      "agreement_percentage": 47.1
+    },
+    {
+      "hero": "Leoric",
+      "score": 26,
+      "agree": 20,
+      "disagree": 33,
+      "total_votes": 53,
+      "agreement_percentage": 37.7
+    },
+    {
+      "hero": "Stitches",
+      "score": 26,
+      "agree": 11,
+      "disagree": 15,
+      "total_votes": 26,
+      "agreement_percentage": 42.3
+    },
+    {
+      "hero": "D.Va",
+      "score": 25,
+      "agree": 4,
+      "disagree": 3,
+      "total_votes": 7,
+      "agreement_percentage": 57.1
+    },
+    {
+      "hero": "Ana",
+      "score": 25,
+      "agree": 4,
+      "disagree": 3,
+      "total_votes": 7,
+      "agreement_percentage": 57.1
+    },
+    {
+      "hero": "Kharazim",
+      "score": 25,
+      "agree": 7,
+      "disagree": 8,
+      "total_votes": 15,
+      "agreement_percentage": 46.7
+    },
+    {
+      "hero": "Kerrigan",
+      "score": 24,
+      "agree": 10,
+      "disagree": 14,
+      "total_votes": 24,
+      "agreement_percentage": 41.7
+    },
+    {
+      "hero": "Probius",
+      "score": 24,
+      "agree": 5,
+      "disagree": 5,
+      "total_votes": 10,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Malfurion",
+      "score": 23,
+      "agree": 7,
+      "disagree": 9,
+      "total_votes": 16,
+      "agreement_percentage": 43.8
+    },
+    {
+      "hero": "Yrel",
+      "score": 23,
+      "agree": 3,
+      "disagree": 2,
+      "total_votes": 5,
+      "agreement_percentage": 60.0
+    },
+    {
+      "hero": "Raynor",
+      "score": 22,
+      "agree": 8,
+      "disagree": 12,
+      "total_votes": 20,
+      "agreement_percentage": 40.0
+    },
+    {
+      "hero": "Sonya",
+      "score": 21,
+      "agree": 5,
+      "disagree": 6,
+      "total_votes": 11,
+      "agreement_percentage": 45.5
+    },
+    {
+      "hero": "Malthael",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Whitemane",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Greymane",
+      "score": 19,
+      "agree": 5,
+      "disagree": 7,
+      "total_votes": 12,
+      "agreement_percentage": 41.7
+    },
+    {
+      "hero": "Brightwing",
+      "score": 19,
+      "agree": 17,
+      "disagree": 41,
+      "total_votes": 58,
+      "agreement_percentage": 29.3
+    },
+    {
+      "hero": "ETC",
+      "score": 19,
+      "agree": 7,
+      "disagree": 12,
+      "total_votes": 19,
+      "agreement_percentage": 36.8
+    },
+    {
+      "hero": "Rehgar",
+      "score": 19,
+      "agree": 12,
+      "disagree": 26,
+      "total_votes": 38,
+      "agreement_percentage": 31.6
+    },
+    {
+      "hero": "Zul'jin",
+      "score": 19,
+      "agree": 3,
+      "disagree": 3,
+      "total_votes": 6,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Li Li",
+      "score": 17,
+      "agree": 14,
+      "disagree": 37,
+      "total_votes": 51,
+      "agreement_percentage": 27.5
+    },
+    {
+      "hero": "Arthas",
+      "score": 15,
+      "agree": 6,
+      "disagree": 14,
+      "total_votes": 20,
+      "agreement_percentage": 30.0
+    },
+    {
+      "hero": "Maiev",
+      "score": 14,
+      "agree": 4,
+      "disagree": 8,
+      "total_votes": 12,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Tyrael",
+      "score": 14,
+      "agree": 3,
+      "disagree": 5,
+      "total_votes": 8,
+      "agreement_percentage": 37.5
+    },
+    {
+      "hero": "Gul'dan",
+      "score": 14,
+      "agree": 3,
+      "disagree": 5,
+      "total_votes": 8,
+      "agreement_percentage": 37.5
+    },
+    {
+      "hero": "Uther",
+      "score": 10,
+      "agree": 2,
+      "disagree": 4,
+      "total_votes": 6,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Auriel",
+      "score": 10,
+      "agree": 2,
+      "disagree": 4,
+      "total_votes": 6,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Anduin",
+      "score": 10,
+      "agree": 2,
+      "disagree": 4,
+      "total_votes": 6,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Hanzo",
+      "score": 9,
+      "agree": 1,
+      "disagree": 1,
+      "total_votes": 2,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Deckard",
+      "score": 9,
+      "agree": 1,
+      "disagree": 1,
+      "total_votes": 2,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Mal'Ganis",
+      "score": 9,
+      "agree": 1,
+      "disagree": 1,
+      "total_votes": 2,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Muradin",
+      "score": 9,
+      "agree": 3,
+      "disagree": 9,
+      "total_votes": 12,
+      "agreement_percentage": 25.0
+    },
+    {
+      "hero": "Zarya",
+      "score": 8,
+      "agree": 2,
+      "disagree": 5,
+      "total_votes": 7,
+      "agreement_percentage": 28.6
+    },
+    {
+      "hero": "Stukov",
+      "score": 6,
+      "agree": 1,
+      "disagree": 2,
+      "total_votes": 3,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Orphea",
+      "score": 6,
+      "agree": 1,
+      "disagree": 2,
+      "total_votes": 3,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Alarak",
+      "score": 5,
+      "agree": 1,
+      "disagree": 3,
+      "total_votes": 4,
+      "agreement_percentage": 25.0
+    }
+  ],
+  "good_team_with": [
+    {
+      "hero": "Illidan",
+      "score": 97,
+      "agree": 3262,
+      "disagree": 76,
+      "total_votes": 3338,
+      "agreement_percentage": 97.7
+    },
+    {
+      "hero": "The Butcher",
+      "score": 95,
+      "agree": 1563,
+      "disagree": 71,
+      "total_votes": 1634,
+      "agreement_percentage": 95.7
+    },
+    {
+      "hero": "Greymane",
+      "score": 93,
+      "agree": 779,
+      "disagree": 40,
+      "total_votes": 819,
+      "agreement_percentage": 95.1
+    },
+    {
+      "hero": "Kerrigan",
+      "score": 93,
+      "agree": 956,
+      "disagree": 56,
+      "total_votes": 1012,
+      "agreement_percentage": 94.5
+    },
+    {
+      "hero": "Sonya",
+      "score": 92,
+      "agree": 795,
+      "disagree": 49,
+      "total_votes": 844,
+      "agreement_percentage": 94.2
+    },
+    {
+      "hero": "Thrall",
+      "score": 90,
+      "agree": 714,
+      "disagree": 58,
+      "total_votes": 772,
+      "agreement_percentage": 92.5
+    },
+    {
+      "hero": "Artanis",
+      "score": 90,
+      "agree": 659,
+      "disagree": 53,
+      "total_votes": 712,
+      "agreement_percentage": 92.6
+    },
+    {
+      "hero": "Varian",
+      "score": 90,
+      "agree": 463,
+      "disagree": 36,
+      "total_votes": 499,
+      "agreement_percentage": 92.8
+    },
+    {
+      "hero": "Zeratul",
+      "score": 87,
+      "agree": 861,
+      "disagree": 102,
+      "total_votes": 963,
+      "agreement_percentage": 89.4
+    },
+    {
+      "hero": "Valeera",
+      "score": 86,
+      "agree": 289,
+      "disagree": 33,
+      "total_votes": 322,
+      "agreement_percentage": 89.8
+    },
+    {
+      "hero": "Genji",
+      "score": 86,
+      "agree": 290,
+      "disagree": 34,
+      "total_votes": 324,
+      "agreement_percentage": 89.5
+    },
+    {
+      "hero": "Mal'Ganis",
+      "score": 85,
+      "agree": 109,
+      "disagree": 10,
+      "total_votes": 119,
+      "agreement_percentage": 91.6
+    },
+    {
+      "hero": "Chen",
+      "score": 85,
+      "agree": 486,
+      "disagree": 69,
+      "total_votes": 555,
+      "agreement_percentage": 87.6
+    },
+    {
+      "hero": "Tracer",
+      "score": 84,
+      "agree": 549,
+      "disagree": 81,
+      "total_votes": 630,
+      "agreement_percentage": 87.1
+    },
+    {
+      "hero": "Tyrael",
+      "score": 83,
+      "agree": 395,
+      "disagree": 63,
+      "total_votes": 458,
+      "agreement_percentage": 86.2
+    },
+    {
+      "hero": "Muradin",
+      "score": 82,
+      "agree": 262,
+      "disagree": 42,
+      "total_votes": 304,
+      "agreement_percentage": 86.2
+    },
+    {
+      "hero": "Johanna",
+      "score": 82,
+      "agree": 313,
+      "disagree": 53,
+      "total_votes": 366,
+      "agreement_percentage": 85.5
+    },
+    {
+      "hero": "Leoric",
+      "score": 81,
+      "agree": 342,
+      "disagree": 63,
+      "total_votes": 405,
+      "agreement_percentage": 84.4
+    },
+    {
+      "hero": "Samuro",
+      "score": 80,
+      "agree": 220,
+      "disagree": 39,
+      "total_votes": 259,
+      "agreement_percentage": 84.9
+    },
+    {
+      "hero": "Kharazim",
+      "score": 79,
+      "agree": 202,
+      "disagree": 37,
+      "total_votes": 239,
+      "agreement_percentage": 84.5
+    },
+    {
+      "hero": "Dehaka",
+      "score": 79,
+      "agree": 188,
+      "disagree": 34,
+      "total_votes": 222,
+      "agreement_percentage": 84.7
+    },
+    {
+      "hero": "Anub'arak",
+      "score": 79,
+      "agree": 261,
+      "disagree": 52,
+      "total_votes": 313,
+      "agreement_percentage": 83.4
+    },
+    {
+      "hero": "Arthas",
+      "score": 78,
+      "agree": 229,
+      "disagree": 48,
+      "total_votes": 277,
+      "agreement_percentage": 82.7
+    },
+    {
+      "hero": "Murky",
+      "score": 78,
+      "agree": 762,
+      "disagree": 187,
+      "total_votes": 949,
+      "agreement_percentage": 80.3
+    },
+    {
+      "hero": "Imperius",
+      "score": 77,
+      "agree": 36,
+      "disagree": 4,
+      "total_votes": 40,
+      "agreement_percentage": 90.0
+    },
+    {
+      "hero": "Diablo",
+      "score": 76,
+      "agree": 206,
+      "disagree": 49,
+      "total_votes": 255,
+      "agreement_percentage": 80.8
+    },
+    {
+      "hero": "Blaze",
+      "score": 74,
+      "agree": 54,
+      "disagree": 10,
+      "total_votes": 64,
+      "agreement_percentage": 84.4
+    },
+    {
+      "hero": "Zul'jin",
+      "score": 73,
+      "agree": 102,
+      "disagree": 25,
+      "total_votes": 127,
+      "agreement_percentage": 80.3
+    },
+    {
+      "hero": "Rexxar",
+      "score": 72,
+      "agree": 209,
+      "disagree": 60,
+      "total_votes": 269,
+      "agreement_percentage": 77.7
+    },
+    {
+      "hero": "Malthael",
+      "score": 69,
+      "agree": 77,
+      "disagree": 22,
+      "total_votes": 99,
+      "agreement_percentage": 77.8
+    },
+    {
+      "hero": "Yrel",
+      "score": 68,
+      "agree": 42,
+      "disagree": 10,
+      "total_votes": 52,
+      "agreement_percentage": 80.8
+    },
+    {
+      "hero": "Valla",
+      "score": 65,
+      "agree": 219,
+      "disagree": 91,
+      "total_votes": 310,
+      "agreement_percentage": 70.6
+    },
+    {
+      "hero": "ETC",
+      "score": 60,
+      "agree": 129,
+      "disagree": 65,
+      "total_votes": 194,
+      "agreement_percentage": 66.5
+    },
+    {
+      "hero": "Raynor",
+      "score": 58,
+      "agree": 128,
+      "disagree": 69,
+      "total_votes": 197,
+      "agreement_percentage": 65.0
+    },
+    {
+      "hero": "Maiev",
+      "score": 57,
+      "agree": 19,
+      "disagree": 6,
+      "total_votes": 25,
+      "agreement_percentage": 76.0
+    },
+    {
+      "hero": "Alarak",
+      "score": 55,
+      "agree": 76,
+      "disagree": 43,
+      "total_votes": 119,
+      "agreement_percentage": 63.9
+    },
+    {
+      "hero": "Tychus",
+      "score": 51,
+      "agree": 105,
+      "disagree": 75,
+      "total_votes": 180,
+      "agreement_percentage": 58.3
+    },
+    {
+      "hero": "Lunara",
+      "score": 49,
+      "agree": 78,
+      "disagree": 59,
+      "total_votes": 137,
+      "agreement_percentage": 56.9
+    },
+    {
+      "hero": "Stitches",
+      "score": 48,
+      "agree": 64,
+      "disagree": 48,
+      "total_votes": 112,
+      "agreement_percentage": 57.1
+    },
+    {
+      "hero": "Garrosh",
+      "score": 48,
+      "agree": 27,
+      "disagree": 16,
+      "total_votes": 43,
+      "agreement_percentage": 62.8
+    },
+    {
+      "hero": "D.Va",
+      "score": 47,
+      "agree": 48,
+      "disagree": 35,
+      "total_votes": 83,
+      "agreement_percentage": 57.8
+    },
+    {
+      "hero": "Orphea",
+      "score": 44,
+      "agree": 3,
+      "disagree": 0,
+      "total_votes": 3,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Sylvanas",
+      "score": 41,
+      "agree": 107,
+      "disagree": 118,
+      "total_votes": 225,
+      "agreement_percentage": 47.6
+    },
+    {
+      "hero": "Cho'gall",
+      "score": 40,
+      "agree": 141,
+      "disagree": 166,
+      "total_votes": 307,
+      "agreement_percentage": 45.9
+    },
+    {
+      "hero": "Sgt. Hammer",
+      "score": 40,
+      "agree": 100,
+      "disagree": 116,
+      "total_votes": 216,
+      "agreement_percentage": 46.3
+    },
+    {
+      "hero": "Fenix",
+      "score": 37,
+      "agree": 15,
+      "disagree": 12,
+      "total_votes": 27,
+      "agreement_percentage": 55.6
+    },
+    {
+      "hero": "Falstad",
+      "score": 37,
+      "agree": 53,
+      "disagree": 62,
+      "total_votes": 115,
+      "agreement_percentage": 46.1
+    },
+    {
+      "hero": "Rehgar",
+      "score": 36,
+      "agree": 71,
+      "disagree": 92,
+      "total_votes": 163,
+      "agreement_percentage": 43.6
+    },
+    {
+      "hero": "Jaina",
+      "score": 33,
+      "agree": 80,
+      "disagree": 121,
+      "total_votes": 201,
+      "agreement_percentage": 39.8
+    },
+    {
+      "hero": "The Lost Vikings",
+      "score": 30,
+      "agree": 98,
+      "disagree": 179,
+      "total_votes": 277,
+      "agreement_percentage": 35.4
+    },
+    {
+      "hero": "Zagara",
+      "score": 30,
+      "agree": 52,
+      "disagree": 88,
+      "total_votes": 140,
+      "agreement_percentage": 37.1
+    },
+    {
+      "hero": "Tyrande",
+      "score": 30,
+      "agree": 13,
+      "disagree": 15,
+      "total_votes": 28,
+      "agreement_percentage": 46.4
+    },
+    {
+      "hero": "Lúcio",
+      "score": 29,
+      "agree": 9,
+      "disagree": 9,
+      "total_votes": 18,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Nova",
+      "score": 28,
+      "agree": 36,
+      "disagree": 60,
+      "total_votes": 96,
+      "agreement_percentage": 37.5
+    },
+    {
+      "hero": "Azmodan",
+      "score": 28,
+      "agree": 19,
+      "disagree": 27,
+      "total_votes": 46,
+      "agreement_percentage": 41.3
+    },
+    {
+      "hero": "Cassia",
+      "score": 27,
+      "agree": 7,
+      "disagree": 7,
+      "total_votes": 14,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Uther",
+      "score": 27,
+      "agree": 11,
+      "disagree": 14,
+      "total_votes": 25,
+      "agreement_percentage": 44.0
+    },
+    {
+      "hero": "Brightwing",
+      "score": 26,
+      "agree": 14,
+      "disagree": 21,
+      "total_votes": 35,
+      "agreement_percentage": 40.0
+    },
+    {
+      "hero": "Ragnaros",
+      "score": 25,
+      "agree": 6,
+      "disagree": 6,
+      "total_votes": 12,
+      "agreement_percentage": 50.0
+    },
+    {
+      "hero": "Gazlowe",
+      "score": 25,
+      "agree": 18,
+      "disagree": 30,
+      "total_votes": 48,
+      "agreement_percentage": 37.5
+    },
+    {
+      "hero": "Mephisto",
+      "score": 21,
+      "agree": 2,
+      "disagree": 1,
+      "total_votes": 3,
+      "agreement_percentage": 66.7
+    },
+    {
+      "hero": "Kael'thas",
+      "score": 21,
+      "agree": 10,
+      "disagree": 18,
+      "total_votes": 28,
+      "agreement_percentage": 35.7
+    },
+    {
+      "hero": "Xul",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Anduin",
+      "score": 21,
+      "agree": 1,
+      "disagree": 0,
+      "total_votes": 1,
+      "agreement_percentage": 100.0
+    },
+    {
+      "hero": "Lt. Morales",
+      "score": 20,
+      "agree": 12,
+      "disagree": 24,
+      "total_votes": 36,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Nazeebo",
+      "score": 19,
+      "agree": 5,
+      "disagree": 7,
+      "total_votes": 12,
+      "agreement_percentage": 41.7
+    },
+    {
+      "hero": "Malfurion",
+      "score": 18,
+      "agree": 8,
+      "disagree": 16,
+      "total_votes": 24,
+      "agreement_percentage": 33.3
+    },
+    {
+      "hero": "Zarya",
+      "score": 17,
+      "agree": 4,
+      "disagree": 6,
+      "total_votes": 10,
+      "agreement_percentage": 40.0
+    },
+    {
+      "hero": "Li-Ming",
+      "score": 16,
+      "agree": 9,
+      "disagree": 22,
+      "total_votes": 31,
+      "agreement_percentage": 29.0
+    },
+    {
+      "hero": "Tassadar",
+      "score": 15,
+      "agree": 10,
+      "disagree": 27,
+      "total_votes": 37,
+      "agreement_percentage": 27.0
+    },
+    {
+      "hero": "Li Li",
+      "score": 15,
+      "agree": 8,
+      "disagree": 21,
+      "total_votes": 29,
+      "agreement_percentage": 27.6
+    },
+    {
+      "hero": "Probius",
+      "score": 8,
+      "agree": 3,
+      "disagree": 10,
+      "total_votes": 13,
+      "agreement_percentage": 23.1
+    },
+    {
+      "hero": "Chromie",
+      "score": 8,
+      "agree": 4,
+      "disagree": 16,
+      "total_votes": 20,
+      "agreement_percentage": 20.0
+    },
+    {
+      "hero": "Kel'Thuzad",
+      "score": 5,
+      "agree": 1,
+      "disagree": 3,
+      "total_votes": 4,
+      "agreement_percentage": 25.0
+    },
+    {
+      "hero": "Medivh",
+      "score": 3,
+      "agree": 2,
+      "disagree": 18,
+      "total_votes": 20,
+      "agreement_percentage": 10.0
+    }
+  ],
+  "best_maps": [
+    {
+      "map": "Cursed Hollow",
+      "score": 89,
+      "agree": 1208,
+      "disagree": 130
+    },
+    {
+      "map": "Cursed Hollow",
+      "score": 89,
+      "agree": 1208,
+      "disagree": 130
+    },
+    {
+      "map": "Warhead Junction",
+      "score": 81,
+      "agree": 370,
+      "disagree": 66
+    },
+    {
+      "map": "Warhead Junction",
+      "score": 81,
+      "agree": 370,
+      "disagree": 66
+    },
+    {
+      "map": "Sky Temple",
+      "score": 76,
+      "agree": 400,
+      "disagree": 99
+    },
+    {
+      "map": "Sky Temple",
+      "score": 76,
+      "agree": 400,
+      "disagree": 99
+    },
+    {
+      "map": "Garden of Terror",
+      "score": 75,
+      "agree": 322,
+      "disagree": 84
+    },
+    {
+      "map": "Garden of Terror",
+      "score": 75,
+      "agree": 322,
+      "disagree": 84
+    },
+    {
+      "map": "Towers of Doom",
+      "score": 66,
+      "agree": 262,
+      "disagree": 109
+    },
+    {
+      "map": "Towers of Doom",
+      "score": 66,
+      "agree": 262,
+      "disagree": 109
+    },
+    {
+      "map": "Blackheart's Bay",
+      "score": 65,
+      "agree": 256,
+      "disagree": 111
+    },
+    {
+      "map": "Blackheart's Bay",
+      "score": 65,
+      "agree": 256,
+      "disagree": 111
+    },
+    {
+      "map": "Alterac Pass",
+      "score": 60,
+      "agree": 73,
+      "disagree": 33
+    },
+    {
+      "map": "Alterac Pass",
+      "score": 60,
+      "agree": 73,
+      "disagree": 33
+    },
+    {
+      "map": "Infernal Shrines",
+      "score": 57,
+      "agree": 180,
+      "disagree": 105
+    },
+    {
+      "map": "Infernal Shrines",
+      "score": 57,
+      "agree": 180,
+      "disagree": 105
+    },
+    {
+      "map": "Battlefield of Eternity",
+      "score": 53,
+      "agree": 267,
+      "disagree": 196
+    },
+    {
+      "map": "Battlefield of Eternity",
+      "score": 53,
+      "agree": 267,
+      "disagree": 196
+    },
+    {
+      "map": "Volskaya Foundry",
+      "score": 51,
+      "agree": 60,
+      "disagree": 38
+    },
+    {
+      "map": "Volskaya Foundry",
+      "score": 51,
+      "agree": 60,
+      "disagree": 38
+    },
+    {
+      "map": "Dragon Shire",
+      "score": 45,
+      "agree": 184,
+      "disagree": 181
+    },
+    {
+      "map": "Dragon Shire",
+      "score": 45,
+      "agree": 184,
+      "disagree": 181
+    },
+    {
+      "map": "Haunted Mines",
+      "score": 30,
+      "agree": 99,
+      "disagree": 178
+    },
+    {
+      "map": "Haunted Mines",
+      "score": 30,
+      "agree": 99,
+      "disagree": 178
+    },
+    {
+      "map": "Hanamura Temple",
+      "score": 25,
+      "agree": 54,
+      "disagree": 120
+    },
+    {
+      "map": "Hanamura Temple",
+      "score": 25,
+      "agree": 54,
+      "disagree": 120
+    },
+    {
+      "map": "Braxis Holdout",
+      "score": 23,
+      "agree": 103,
+      "disagree": 278
+    },
+    {
+      "map": "Braxis Holdout",
+      "score": 23,
+      "agree": 103,
+      "disagree": 278
+    },
+    {
+      "map": "Tomb of the Spider Queen",
+      "score": 20,
+      "agree": 99,
+      "disagree": 316
+    },
+    {
+      "map": "Tomb of the Spider Queen",
+      "score": 20,
+      "agree": 99,
+      "disagree": 316
+    },
+    {
+      "map": "Lost Caverns",
+      "score": 12,
+      "agree": 21,
+      "disagree": 92
+    },
+    {
+      "map": "Lost Caverns",
+      "score": 12,
+      "agree": 21,
+      "disagree": 92
+    }
+  ]
+}

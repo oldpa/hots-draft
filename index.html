@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heroes of the Storm - Team Picker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Heroes of the Storm - Team Picker</h1>
+            <p class="subtitle">Select map, ban heroes, and pick your team composition</p>
+        </header>
+
+        <!-- Compact Draft Header: Map + Bans -->
+        <section class="draft-header">
+            <!-- Map Selection -->
+            <div class="map-selection-compact">
+                <label for="map-dropdown">Map:</label>
+                <select id="map-dropdown" class="map-dropdown">
+                    <option value="">-- Select a map --</option>
+                    <!-- Maps will be loaded here -->
+                </select>
+            </div>
+
+            <!-- Bans -->
+            <div class="bans-compact">
+                <div class="team-bans-compact">
+                    <span class="ban-label blue">Blue Bans:</span>
+                    <div class="ban-slot-mini" data-team="blue" data-slot="0"></div>
+                    <div class="ban-slot-mini" data-team="blue" data-slot="1"></div>
+                    <div class="ban-slot-mini" data-team="blue" data-slot="2"></div>
+                </div>
+                <div class="team-bans-compact">
+                    <span class="ban-label red">Red Bans:</span>
+                    <div class="ban-slot-mini" data-team="red" data-slot="0"></div>
+                    <div class="ban-slot-mini" data-team="red" data-slot="1"></div>
+                    <div class="ban-slot-mini" data-team="red" data-slot="2"></div>
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <button id="reset-draft" class="btn-danger btn-compact">Reset</button>
+        </section>
+
+        <!-- Teams Side by Side -->
+        <section class="teams-container">
+            <!-- Team Blue Column -->
+            <div class="team-column blue-column">
+                <div class="team-header blue">
+                    <h2>Team Blue</h2>
+                </div>
+                
+                <!-- Blue Picks -->
+                <div class="pick-slots-vertical">
+                    <div class="pick-slot-compact" data-team="blue" data-slot="0"></div>
+                    <div class="pick-slot-compact" data-team="blue" data-slot="1"></div>
+                    <div class="pick-slot-compact" data-team="blue" data-slot="2"></div>
+                    <div class="pick-slot-compact" data-team="blue" data-slot="3"></div>
+                    <div class="pick-slot-compact" data-team="blue" data-slot="4"></div>
+                </div>
+                
+                <!-- Blue Recommendations -->
+                <div class="recommendations-section team-blue">
+                    <h3>Recommendations</h3>
+                    <div id="recommendations-blue" class="recommendations-content">
+                        <p class="recommendations-placeholder">Select heroes and map for recommendations</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Red Column -->
+            <div class="team-column red-column">
+                <div class="team-header red">
+                    <h2>Team Red</h2>
+                </div>
+                
+                <!-- Red Picks -->
+                <div class="pick-slots-vertical">
+                    <div class="pick-slot-compact" data-team="red" data-slot="0"></div>
+                    <div class="pick-slot-compact" data-team="red" data-slot="1"></div>
+                    <div class="pick-slot-compact" data-team="red" data-slot="2"></div>
+                    <div class="pick-slot-compact" data-team="red" data-slot="3"></div>
+                    <div class="pick-slot-compact" data-team="red" data-slot="4"></div>
+                </div>
+                
+                <!-- Red Recommendations -->
+                <div class="recommendations-section team-red">
+                    <h3>Recommendations</h3>
+                    <div id="recommendations-red" class="recommendations-content">
+                        <p class="recommendations-placeholder">Select heroes and map for recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Selection Panel -->
+        <section class="hero-selection" id="hero-selection-panel">
+            <div class="selection-header">
+                <h2 id="selection-title">Select Hero</h2>
+                <div class="selection-controls">
+                    <input type="text" id="hero-search" placeholder="Search heroes..." autofocus>
+                </div>
+            </div>
+            <div id="hero-grid" class="hero-grid">
+                <!-- Heroes will be loaded here -->
+            </div>
+            <div class="selection-actions">
+                <button id="cancel-selection" class="btn-secondary">Cancel</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,33 @@
+# Hero images (can be re-downloaded)
+# Note: Comment out the line below if deploying to GitHub Pages
+# images/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug scripts (if any are recreated)
+debug_*.py
+test_*.py
+
