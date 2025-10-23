@@ -96,7 +96,6 @@ class DraftManager {
         // Map dropdown
         document.getElementById('map-dropdown').addEventListener('change', (e) => {
             this.selectedMap = e.target.value;
-            console.log('Map selected:', this.selectedMap);
             this.renderRecommendations(); // Update recommendations when map changes
         });
 
@@ -341,7 +340,6 @@ class DraftManager {
             this.draft[team].picks[emptySlotIndex] = hero;
             this.renderDraft();
             this.renderRecommendations();
-            console.log(`Quick picked ${hero.name} for ${team} team`);
         } else {
             alert(`${team === 'blue' ? 'Blue' : 'Red'} team has no empty pick slots!`);
         }
@@ -357,7 +355,6 @@ class DraftManager {
             this.draft[team].bans[emptySlotIndex] = hero;
             this.renderDraft();
             this.renderRecommendations();
-            console.log(`Quick banned ${hero.name} for ${team} team`);
         } else {
             alert(`${team === 'blue' ? 'Blue' : 'Red'} team has no empty ban slots!`);
         }
@@ -506,17 +503,7 @@ class DraftManager {
         const hasOwnPicks = this.getPickedHeroes(team).length > 0;
         const hasEnemyPicks = this.getPickedHeroes(enemyTeam).length > 0;
         
-        console.log(`getRecommendations(${team}):`, {
-            hasMap,
-            selectedMap: this.selectedMap,
-            hasOwnPicks,
-            hasEnemyPicks,
-            ownPicksCount: this.getPickedHeroes(team).length,
-            enemyPicksCount: this.getPickedHeroes(enemyTeam).length
-        });
-        
         if (!hasMap && !hasOwnPicks && !hasEnemyPicks) {
-            console.log(`No recommendations for ${team}: no map, own picks, or enemy picks`);
             return [];
         }
 
@@ -550,15 +537,6 @@ class DraftManager {
         // Sort by total score (descending)
         recommendations.sort((a, b) => b.total - a.total);
 
-        console.log(`Found ${recommendations.length} recommendations for ${team}, returning top 15`);
-        if (recommendations.length > 0) {
-            console.log('Top 3 recommendations:', recommendations.slice(0, 3).map(r => ({
-                name: r.hero.name,
-                total: r.total,
-                breakdown: r.breakdown
-            })));
-        }
-
         return recommendations.slice(0, 15); // Top 15 recommendations
     }
 
@@ -566,19 +544,15 @@ class DraftManager {
      * Render recommendations for both teams
      */
     renderRecommendations() {
-        console.log('renderRecommendations() called');
         ['blue', 'red'].forEach(team => {
             const container = document.getElementById(`recommendations-${team}`);
-            console.log(`Rendering recommendations for ${team}, container:`, container);
             const recommendations = this.getRecommendations(team);
 
             if (recommendations.length === 0) {
-                console.log(`No recommendations to display for ${team}`);
                 container.innerHTML = '<p class="recommendations-placeholder">Select map and heroes for recommendations</p>';
                 return;
             }
 
-            console.log(`Rendering ${recommendations.length} recommendations for ${team}`);
             container.innerHTML = '';
 
             recommendations.forEach((rec, index) => {
