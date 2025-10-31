@@ -148,6 +148,35 @@
         </section>
     </div>
 
+    <!-- Debug Panel -->
+    <div class="debug-panel" id="debug-panel">
+        <div class="debug-header">
+            <h2>Debug Mode - Hero Scoring Breakdown</h2>
+            <button id="close-debug" class="btn-secondary">Close</button>
+        </div>
+        <div class="debug-controls">
+            <label>
+                Team:
+                <select id="debug-team-select">
+                    <option value="blue">Blue Team</option>
+                    <option value="red">Red Team</option>
+                </select>
+            </label>
+            <label>
+                <input type="checkbox" id="debug-show-zero-scores">
+                Show heroes with 0 scores
+            </label>
+        </div>
+        <div id="debug-content" class="debug-content">
+            <!-- Debug table will be populated here -->
+        </div>
+    </div>
+
+    <!-- Debug Toggle Button -->
+    <button id="toggle-debug" class="debug-toggle-btn">
+        Debug
+    </button>
+
     <script src="app.js"></script>
 </body>
 </html>

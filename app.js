@@ -122,10 +122,17 @@ class DraftManager {
             this.resetDraft();
         });
 
-        // Close hero selection on escape
+        // Close panels on escape (check debug panel first, then hero selection)
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                this.hideHeroSelection();
+                const debugPanel = document.getElementById('debug-panel');
+                const heroPanel = document.getElementById('hero-selection-panel');
+                
+                if (debugPanel.classList.contains('active')) {
+                    this.closeDebugPanel();
+                } else if (heroPanel.classList.contains('active')) {
+                    this.hideHeroSelection();
+                }
             }
         });
 
@@ -163,6 +170,25 @@ class DraftManager {
                 const team = btn.dataset.team;
                 await this.pasteBattletags(team);
             });
+        });
+
+        // Debug mode toggle
+        document.getElementById('toggle-debug').addEventListener('click', () => {
+            this.openDebugPanel();
+        });
+
+        document.getElementById('close-debug').addEventListener('click', () => {
+            this.closeDebugPanel();
+        });
+
+        // Debug team selector
+        document.getElementById('debug-team-select').addEventListener('change', (e) => {
+            this.renderDebugTable();
+        });
+
+        // Debug show zero scores checkbox
+        document.getElementById('debug-show-zero-scores').addEventListener('change', (e) => {
+            this.renderDebugTable();
         });
     }
 
@@ -713,8 +739,9 @@ class DraftManager {
             let message = `Successfully added ${successCount} player(s)!`;
             if (failCount > 0) {
                 message += `\n\n${failCount} player(s) could not be added (may already exist or API error).`;
+                alert(message);
             }
-            alert(message);
+            
 
             // Restore button state
             pasteBtn.textContent = originalText;
@@ -1007,6 +1034,16 @@ class DraftManager {
         const ownPicks = this.getPickedHeroes(team);
         const enemyPicks = this.getPickedHeroes(enemyTeam);
 
+        // Debug flag for Illidan
+        const isIllidan = heroData.name === 'Illidan';
+        
+        if (isIllidan) {
+            console.log('=== ILLIDAN SCORE CALCULATION START ===');
+            console.log('Team:', team);
+            console.log('Own Picks:', ownPicks.map(h => h.name));
+            console.log('Enemy Picks:', enemyPicks.map(h => h.name));
+        }
+
         const breakdown = {
             map: 0,
             strongAgainst: 0,
@@ -1018,6 +1055,11 @@ class DraftManager {
 
         // 1. Player MMR Score
         const mmrScore = this.getPlayerMMRScore(heroData.name, team);
+        if (isIllidan) {
+            console.log('\n1. PLAYER MMR SCORE:');
+            console.log('   MMR Score:', mmrScore);
+        }
+        
         if (mmrScore > 0) {
             breakdown.playerMMR = mmrScore;
             if (mmrScore >= 50) {
@@ -1053,19 +1095,38 @@ class DraftManager {
                         score: mmrScore,
                         type: 'mmr' 
                     });
+                    
+                    if (isIllidan) {
+                        console.log('   Best Player:', bestPlayer, 'with MMR:', bestMMR);
+                    }
                 }
             }
         }
 
         // 2. Map Score
+        if (isIllidan) {
+            console.log('\n2. MAP SCORE:');
+            console.log('   Selected Map:', this.selectedMap);
+        }
+        
         if (this.selectedMap && heroData.best_maps) {
             // Find the map name from slug
             const selectedMapData = this.maps.find(m => m.slug === this.selectedMap);
             if (selectedMapData) {
                 const mapScore = heroData.best_maps.find(m => m.map === selectedMapData.name);
+                if (isIllidan) {
+                    console.log('   Map Data:', selectedMapData.name);
+                    console.log('   Map Score Object:', mapScore);
+                }
+                
                 if (mapScore && mapScore.score) {
                     // Use the score directly (0-100 scale)
                     breakdown.map = mapScore.score;
+                    
+                    if (isIllidan) {
+                        console.log('   Final Map Score:', breakdown.map);
+                    }
+                    
                     if (breakdown.map >= 80) {
                         tags.push({ text: `Strong on ${selectedMapData.name}`, score: breakdown.map, type: 'map' });
                     }
@@ -1074,17 +1135,32 @@ class DraftManager {
         }
 
         // 3. Strong Against (counters enemy picks)
+        if (isIllidan) {
+            console.log('\n3. STRONG AGAINST (Countering Enemy):');
+            console.log('   Enemy Picks Count:', enemyPicks.length);
+            console.log('   Has strong_against data:', !!heroData.strong_against);
+        }
+        
         if (enemyPicks.length > 0 && heroData.strong_against) {
             let totalScore = 0;
             let matchCount = 0;
 
             enemyPicks.forEach(enemyHero => {
                 const matchup = heroData.strong_against.find(m => m.hero === enemyHero.name);
+                
+                if (isIllidan) {
+                    console.log(`   Checking vs ${enemyHero.name}:`, matchup);
+                }
+                
                 if (matchup && matchup.score) {
-                    // Score is already 0-100, normalize to center around 50
-                    const normalizedScore = matchup.score - 50;
-                    totalScore += normalizedScore;
+                    // Use score directly (0-100 scale, consistent with map score)
+                    totalScore += matchup.score;
                     matchCount++;
+
+                    if (isIllidan) {
+                        console.log(`      Score: ${matchup.score}`);
+                        console.log(`      Running total: ${totalScore}`);
+                    }
 
                     if (matchup.score >= 60) { // High counter score
                         tags.push({ 
@@ -1097,51 +1173,92 @@ class DraftManager {
             });
 
             if (matchCount > 0) {
-                breakdown.strongAgainst = totalScore / matchCount;
+                breakdown.strongAgainst = totalScore; // Sum, not average
+                
+                if (isIllidan) {
+                    console.log(`   Final Strong Against Score: ${breakdown.strongAgainst} (sum of ${matchCount} matchups)`);
+                }
             }
         }
 
         // 4. Weak Against (subtract score for bad matchups)
+        if (isIllidan) {
+            console.log('\n4. WEAK AGAINST:');
+            console.log('   Enemy Picks Count:', enemyPicks.length);
+            console.log('   Has weak_against data:', !!heroData.weak_against);
+        }
+        
         if (enemyPicks.length > 0 && heroData.weak_against) {
             let totalScore = 0;
             let matchCount = 0;
 
             enemyPicks.forEach(enemyHero => {
                 const matchup = heroData.weak_against.find(m => m.hero === enemyHero.name);
+                
+                if (isIllidan) {
+                    console.log(`   Checking vs ${enemyHero.name}:`, matchup);
+                }
+                
                 if (matchup && matchup.score) {
-                    // High score means very weak against this hero
-                    // Normalize around 50 and make it negative
-                    const normalizedScore = matchup.score - 50;
-                    totalScore += normalizedScore;
-                    matchCount++;
+                    // Only factor in if score is above 50 (significant weakness)
+                    if (matchup.score > 50) {
+                        totalScore += matchup.score;
+                        matchCount++;
 
-                    if (matchup.score >= 60) { // High weakness score
-                        tags.push({ 
-                            text: `Weak vs ${enemyHero.name}`, 
-                            score: matchup.score,
-                            type: 'weakness' 
-                        });
+                        if (isIllidan) {
+                            console.log(`      Score: ${matchup.score} (above 50, counting as weakness)`);
+                            console.log(`      Running total: ${totalScore}`);
+                        }
+
+                        if (matchup.score >= 60) { // High weakness score
+                            tags.push({ 
+                                text: `Weak vs ${enemyHero.name}`, 
+                                score: matchup.score,
+                                type: 'weakness' 
+                            });
+                        }
+                    } else if (isIllidan) {
+                        console.log(`      Score: ${matchup.score} (below 50, ignoring)`);
                     }
                 }
             });
 
             if (matchCount > 0) {
-                breakdown.weakAgainst = -(totalScore / matchCount); // Negative score
+                breakdown.weakAgainst = -totalScore; // Negative sum (weakness is bad)
+                
+                if (isIllidan) {
+                    console.log(`   Final Weak Against Score: ${breakdown.weakAgainst} (sum of ${matchCount} weaknesses, negated)`);
+                }
             }
         }
 
         // 5. Synergy (good with own team)
+        if (isIllidan) {
+            console.log('\n5. SYNERGY (Team Synergy):');
+            console.log('   Own Picks Count:', ownPicks.length);
+            console.log('   Has good_team_with data:', !!heroData.good_team_with);
+        }
+        
         if (ownPicks.length > 0 && heroData.good_team_with) {
             let totalScore = 0;
             let matchCount = 0;
 
             ownPicks.forEach(teammate => {
                 const synergy = heroData.good_team_with.find(m => m.hero === teammate.name);
+                
+                if (isIllidan) {
+                    console.log(`   Checking with ${teammate.name}:`, synergy);
+                }
+                
                 if (synergy && synergy.score) {
-                    // Score is already 0-100, normalize to center around 50
-                    const normalizedScore = synergy.score - 50;
-                    totalScore += normalizedScore;
+                    // Use score directly (0-100 scale, consistent with map score)
+                    totalScore += synergy.score;
                     matchCount++;
+
+                    if (isIllidan) {
+                        console.log(`      Score: ${synergy.score}`);
+                        console.log(`      Running total: ${totalScore}`);
+                    }
 
                     if (synergy.score >= 60) { // High synergy score
                         tags.push({ 
@@ -1154,12 +1271,24 @@ class DraftManager {
             });
 
             if (matchCount > 0) {
-                breakdown.synergy = totalScore / matchCount;
+                breakdown.synergy = totalScore; // Sum, not average
+                
+                if (isIllidan) {
+                    console.log(`   Final Synergy Score: ${breakdown.synergy} (sum of ${matchCount} synergies)`);
+                }
             }
         }
 
         // Calculate total score
         const total = Object.values(breakdown).reduce((sum, val) => sum + val, 0);
+
+        if (isIllidan) {
+            console.log('\n=== FINAL BREAKDOWN ===');
+            console.log('Breakdown:', breakdown);
+            console.log('Total Score:', total);
+            console.log('Tags:', tags);
+            console.log('=== END ILLIDAN CALCULATION ===\n');
+        }
 
         return { total, breakdown, tags };
     }
@@ -1304,6 +1433,231 @@ class DraftManager {
                 container.appendChild(recItem);
             });
         });
+    }
+
+    /**
+     * Open the debug panel and render the table
+     */
+    openDebugPanel() {
+        const panel = document.getElementById('debug-panel');
+        panel.classList.add('active');
+        this.renderDebugTable();
+    }
+
+    /**
+     * Close the debug panel
+     */
+    closeDebugPanel() {
+        const panel = document.getElementById('debug-panel');
+        panel.classList.remove('active');
+    }
+
+    /**
+     * Get individual player MMR scores for a hero
+     * Returns an array of scores, one per player on the team
+     * @param {string} heroName - Hero name
+     * @param {string} team - 'blue' or 'red'
+     * @returns {Array} Array of player scores
+     */
+    getIndividualPlayerScores(heroName, team) {
+        const playerData = this.playerStats[team];
+        const playerScores = [];
+        
+        if (!playerData || !Array.isArray(playerData)) {
+            return [];
+        }
+
+        for (let i = 0; i < playerData.length; i++) {
+            const player = playerData[i];
+            
+            // If no player in this slot, add 0
+            if (!player || !player.data) {
+                if (i === 0 || playerData.some((p, idx) => idx < i && p)) {
+                    // Only add 0 if there's at least one player before this slot
+                    continue;
+                }
+                continue;
+            }
+
+            let maxScore = 0;
+            const gameTypes = ['Quick Match', 'Storm League'];
+            
+            for (const gameType of gameTypes) {
+                const gameTypeData = player.data[gameType];
+                if (!gameTypeData || !gameTypeData[heroName]) {
+                    continue;
+                }
+                
+                const heroStats = gameTypeData[heroName];
+                
+                // Only consider heroes with 25+ games
+                if (heroStats.games_played < 25) {
+                    continue;
+                }
+                
+                // Map MMR to score: 1700 = 0, 2700 = 100
+                const mmr = heroStats.mmr || 0;
+                const score = ((mmr - 1700) / 1000) * 100;
+                maxScore = Math.max(maxScore, score);
+            }
+            
+            playerScores.push({
+                battletag: player.battletag,
+                score: maxScore
+            });
+        }
+        
+        return playerScores;
+    }
+
+    /**
+     * Generate debug data for all heroes for a specific team
+     * This uses the EXACT SAME calculateHeroScore method as recommendations
+     * @param {string} team - 'blue' or 'red'
+     * @returns {Array} Array of hero debug data
+     */
+    generateDebugData(team) {
+        const debugData = [];
+        
+        // Get unavailable heroes (banned or picked)
+        const unavailableHeroes = new Set();
+        ['blue', 'red'].forEach(t => {
+            this.draft[t].bans.forEach(hero => {
+                if (hero) unavailableHeroes.add(hero.slug);
+            });
+            this.draft[t].picks.forEach(hero => {
+                if (hero) unavailableHeroes.add(hero.slug);
+            });
+        });
+
+        // Calculate scores for all heroes
+        this.heroes.forEach(hero => {
+            // Calculate using the EXACT SAME method as recommendations
+            const scoreData = this.calculateHeroScore(hero.slug, team);
+            
+            // Get individual player scores
+            const playerScores = this.getIndividualPlayerScores(hero.name, team);
+            
+            debugData.push({
+                hero,
+                breakdown: scoreData.breakdown,
+                total: scoreData.total,
+                playerScores: playerScores,
+                unavailable: unavailableHeroes.has(hero.slug)
+            });
+        });
+
+        // Sort by total score descending
+        debugData.sort((a, b) => b.total - a.total);
+
+        return debugData;
+    }
+
+    /**
+     * Render the debug table
+     */
+    renderDebugTable() {
+        const team = document.getElementById('debug-team-select').value;
+        const showZeroScores = document.getElementById('debug-show-zero-scores').checked;
+        const content = document.getElementById('debug-content');
+
+        // Generate debug data using the SAME calculation as recommendations
+        let debugData = this.generateDebugData(team);
+
+        // Filter out heroes with zero scores if checkbox is unchecked
+        if (!showZeroScores) {
+            debugData = debugData.filter(d => d.total !== 0 || d.unavailable);
+        }
+
+        if (debugData.length === 0) {
+            content.innerHTML = '<div class="debug-no-data">No data available. Select map, heroes, or add players to see scores.</div>';
+            return;
+        }
+
+        // Get player battletags for headers
+        const playerData = this.playerStats[team] || [];
+        const players = playerData.filter(p => p && p.battletag);
+
+        // Build table HTML
+        let html = '<table class="debug-table"><thead><tr>';
+        html += '<th>Hero</th>';
+        html += '<th title="Map synergy score">Map</th>';
+        html += '<th title="Average score against enemy picks">vs Enemy</th>';
+        html += '<th title="Average weakness against enemy picks (negative)">Weak vs</th>';
+        html += '<th title="Average synergy with team picks">Synergy</th>';
+        
+        // Add player columns
+        players.forEach((player, idx) => {
+            const shortTag = player.battletag.split('#')[0];
+            html += `<th class="debug-player-columns" title="Player MMR score for ${player.battletag}">${shortTag}</th>`;
+        });
+        
+        html += '<th title="Combined total score from all players">Player Total</th>';
+        html += '<th title="Final total score">Total</th>';
+        html += '</tr></thead><tbody>';
+
+        // Add rows for each hero
+        debugData.forEach(data => {
+            const { hero, breakdown, total, playerScores, unavailable } = data;
+            
+            html += '<tr>';
+            
+            // Hero name and image
+            html += '<td><div class="debug-hero-cell">';
+            html += `<img src="images/heroes/${hero.slug}.jpg" alt="${hero.name}" class="debug-hero-img">`;
+            html += `<span class="debug-hero-name">${hero.name}</span>`;
+            if (unavailable) {
+                html += ' <span style="color: #f44336; font-size: 0.7rem;">(UNAVAILABLE)</span>';
+            }
+            html += '</div></td>';
+            
+            // Map score
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.map)}">${this.formatScore(breakdown.map)}</td>`;
+            
+            // Strong against
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.strongAgainst)}">${this.formatScore(breakdown.strongAgainst)}</td>`;
+            
+            // Weak against
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.weakAgainst)}">${this.formatScore(breakdown.weakAgainst)}</td>`;
+            
+            // Synergy
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.synergy)}">${this.formatScore(breakdown.synergy)}</td>`;
+            
+            // Individual player scores
+            players.forEach((player, idx) => {
+                const playerScore = playerScores.find(ps => ps.battletag === player.battletag);
+                const score = playerScore ? playerScore.score : 0;
+                html += `<td class="debug-score-cell debug-player-columns ${this.getScoreClass(score)}">${this.formatScore(score)}</td>`;
+            });
+            
+            // Player total (from breakdown.playerMMR which is max of all players)
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.playerMMR)}">${this.formatScore(breakdown.playerMMR)}</td>`;
+            
+            // Total score
+            html += `<td class="debug-score-cell debug-score-total ${this.getScoreClass(total)}">${this.formatScore(total)}</td>`;
+            
+            html += '</tr>';
+        });
+
+        html += '</tbody></table>';
+        content.innerHTML = html;
+    }
+
+    /**
+     * Format score for display
+     */
+    formatScore(score) {
+        if (score === 0) return '0.0';
+        return score.toFixed(1);
+    }
+
+    /**
+     * Get CSS class for score coloring
+     */
+    getScoreClass(score) {
+        if (score > 0.5) return 'debug-score-positive';
+        if (score < -0.5) return 'debug-score-negative';
+        return 'debug-score-neutral';
     }
 }
 
