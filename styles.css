@@ -230,6 +230,363 @@ header h1 {
   margin: 0;
 }
 
+/* Player Profiles Section (Top) */
+.player-profiles-section {
+  background: var(--bg-light);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.player-profiles-section h2 {
+  margin: 0 0 15px 0;
+  font-size: 1.3rem;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.profiles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.team-profiles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.team-profiles-header {
+  text-align: center;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+
+.team-profiles-header.blue {
+  background: var(--team-blue);
+  color: white;
+}
+
+.team-profiles-header.red {
+  background: var(--team-red);
+  color: white;
+}
+
+/* Add Player Row */
+.add-player-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.battletag-input-add {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.battletag-input-add:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: #2c313a;
+}
+
+.battletag-input-add::placeholder {
+  color: var(--text-secondary);
+}
+
+.fetch-btn-add {
+  padding: 10px 20px;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.fetch-btn-add:hover {
+  background: var(--primary-color-hover);
+}
+
+.fetch-btn-add:disabled {
+  background: #4a5568;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.paste-battletags-btn {
+  padding: 10px 20px;
+  background: #38a169;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.paste-battletags-btn:hover {
+  background: #2f855a;
+}
+
+.paste-battletags-btn:disabled {
+  background: #4a5568;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Player Rows Container */
+.player-rows-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual Player Row */
+.player-row {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.player-row.loading {
+  opacity: 0.6;
+}
+
+/* Remove Player Button */
+.remove-player-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  color: #f56565;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.remove-player-btn:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.5);
+}
+
+/* Player Info Section (Header) */
+.player-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 60px; /* Space for remove button */
+}
+
+.player-battletag {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.player-stats-row {
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.player-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.player-stat-label {
+  color: var(--text-secondary);
+}
+
+.player-stat-value {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.player-stat-value.mmr {
+  color: #ba68c8;
+}
+
+.player-stat-value.games {
+  color: #4299e1;
+}
+
+/* Player Heroes Section (Below stats) */
+.player-heroes-inline {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap; /* Keep all heroes on one row */
+  justify-content: flex-start;
+}
+
+.profile-heroes {
+  display: none; /* Hidden until data is loaded */
+}
+
+.profile-heroes.loaded {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.hero-stat-card {
+  position: relative;
+  flex: 1 1 calc(10% - 6px); /* Responsive: each card takes ~10% width minus gap */
+  min-width: 50px;
+  max-width: 70px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.hero-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.hero-stat-img-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* Maintains square aspect ratio */
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+}
+
+.hero-stat-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-stat-score-overlay {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: #4caf50;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-stat-name {
+  font-size: 0.7rem;
+  color: var(--text-primary);
+  text-align: center;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hover tooltip */
+.hero-stat-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.95);
+  color: var(--text-primary);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  margin-bottom: 8px;
+  z-index: 1000;
+  border: 1px solid var(--border-color);
+}
+
+.hero-stat-card:hover .hero-stat-tooltip {
+  opacity: 1;
+}
+
+.tooltip-row {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.tooltip-label {
+  color: var(--text-secondary);
+}
+
+.tooltip-mmr {
+  color: #ba68c8;
+  font-weight: 600;
+}
+
+.tooltip-games {
+  color: #4299e1;
+  font-weight: 600;
+}
+
+/* Responsive adjustments for profiles */
+@media (max-width: 1200px) {
+  .profiles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-profiles-section {
+    padding: 15px;
+  }
+
+  .hero-stat-card {
+    min-width: 45px;
+    max-width: 60px;
+  }
+
+  .hero-stat-name {
+    font-size: 0.65rem;
+  }
+
+  .hero-stat-score-overlay {
+    font-size: 0.75rem;
+    padding: 1px 4px;
+  }
+}
+
 /* Pick Slots - Horizontal */
 .pick-slots-vertical {
   display: flex;
@@ -428,6 +785,12 @@ header h1 {
   background: rgba(255, 193, 7, 0.2);
   color: #ffc107;
   border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.rec-tag.mmr {
+  background: rgba(138, 43, 226, 0.2);
+  color: #ba68c8;
+  border: 1px solid rgba(138, 43, 226, 0.4);
 }
 
 /* Recommendation Action Buttons */

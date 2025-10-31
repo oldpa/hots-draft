@@ -30,4 +30,7 @@ Thumbs.db
 # Debug scripts (if any are recreated)
 debug_*.py
 test_*.py
-
+.env
+.vercel/
+teams.txt
+node_modules/

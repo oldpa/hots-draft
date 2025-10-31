@@ -16,8 +16,15 @@ class DraftManager {
                 picks: [null, null, null, null, null]
             }
         };
+        this.playerStats = {
+            blue: [],  // Array of player data objects
+            red: []
+        };
         this.currentSelection = null; // { type: 'ban'|'pick', team: 'blue'|'red', slot: number }
         this.searchQuery = '';
+        this.API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:3000'
+            : 'https://hots-one.vercel.app'; // Update this with your actual Vercel URL
         
         this.init();
     }
@@ -120,6 +127,42 @@ class DraftManager {
             if (e.key === 'Escape') {
                 this.hideHeroSelection();
             }
+        });
+
+        // Add player buttons
+        document.querySelectorAll('.fetch-btn-add').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const team = btn.dataset.team;
+                const input = document.querySelector(`.battletag-input-add[data-team="${team}"]`);
+                const battletag = input.value.trim();
+                
+                if (battletag) {
+                    await this.addPlayerRow(team, battletag);
+                    input.value = ''; // Clear input after adding
+                }
+            });
+        });
+
+        // Allow Enter key to add player
+        document.querySelectorAll('.battletag-input-add').forEach(input => {
+            input.addEventListener('keypress', async (e) => {
+                if (e.key === 'Enter') {
+                    const team = input.dataset.team;
+                    const battletag = input.value.trim();
+                    if (battletag) {
+                        await this.addPlayerRow(team, battletag);
+                        input.value = '';
+                    }
+                }
+            });
+        });
+
+        // Paste battletags buttons
+        document.querySelectorAll('.paste-battletags-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const team = btn.dataset.team;
+                await this.pasteBattletags(team);
+            });
         });
     }
 
@@ -306,6 +349,594 @@ class DraftManager {
         this.renderRecommendations(); // Update recommendations
     }
 
+    /**
+     * Fetch stats for a single player and display their top heroes
+     * @param {string} team - 'blue' or 'red'
+     * @param {number} slot - Player slot (0-4)
+     * @param {string} battletag - Player's battle tag
+     * @param {HTMLElement} card - The player profile card element
+     */
+    async fetchSinglePlayerStats(team, slot, battletag, card) {
+        const statusDiv = card.querySelector('.profile-status');
+        const heroesDiv = card.querySelector('.profile-heroes');
+        const fetchBtn = card.querySelector('.fetch-btn-top');
+        
+        // Show loading state
+        statusDiv.className = 'profile-status loading';
+        statusDiv.textContent = 'Fetching...';
+        statusDiv.style.display = 'block';
+        fetchBtn.disabled = true;
+        heroesDiv.classList.remove('loaded');
+        heroesDiv.innerHTML = '';
+        
+        try {
+            const params = new URLSearchParams({
+                battletag: battletag,
+                region: '2' // EU region
+            });
+            
+            const response = await fetch(`${this.API_URL}/api/player/heroes?${params}`);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data for ${battletag}`);
+            }
+            
+            const data = await response.json();
+            
+            // Ensure playerStats arrays are initialized
+            if (!Array.isArray(this.playerStats[team])) {
+                this.playerStats[team] = [];
+            }
+            
+            // Update or add player data at the correct slot
+            this.playerStats[team][slot] = {
+                battletag: battletag,
+                data: data
+            };
+            
+            // Show success status
+            statusDiv.className = 'profile-status success';
+            statusDiv.textContent = `✓ ${battletag}`;
+            
+            // Display top 7 heroes
+            this.displayPlayerTopHeroes(battletag, data, heroesDiv);
+            
+            // Update recommendations with new data
+            this.renderRecommendations();
+            
+        } catch (error) {
+            console.error(`Error fetching stats for ${battletag}:`, error);
+            statusDiv.className = 'profile-status error';
+            statusDiv.textContent = `✗ Failed to load`;
+        } finally {
+            fetchBtn.disabled = false;
+        }
+    }
+
+    /**
+     * Display top 10 heroes for a player in their profile card
+     * @param {string} battletag - Player's battle tag
+     * @param {Object} playerData - Player's hero data from API
+     * @param {HTMLElement} heroesDiv - Container div for hero list
+     */
+    displayPlayerTopHeroes(battletag, playerData, heroesDiv) {
+        // Extract Quick Match and Storm League heroes
+        const quickMatch = playerData['Quick Match'] || {};
+        const stormLeague = playerData['Storm League'] || {};
+        
+        // Check if we have any data at all
+        if (Object.keys(quickMatch).length === 0 && Object.keys(stormLeague).length === 0) {
+            heroesDiv.innerHTML = '<div style="text-align: center; color: #718096; font-size: 0.75rem; padding: 8px;">No game data available</div>';
+            heroesDiv.classList.add('loaded');
+            return;
+        }
+        
+        // Combine heroes from both game types, taking the best stats
+        const heroMap = new Map();
+        
+        // Helper function to process heroes from a game type
+        const processGameType = (gameTypeData, gameTypeName) => {
+            for (const [heroName, stats] of Object.entries(gameTypeData)) {
+                const mmr = Math.round(stats.mmr || 0);
+                const score = ((mmr - 1700) / 1000) * 100;
+                
+                // If hero already exists, use the higher MMR/score
+                if (heroMap.has(heroName)) {
+                    const existing = heroMap.get(heroName);
+                    if (score > existing.score) {
+                        heroMap.set(heroName, {
+                            name: heroName,
+                            mmr: mmr,
+                            games: stats.games_played,
+                            score: score,
+                            gameType: gameTypeName
+                        });
+                    }
+                } else {
+                    heroMap.set(heroName, {
+                        name: heroName,
+                        mmr: mmr,
+                        games: stats.games_played,
+                        score: score,
+                        gameType: gameTypeName
+                    });
+                }
+            }
+        };
+        
+        // Process both game types
+        processGameType(quickMatch, 'QM');
+        processGameType(stormLeague, 'SL');
+        
+        // Convert to array
+        let heroList = Array.from(heroMap.values());
+        
+        // Filter heroes with 25+ games
+        const heroesWithMinGames = heroList.filter(h => h.games >= 25);
+        
+        // If no heroes with 25+ games, fall back to top 3 most played
+        let displayList;
+        if (heroesWithMinGames.length === 0) {
+            // Sort by games played, take top 3
+            heroList.sort((a, b) => b.games - a.games);
+            displayList = heroList.slice(0, 3);
+        } else {
+            // Sort by score, take top 10
+            heroesWithMinGames.sort((a, b) => b.score - a.score);
+            displayList = heroesWithMinGames.slice(0, 10);
+        }
+        
+        if (displayList.length === 0) {
+            heroesDiv.innerHTML = '<div style="text-align: center; color: #718096; font-size: 0.75rem; padding: 8px;">No hero data available</div>';
+            heroesDiv.classList.add('loaded');
+            return;
+        }
+        
+        // Display each hero
+        heroesDiv.innerHTML = '';
+        displayList.forEach(hero => {
+            // Find hero slug for image
+            const heroData = this.heroes.find(h => h.name === hero.name);
+            const slug = heroData ? heroData.slug : hero.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            
+            const card = document.createElement('div');
+            card.className = 'hero-stat-card';
+            
+            card.innerHTML = `
+                <div class="hero-stat-tooltip">
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">MMR:</span>
+                        <span class="tooltip-mmr">${hero.mmr}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Games:</span>
+                        <span class="tooltip-games">${hero.games}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Type:</span>
+                        <span class="tooltip-games">${hero.gameType}</span>
+                    </div>
+                </div>
+                <div class="hero-stat-img-container">
+                    <img class="hero-stat-img" src="images/heroes/${slug}.jpg" alt="${hero.name}">
+                    <div class="hero-stat-score-overlay">+${hero.score.toFixed(0)}</div>
+                </div>
+                <div class="hero-stat-name">${hero.name}</div>
+            `;
+            
+            heroesDiv.appendChild(card);
+        });
+        
+        heroesDiv.classList.add('loaded');
+    }
+
+    /**
+     * Add a new player row dynamically
+     * @param {string} team - 'blue' or 'red'
+     * @param {string} battletag - Player's battletag
+     */
+    async addPlayerRow(team, battletag) {
+        const container = document.querySelector(`.player-rows-container[data-team="${team}"]`);
+        
+        // Check if player already exists
+        const existingPlayers = this.playerStats[team] || [];
+        if (existingPlayers.some(p => p && p.battletag === battletag)) {
+            alert('This player is already added!');
+            return;
+        }
+
+        // Check max 5 players
+        if (existingPlayers.filter(p => p).length >= 5) {
+            alert('Maximum 5 players per team!');
+            return;
+        }
+
+        // Create player row element
+        const playerRow = document.createElement('div');
+        playerRow.className = 'player-row loading';
+        playerRow.dataset.battletag = battletag;
+        playerRow.innerHTML = `
+            <button class="remove-player-btn">Remove</button>
+            <div class="player-info">
+                <div class="player-battletag">${battletag}</div>
+                <div class="player-stats-row">Loading...</div>
+            </div>
+            <div class="player-heroes-inline"></div>
+        `;
+        container.appendChild(playerRow);
+
+        // Add remove button handler
+        const removeBtn = playerRow.querySelector('.remove-player-btn');
+        removeBtn.addEventListener('click', () => {
+            this.removePlayerRow(team, battletag);
+            playerRow.remove();
+        });
+
+        try {
+            const params = new URLSearchParams({
+                battletag: battletag,
+                region: '2' // EU region
+            });
+
+            const response = await fetch(`${this.API_URL}/api/player/heroes?${params}`);
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data for ${battletag}`);
+            }
+
+            const data = await response.json();
+
+            // Store player data
+            if (!Array.isArray(this.playerStats[team])) {
+                this.playerStats[team] = [];
+            }
+            const slot = this.playerStats[team].findIndex(p => !p);
+            if (slot === -1) {
+                this.playerStats[team].push({ battletag, data });
+            } else {
+                this.playerStats[team][slot] = { battletag, data };
+            }
+
+            // Calculate player stats
+            const stats = this.calculatePlayerStats(data);
+
+            // Update player row
+            playerRow.classList.remove('loading');
+            const statsRow = playerRow.querySelector('.player-stats-row');
+            statsRow.innerHTML = `
+                <div class="player-stat">
+                    <span class="player-stat-label">${stats.topMode}:</span>
+                    <span class="player-stat-value mmr">${stats.mmr} MMR</span>
+                </div>
+                <div class="player-stat">
+                    <span class="player-stat-label">Games:</span>
+                    <span class="player-stat-value games">${stats.totalGames}</span>
+                </div>
+                <div class="player-stat">
+                    <span class="player-stat-label">Last 90d:</span>
+                    <span class="player-stat-value games">${stats.recent90Games}</span>
+                </div>
+            `;
+
+            // Display top heroes
+            const heroesDiv = playerRow.querySelector('.player-heroes-inline');
+            this.displayPlayerTopHeroesInline(data, heroesDiv);
+
+            // Update recommendations
+            this.renderRecommendations();
+
+        } catch (error) {
+            console.error(`Error fetching stats for ${battletag}:`, error);
+            playerRow.classList.remove('loading');
+            const statsRow = playerRow.querySelector('.player-stats-row');
+            statsRow.innerHTML = '<span style="color: #f56565;">Failed to load</span>';
+        }
+    }
+
+    /**
+     * Remove a player row
+     * @param {string} team - 'blue' or 'red'
+     * @param {string} battletag - Player's battletag
+     */
+    removePlayerRow(team, battletag) {
+        // Find and remove from playerStats
+        if (!Array.isArray(this.playerStats[team])) {
+            return;
+        }
+        const index = this.playerStats[team].findIndex(p => p && p.battletag === battletag);
+        if (index !== -1) {
+            this.playerStats[team][index] = null;
+        }
+        // Update recommendations
+        this.renderRecommendations();
+    }
+
+    /**
+     * Paste multiple battletags
+     * @param {string} team - 'blue' or 'red'
+     */
+    async pasteBattletags(team) {
+        // Prompt user for battletags
+        const input = prompt(
+            'Paste battletags (one per line or separated by commas):\n\n' +
+            'Example:\n' +
+            'Wraysford#2123\n' +
+            'Calytras#2456\n' +
+            'ASGGSA#1234\n\n' +
+            'Or: Wraysford#2123, Calytras#2456, ASGGSA#1234'
+        );
+
+        if (!input || !input.trim()) {
+            return; // User cancelled
+        }
+
+        try {
+            // Show loading state
+            const pasteBtn = document.querySelector(`.paste-battletags-btn[data-team="${team}"]`);
+            const originalText = pasteBtn.textContent;
+            pasteBtn.textContent = 'Adding...';
+            pasteBtn.disabled = true;
+
+            // Extract battletags using regex
+            const battletagRegex = /([A-Za-z][A-Za-z0-9]{2,11})#(\d{4,5})/g;
+            const matches = input.matchAll(battletagRegex);
+            
+            const battletags = new Set();
+            for (const match of matches) {
+                const battletag = `${match[1]}#${match[2]}`;
+                battletags.add(battletag);
+            }
+
+            const battletagArray = Array.from(battletags).slice(0, 5); // Limit to 5
+
+            if (battletagArray.length === 0) {
+                throw new Error('No valid battletags found. Make sure they are in format: Name#1234');
+            }
+
+            console.log(`Found ${battletagArray.length} battletags:`, battletagArray);
+
+            // Add each player
+            let successCount = 0;
+            let failCount = 0;
+
+            for (const battletag of battletagArray) {
+                try {
+                    await this.addPlayerRow(team, battletag);
+                    successCount++;
+                } catch (error) {
+                    console.error(`Failed to add ${battletag}:`, error);
+                    failCount++;
+                }
+            }
+
+            // Show result
+            let message = `Successfully added ${successCount} player(s)!`;
+            if (failCount > 0) {
+                message += `\n\n${failCount} player(s) could not be added (may already exist or API error).`;
+            }
+            alert(message);
+
+            // Restore button state
+            pasteBtn.textContent = originalText;
+            pasteBtn.disabled = false;
+
+        } catch (error) {
+            console.error('Error pasting battletags:', error);
+            alert(`Failed to add battletags:\n\n${error.message}`);
+
+            // Restore button state
+            const pasteBtn = document.querySelector(`.paste-battletags-btn[data-team="${team}"]`);
+            pasteBtn.textContent = 'Paste List';
+            pasteBtn.disabled = false;
+        }
+    }
+
+    /**
+     * Calculate overall player stats from player data
+     * @param {Object} playerData - Player data from API
+     * @returns {Object} Calculated stats
+     */
+    calculatePlayerStats(playerData) {
+        const player_mmr = playerData.player_mmr || {};
+        
+        // Find game mode with most games in last 90 days
+        let topMode = 'QM'; // Default
+        let topMMR = 0;
+        let maxRecent = 0;
+
+        for (const [mode, stats] of Object.entries(player_mmr)) {
+            if (stats.games_played_last_90_days > maxRecent) {
+                maxRecent = stats.games_played_last_90_days;
+                topMMR = Math.round(stats.mmr || 0);
+                
+                // Shorten mode names
+                if (mode === 'Quick Match') topMode = 'QM';
+                else if (mode === 'Storm League') topMode = 'SL';
+                else if (mode === 'Unranked Draft') topMode = 'UD';
+                else if (mode === 'Hero League') topMode = 'HL';
+                else if (mode === 'Team League') topMode = 'TL';
+                else topMode = mode.slice(0, 2).toUpperCase();
+            }
+        }
+
+        // Calculate total games across all modes
+        let totalGames = 0;
+        let recent90Games = 0;
+        for (const stats of Object.values(player_mmr)) {
+            totalGames += stats.games_played || 0;
+            recent90Games += stats.games_played_last_90_days || 0;
+        }
+
+        return {
+            topMode,
+            mmr: topMMR,
+            totalGames,
+            recent90Games
+        };
+    }
+
+    /**
+     * Display top 10 heroes inline in a player row
+     * @param {Object} playerData - Player's hero data from API
+     * @param {HTMLElement} heroesDiv - Container div for hero list
+     */
+    displayPlayerTopHeroesInline(playerData, heroesDiv) {
+        // Extract Quick Match and Storm League heroes
+        const quickMatch = playerData['Quick Match'] || {};
+        const stormLeague = playerData['Storm League'] || {};
+        
+        // Check if we have any data at all
+        if (Object.keys(quickMatch).length === 0 && Object.keys(stormLeague).length === 0) {
+            heroesDiv.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.75rem;">No game data</div>';
+            return;
+        }
+
+        // Combine heroes from both game types, taking the best stats
+        const heroMap = new Map();
+        
+        // Helper function to process heroes from a game type
+        const processGameType = (gameTypeData, gameTypeName) => {
+            for (const [heroName, stats] of Object.entries(gameTypeData)) {
+                const mmr = Math.round(stats.mmr || 0);
+                const score = ((mmr - 1700) / 1000) * 100;
+                
+                // If hero already exists, use the higher MMR/score
+                if (heroMap.has(heroName)) {
+                    const existing = heroMap.get(heroName);
+                    if (score > existing.score) {
+                        heroMap.set(heroName, {
+                            name: heroName,
+                            mmr: mmr,
+                            games: stats.games_played,
+                            score: score,
+                            gameType: gameTypeName
+                        });
+                    }
+                } else {
+                    heroMap.set(heroName, {
+                        name: heroName,
+                        mmr: mmr,
+                        games: stats.games_played,
+                        score: score,
+                        gameType: gameTypeName
+                    });
+                }
+            }
+        };
+        
+        // Process both game types
+        processGameType(quickMatch, 'QM');
+        processGameType(stormLeague, 'SL');
+        
+        // Convert to array
+        let heroList = Array.from(heroMap.values());
+        
+        // Filter heroes with 25+ games
+        const heroesWithMinGames = heroList.filter(h => h.games >= 25);
+        
+        // If no heroes with 25+ games, fall back to top 3 most played
+        let displayList;
+        if (heroesWithMinGames.length === 0) {
+            // Sort by games played, take top 3
+            heroList.sort((a, b) => b.games - a.games);
+            displayList = heroList.slice(0, 3);
+        } else {
+            // Sort by score, take top 10
+            heroesWithMinGames.sort((a, b) => b.score - a.score);
+            displayList = heroesWithMinGames.slice(0, 10);
+        }
+
+        if (displayList.length === 0) {
+            heroesDiv.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.75rem;">No hero data</div>';
+            return;
+        }
+
+        heroesDiv.innerHTML = '';
+        displayList.forEach(hero => {
+            const heroData = this.heroes.find(h => h.name === hero.name);
+            const slug = heroData ? heroData.slug : hero.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+            const card = document.createElement('div');
+            card.className = 'hero-stat-card';
+
+            card.innerHTML = `
+                <div class="hero-stat-tooltip">
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">MMR:</span>
+                        <span class="tooltip-mmr">${hero.mmr}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Games:</span>
+                        <span class="tooltip-games">${hero.games}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Type:</span>
+                        <span class="tooltip-games">${hero.gameType}</span>
+                    </div>
+                </div>
+                <div class="hero-stat-img-container">
+                    <img class="hero-stat-img" src="images/heroes/${slug}.jpg" alt="${hero.name}">
+                    <div class="hero-stat-score-overlay">+${hero.score.toFixed(0)}</div>
+                </div>
+                <div class="hero-stat-name">${hero.name}</div>
+            `;
+
+            heroesDiv.appendChild(card);
+        });
+    }
+
+    /**
+     * Calculate MMR score for a hero based on player data
+     * Maps MMR: 1700 = 0, 2700 = 100
+     * Uses both Quick Match and Storm League data with 25+ games played
+     * Returns max score among all players and game types
+     * @param {string} heroName - Hero name
+     * @param {string} team - 'blue' or 'red'
+     * @returns {number} MMR score (0-100+)
+     */
+    getPlayerMMRScore(heroName, team) {
+        const playerData = this.playerStats[team];
+        
+        if (!playerData || !Array.isArray(playerData) || playerData.length === 0) {
+            return 0;
+        }
+        
+        let maxScore = 0;
+        
+        for (const player of playerData) {
+            // Skip empty slots
+            if (!player || !player.data) {
+                continue;
+            }
+            
+            // Check both Quick Match and Storm League data
+            const gameTypes = ['Quick Match', 'Storm League'];
+            
+            for (const gameType of gameTypes) {
+                const gameTypeData = player.data[gameType];
+                if (!gameTypeData || !gameTypeData[heroName]) {
+                    continue;
+                }
+                
+                const heroStats = gameTypeData[heroName];
+                
+                // Only consider heroes with 25+ games
+                if (heroStats.games_played < 25) {
+                    continue;
+                }
+                
+                // Map MMR to score: 1700 = 0, 2700 = 100
+                const mmr = heroStats.mmr || 0;
+                const score = ((mmr - 1700) / 1000) * 100;
+                
+                // Use max score among all players and game types
+                maxScore = Math.max(maxScore, score);
+            }
+        }
+        
+        return maxScore;
+    }
+
     getBannedHeroes() {
         const banned = [];
         ['blue', 'red'].forEach(team => {
@@ -380,11 +1011,53 @@ class DraftManager {
             map: 0,
             strongAgainst: 0,
             weakAgainst: 0,
-            synergy: 0
+            synergy: 0,
+            playerMMR: 0
         };
         const tags = [];
 
-        // 1. Map Score
+        // 1. Player MMR Score
+        const mmrScore = this.getPlayerMMRScore(heroData.name, team);
+        if (mmrScore > 0) {
+            breakdown.playerMMR = mmrScore;
+            if (mmrScore >= 50) {
+                const heroName = heroData.name;
+                // Find which player has this hero
+                const playerData = this.playerStats[team];
+                let bestPlayer = null;
+                let bestMMR = 0;
+                
+                for (const player of playerData) {
+                    // Skip empty slots
+                    if (!player || !player.data) {
+                        continue;
+                    }
+                    
+                    // Check both Quick Match and Storm League
+                    const gameTypes = ['Quick Match', 'Storm League'];
+                    for (const gameType of gameTypes) {
+                        const gameTypeData = player.data[gameType];
+                        if (gameTypeData && gameTypeData[heroName] && gameTypeData[heroName].games_played >= 25) {
+                            const mmr = Math.round(gameTypeData[heroName].mmr || 0);
+                            if (mmr > bestMMR) {
+                                bestMMR = mmr;
+                                bestPlayer = player.battletag.split('#')[0]; // Get name part only
+                            }
+                        }
+                    }
+                }
+                
+                if (bestPlayer) {
+                    tags.push({ 
+                        text: `${bestPlayer} ${bestMMR} MMR`, 
+                        score: mmrScore,
+                        type: 'mmr' 
+                    });
+                }
+            }
+        }
+
+        // 2. Map Score
         if (this.selectedMap && heroData.best_maps) {
             // Find the map name from slug
             const selectedMapData = this.maps.find(m => m.slug === this.selectedMap);
@@ -400,7 +1073,7 @@ class DraftManager {
             }
         }
 
-        // 2. Strong Against (counters enemy picks)
+        // 3. Strong Against (counters enemy picks)
         if (enemyPicks.length > 0 && heroData.strong_against) {
             let totalScore = 0;
             let matchCount = 0;
@@ -428,7 +1101,7 @@ class DraftManager {
             }
         }
 
-        // 3. Weak Against (subtract score for bad matchups)
+        // 4. Weak Against (subtract score for bad matchups)
         if (enemyPicks.length > 0 && heroData.weak_against) {
             let totalScore = 0;
             let matchCount = 0;
@@ -457,7 +1130,7 @@ class DraftManager {
             }
         }
 
-        // 4. Synergy (good with own team)
+        // 5. Synergy (good with own team)
         if (ownPicks.length > 0 && heroData.good_team_with) {
             let totalScore = 0;
             let matchCount = 0;

@@ -50,13 +50,49 @@ See [DATA_SUMMARY.md](DATA_SUMMARY.md) for detailed documentation.
 - ✅ Modern, responsive UI
 - ✅ Ready for GitHub Pages deployment
 
+### Backend API (New! 🎉)
+
+- ✅ Serverless API on Vercel
+- ✅ Fetch player hero stats from HeroesProfile API
+- ✅ Redis caching with Vercel KV (1-hour TTL)
+- ✅ CORS-enabled for frontend integration
+- ✅ $0/month hosting with free tiers
+- ✅ Fast responses (<100ms from cache)
+
+See [QUICKSTART.md](QUICKSTART.md) for 5-minute setup guide!
+
 ## 📦 Setup
 
-1. Install dependencies:
+### Frontend & Scrapers
+
+1. Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
+
+### Backend API (Optional)
+
+1. Install Node.js dependencies:
+
+```bash
+npm install
+```
+
+2. Set up environment variables:
+
+```bash
+./setup-env.sh
+# Or manually create .env with your HEROES_PROFILE_TOKEN
+```
+
+3. Start development server:
+
+```bash
+vercel dev
+```
+
+See [QUICKSTART.md](QUICKSTART.md) for complete backend setup and deployment guide.
 
 ## 🔧 Usage
 
@@ -158,6 +194,10 @@ hots/
 ├── index.html                  # ⭐ Web app - Main HTML
 ├── styles.css                  # ⭐ Web app - Styling
 ├── app.js                      # ⭐ Web app - JavaScript logic
+├── api/                        # 🆕 Backend API (Vercel Functions)
+│   ├── health.js               # Health check endpoint
+│   └── player/
+│       └── heroes.js           # Fetch player hero stats
 ├── all_heroes_data.json        # Complete hero dataset (3.0 MB)
 ├── all_maps_data.json          # Complete map dataset (233 KB)
 ├── heroes.json                 # List of all 85 heroes
@@ -165,7 +205,16 @@ hots/
 ├── images/
 │   └── heroes/                 # Hero portrait images (85 x 92x92px JPG)
 ├── requirements.txt            # Python dependencies
+├── package.json                # Node.js dependencies (backend API)
+├── vercel.json                 # Vercel deployment config
+├── .env                        # Environment variables (not committed)
+├── setup-env.sh                # Helper script to create .env
+├── test-api.sh                 # API test script
 ├── README.md                   # This file
+├── QUICKSTART.md               # 🆕 Backend quick start guide
+├── API_README.md               # 🆕 API documentation
+├── DEPLOYMENT.md               # 🆕 Deployment guide
+├── ENV_TEMPLATE.md             # 🆕 Environment variable template
 ├── WEB_APP_README.md           # Web app documentation
 └── DATA_SUMMARY.md             # Dataset documentation
 ```

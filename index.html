@@ -13,6 +13,42 @@
             <p class="subtitle">Select map, ban heroes, and pick your team composition</p>
         </header>
 
+        <!-- Player Battle Tags Section -->
+        <section class="player-profiles-section">
+            <h2>Player Profiles</h2>
+            <div class="profiles-grid">
+                <!-- Team Blue Players -->
+                <div class="team-profiles blue-profiles">
+                    <h3 class="team-profiles-header blue">Team Blue</h3>
+                    
+                    <!-- Add Player Input -->
+                <div class="add-player-row">
+                    <input type="text" class="battletag-input-add" data-team="blue" placeholder="Enter battletag (e.g., oldpa#21616)">
+                    <button class="fetch-btn-add" data-team="blue">Add Player</button>
+                    <button class="paste-battletags-btn" data-team="blue" title="Paste multiple battletags">Paste List</button>
+                </div>
+                    
+                    <!-- Player Rows Container -->
+                    <div class="player-rows-container" data-team="blue"></div>
+                </div>
+
+                <!-- Team Red Players -->
+                <div class="team-profiles red-profiles">
+                    <h3 class="team-profiles-header red">Team Red</h3>
+                    
+                    <!-- Add Player Input -->
+                <div class="add-player-row">
+                    <input type="text" class="battletag-input-add" data-team="red" placeholder="Enter battletag (e.g., oldpa#21616)">
+                    <button class="fetch-btn-add" data-team="red">Add Player</button>
+                    <button class="paste-battletags-btn" data-team="red" title="Paste multiple battletags">Paste List</button>
+                </div>
+                    
+                    <!-- Player Rows Container -->
+                    <div class="player-rows-container" data-team="red"></div>
+                </div>
+            </div>
+        </section>
+
         <!-- Compact Draft Header: Map + Bans -->
         <section class="draft-header">
             <!-- Map Selection -->
