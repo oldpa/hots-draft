@@ -9,11 +9,15 @@ class DraftManager {
         this.draft = {
             blue: {
                 bans: [null, null, null],
-                picks: [null, null, null, null, null]
+                picks: [null, null, null, null, null],
+                assignments: [null, null, null, null, null], // Track which player is assigned to each hero
+                manualAssignments: [false, false, false, false, false] // Track which assignments were manual
             },
             red: {
                 bans: [null, null, null],
-                picks: [null, null, null, null, null]
+                picks: [null, null, null, null, null],
+                assignments: [null, null, null, null, null], // Track which player is assigned to each hero
+                manualAssignments: [false, false, false, false, false] // Track which assignments were manual
             }
         };
         this.playerStats = {
@@ -22,11 +26,191 @@ class DraftManager {
         };
         this.currentSelection = null; // { type: 'ban'|'pick', team: 'blue'|'red', slot: number }
         this.searchQuery = '';
+        this.selectedRoles = {
+            blue: new Set(), // Empty = show all
+            red: new Set()   // Empty = show all
+        };
         this.API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
             ? 'http://localhost:3000'
             : 'https://hots-one.vercel.app'; // Update this with your actual Vercel URL
         
+        this.recentTeams = this.loadRecentTeams();
+        
         this.init();
+    }
+
+    /**
+     * Load recent teams from localStorage
+     * @returns {Array} Array of saved team objects
+     */
+    loadRecentTeams() {
+        try {
+            const stored = localStorage.getItem('hots_recent_teams');
+            if (stored) {
+                const parsed = JSON.parse(stored);
+                // Handle old format (blue/red separated) and migrate
+                if (parsed.blue || parsed.red) {
+                    const migrated = [];
+                    if (parsed.blue) {
+                        parsed.blue.forEach(team => {
+                            migrated.push({ name: '', battletags: team, timestamp: Date.now() });
+                        });
+                    }
+                    if (parsed.red) {
+                        parsed.red.forEach(team => {
+                            if (!migrated.some(t => JSON.stringify(t.battletags) === JSON.stringify(team))) {
+                                migrated.push({ name: '', battletags: team, timestamp: Date.now() });
+                            }
+                        });
+                    }
+                    return migrated;
+                }
+                return parsed;
+            }
+        } catch (error) {
+            console.error('Error loading recent teams:', error);
+        }
+        return [];
+    }
+
+    /**
+     * Save recent teams to localStorage
+     */
+    saveRecentTeams() {
+        try {
+            localStorage.setItem('hots_recent_teams', JSON.stringify(this.recentTeams));
+        } catch (error) {
+            console.error('Error saving recent teams:', error);
+        }
+    }
+
+    /**
+     * Save current team to recent teams
+     * @param {string} team - 'blue' or 'red' (for getting current players)
+     * @param {string} teamName - Name for the team (required)
+     */
+    saveCurrentTeamToRecent(team, teamName) {
+        const players = this.playerStats[team];
+        if (!players || players.filter(p => p).length === 0) {
+            alert('No players to save! Add players first.');
+            return;
+        }
+
+        if (!teamName || teamName.trim() === '') {
+            alert('Please enter a team name!');
+            return;
+        }
+
+        const trimmedName = teamName.trim();
+        
+        // Check if name already exists
+        const existingIndex = this.recentTeams.findIndex(t => t.name.toLowerCase() === trimmedName.toLowerCase());
+        
+        if (existingIndex >= 0) {
+            // Ask to overwrite
+            if (!confirm(`Team "${trimmedName}" already exists. Overwrite it?`)) {
+                return;
+            }
+            // Remove old entry
+            this.recentTeams.splice(existingIndex, 1);
+        }
+
+        // Add to front of recent teams
+        this.recentTeams.unshift({
+            name: trimmedName,
+            battletags: players.filter(p => p).map(p => p.battletag),
+            timestamp: Date.now()
+        });
+        
+        // Keep only last 20 teams
+        this.recentTeams = this.recentTeams.slice(0, 20);
+        
+        this.saveRecentTeams();
+        this.renderRecentTeamsDropdowns();
+    }
+
+
+    /**
+     * Load a recent team
+     * @param {string} targetTeam - 'blue' or 'red' (which team to load into)
+     * @param {number} index - Index of the recent team
+     */
+    async loadRecentTeam(targetTeam, index) {
+        const savedTeam = this.recentTeams[index];
+        if (!savedTeam || !savedTeam.battletags || savedTeam.battletags.length === 0) {
+            return;
+        }
+
+        // Clear current team
+        this.clearTeam(targetTeam);
+
+        // Add each player
+        for (const battletag of savedTeam.battletags) {
+            await this.addPlayerRow(targetTeam, battletag);
+        }
+
+        // After all players are loaded, ensure assignments are set for existing heroes
+        this.assignHeroesToPlayers(targetTeam);
+        this.renderDraft();
+    }
+
+    /**
+     * Clear all players from a team
+     * @param {string} team - 'blue' or 'red'
+     */
+    clearTeam(team) {
+        const container = document.querySelector(`.player-rows-container[data-team="${team}"]`);
+        container.innerHTML = '';
+        this.playerStats[team] = [];
+        this.draft[team].assignments = [null, null, null, null, null];
+        this.renderDraft();
+        this.renderRecommendations();
+    }
+
+    /**
+     * Delete a saved team
+     * @param {number} index - Index of the team to delete
+     */
+    deleteSavedTeam(index) {
+        if (index >= 0 && index < this.recentTeams.length) {
+            const team = this.recentTeams[index];
+            const displayName = team.name || team.battletags.map(bt => bt.split('#')[0]).join(', ');
+            
+            if (confirm(`Delete saved team "${displayName}"?`)) {
+                this.recentTeams.splice(index, 1);
+                this.saveRecentTeams();
+                this.renderRecentTeamsDropdowns();
+            }
+        }
+    }
+
+    /**
+     * Render recent teams dropdowns for both teams
+     */
+    renderRecentTeamsDropdowns() {
+        ['blue', 'red'].forEach(team => {
+            const select = document.querySelector(`.recent-teams-select[data-team="${team}"]`);
+            if (!select) return;
+
+            // Clear existing options except first
+            select.innerHTML = '<option value="">-- Load saved team --</option>';
+
+            this.recentTeams.forEach((savedTeam, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                
+                const playerNames = savedTeam.battletags.map(bt => bt.split('#')[0]).join(', ');
+                const playerCount = savedTeam.battletags.length;
+                
+                if (savedTeam.name) {
+                    option.textContent = `${savedTeam.name} (${playerCount}: ${playerNames})`;
+                } else {
+                    option.textContent = `${playerCount} player${playerCount > 1 ? 's' : ''}: ${playerNames}`;
+                }
+                
+                select.appendChild(option);
+            });
+        });
     }
 
     async init() {
@@ -36,6 +220,9 @@ class DraftManager {
         this.renderDraft();
         this.renderRecommendations();
         this.renderHeroGrid();
+        
+        // Initialize recent teams dropdowns
+        this.renderRecentTeamsDropdowns();
     }
 
     async loadData() {
@@ -84,12 +271,22 @@ class DraftManager {
         // Pick slot clicks
         document.querySelectorAll('.pick-slot-compact').forEach(slot => {
             slot.addEventListener('click', (e) => {
+                // Don't trigger if clicking on player assignment dropdown
+                if (e.target.classList.contains('hero-player-assignment') || 
+                    e.target.tagName === 'SELECT') {
+                    return;
+                }
+                
                 const team = slot.dataset.team;
                 const slotIndex = parseInt(slot.dataset.slot);
                 
                 // If slot is filled, allow removal
                 if (this.draft[team].picks[slotIndex]) {
                     this.draft[team].picks[slotIndex] = null;
+                    this.draft[team].assignments[slotIndex] = null;
+                    this.draft[team].manualAssignments[slotIndex] = false;
+                    // Fill this empty slot with sequential assignment
+                    this.fillEmptySlots(team);
                     this.renderDraft();
                     this.renderRecommendations(); // Update recommendations
                 } else {
@@ -190,6 +387,107 @@ class DraftManager {
         document.getElementById('debug-show-zero-scores').addEventListener('change', (e) => {
             this.renderDebugTable();
         });
+
+        // Role filter buttons
+        document.querySelectorAll('.role-filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const team = btn.closest('.role-filters').dataset.team;
+                const role = btn.dataset.role;
+                const roleFilters = btn.closest('.role-filters');
+                const allBtn = roleFilters.querySelector('[data-role="All"]');
+                const roleButtons = roleFilters.querySelectorAll('.role-filter-btn:not([data-role="All"])');
+                
+                if (role === 'All') {
+                    // "All" button clicked - clear all role filters and deactivate other buttons
+                    this.selectedRoles[team].clear();
+                    roleButtons.forEach(b => b.classList.remove('active'));
+                    allBtn.classList.add('active');
+                } else {
+                    // Specific role clicked
+                    allBtn.classList.remove('active');
+                    
+                    // Toggle the role
+                    if (this.selectedRoles[team].has(role)) {
+                        this.selectedRoles[team].delete(role);
+                        btn.classList.remove('active');
+                    } else {
+                        this.selectedRoles[team].add(role);
+                        btn.classList.add('active');
+                    }
+                    
+                    // If no roles are selected, activate "All"
+                    if (this.selectedRoles[team].size === 0) {
+                        allBtn.classList.add('active');
+                    }
+                }
+                
+                // Update recommendations
+                this.renderRecommendations();
+            });
+        });
+
+        // Recent teams dropdowns
+        document.querySelectorAll('.recent-teams-select').forEach(select => {
+            select.addEventListener('change', async (e) => {
+                const team = select.dataset.team;
+                const index = parseInt(select.value);
+                
+                if (!isNaN(index)) {
+                    await this.loadRecentTeam(team, index);
+                    select.value = ''; // Reset dropdown
+                }
+            });
+        });
+
+        // Save team buttons
+        document.querySelectorAll('.save-team-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const team = btn.dataset.team;
+                const nameInput = document.querySelector(`.team-name-input[data-team="${team}"]`);
+                const teamName = nameInput ? nameInput.value.trim() : '';
+                
+                this.saveCurrentTeamToRecent(team, teamName);
+                
+                // Clear name input after successful save
+                if (nameInput && teamName) {
+                    nameInput.value = '';
+                    
+                    // Visual feedback
+                    const originalText = btn.textContent;
+                    btn.textContent = '✓ Saved!';
+                    btn.style.background = '#48bb78';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                    }, 2000);
+                }
+            });
+        });
+
+        // Clear team buttons
+        document.querySelectorAll('.clear-team-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const team = btn.dataset.team;
+                if (confirm(`Clear all players from ${team === 'blue' ? 'Blue' : 'Red'} team?`)) {
+                    this.clearTeam(team);
+                }
+            });
+        });
+
+        // Delete saved team buttons (context menu on dropdown)
+        document.querySelectorAll('.recent-teams-select').forEach(select => {
+            select.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                const selectedIndex = parseInt(select.value);
+                
+                if (!isNaN(selectedIndex) && selectedIndex >= 0) {
+                    this.deleteSavedTeam(selectedIndex);
+                    select.value = ''; // Reset selection
+                } else {
+                    alert('Select a team from the dropdown first, then right-click to delete it.');
+                }
+            });
+        });
     }
 
     renderMaps() {
@@ -240,6 +538,50 @@ class DraftManager {
             this.draft[team].picks.forEach((hero, index) => {
                 const slot = document.querySelector(`.pick-slot-compact[data-team="${team}"][data-slot="${index}"]`);
                 slot.innerHTML = '';
+                
+                // Add player assignment dropdown at the top (always show if there are players)
+                const players = this.playerStats[team] || [];
+                const validPlayers = players.filter(p => p && p.data);
+                
+                if (validPlayers.length > 0) {
+                    const assignment = this.draft[team].assignments[index];
+                    const playerSelect = document.createElement('select');
+                    playerSelect.className = 'hero-player-assignment';
+                    playerSelect.dataset.team = team;
+                    playerSelect.dataset.slot = index;
+                    
+                    // Add empty option
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = '-- Assign --';
+                    playerSelect.appendChild(emptyOption);
+                    
+                    // Add options for each player
+                    validPlayers.forEach((player, playerIndex) => {
+                        if (player && player.battletag) {
+                            const option = document.createElement('option');
+                            option.value = playerIndex;
+                            option.textContent = player.battletag.split('#')[0];
+                            if (assignment === playerIndex) {
+                                option.selected = true;
+                            }
+                            playerSelect.appendChild(option);
+                        }
+                    });
+                    
+                    // Add change handler
+                    playerSelect.addEventListener('change', (e) => {
+                        e.stopPropagation(); // Prevent slot click from firing
+                        const selectedPlayerIndex = e.target.value === '' ? null : parseInt(e.target.value);
+                        this.assignPlayerToHero(team, index, selectedPlayerIndex);
+                    });
+                    
+                    playerSelect.addEventListener('click', (e) => {
+                        e.stopPropagation(); // Prevent slot click from firing
+                    });
+                    
+                    slot.appendChild(playerSelect);
+                }
                 
                 if (hero) {
                     const img = document.createElement('img');
@@ -349,20 +691,62 @@ class DraftManager {
         
         this.draft[team][type + 's'][slot] = hero;
         
+        // If it's a pick, try to assign heroes to players (auto-assign)
+        if (type === 'pick') {
+            // Only preserve the assignment if it was manually set by the user
+            // Otherwise, auto-assign based on MMR
+            if (!this.draft[team].manualAssignments[slot]) {
+                // Auto-assign only this new hero based on MMR
+                this.assignSingleHero(team, slot, hero);
+            }
+            // Fill any empty slots with sequential assignments
+            this.fillEmptySlots(team);
+        }
+        
         this.hideHeroSelection();
         this.renderDraft();
         this.renderRecommendations(); // Update recommendations after selection
+    }
+
+    /**
+     * Manually assign a player to a hero
+     * @param {string} team - 'blue' or 'red'
+     * @param {number} slotIndex - Index of the pick slot
+     * @param {number|null} playerIndex - Index of the player to assign, or null to unassign
+     */
+    assignPlayerToHero(team, slotIndex, playerIndex) {
+        // If assigning to a player who is already assigned to another hero, unassign that hero first
+        if (playerIndex !== null) {
+            const assignments = this.draft[team].assignments || [];
+            assignments.forEach((assignedIndex, pickIndex) => {
+                if (pickIndex !== slotIndex && assignedIndex === playerIndex) {
+                    assignments[pickIndex] = null;
+                    this.draft[team].manualAssignments[pickIndex] = false;
+                }
+            });
+        }
+        
+        // Assign the player to this hero and mark it as manual
+        this.draft[team].assignments[slotIndex] = playerIndex;
+        this.draft[team].manualAssignments[slotIndex] = true;
+        
+        // Update recommendations
+        this.renderRecommendations();
     }
 
     resetDraft() {
         this.draft = {
             blue: {
                 bans: [null, null, null],
-                picks: [null, null, null, null, null]
+                picks: [null, null, null, null, null],
+                assignments: [null, null, null, null, null],
+                manualAssignments: [false, false, false, false, false]
             },
             red: {
                 bans: [null, null, null],
-                picks: [null, null, null, null, null]
+                picks: [null, null, null, null, null],
+                assignments: [null, null, null, null, null],
+                manualAssignments: [false, false, false, false, false]
             }
         };
         this.selectedMap = null;
@@ -648,7 +1032,11 @@ class DraftManager {
             const heroesDiv = playerRow.querySelector('.player-heroes-inline');
             this.displayPlayerTopHeroesInline(data, heroesDiv);
 
-            // Update recommendations
+            // Fill any empty slots with sequential assignments
+            this.fillEmptySlots(team);
+
+            // Update draft and recommendations
+            this.renderDraft();
             this.renderRecommendations();
 
         } catch (error) {
@@ -672,8 +1060,20 @@ class DraftManager {
         const index = this.playerStats[team].findIndex(p => p && p.battletag === battletag);
         if (index !== -1) {
             this.playerStats[team][index] = null;
+            // Clear any assignments to this player
+            const assignments = this.draft[team].assignments || [];
+            const manualAssignments = this.draft[team].manualAssignments || [];
+            assignments.forEach((assignedIndex, pickIndex) => {
+                if (assignedIndex === index) {
+                    assignments[pickIndex] = null;
+                    manualAssignments[pickIndex] = false;
+                }
+            });
+            // Fill empty slots with sequential assignments
+            this.fillEmptySlots(team);
         }
-        // Update recommendations
+        // Update draft and recommendations
+        this.renderDraft();
         this.renderRecommendations();
     }
 
@@ -916,23 +1316,44 @@ class DraftManager {
      * Calculate MMR score for a hero based on player data
      * Maps MMR: 1700 = 0, 2700 = 100
      * Uses both Quick Match and Storm League data with 25+ games played
-     * Returns max score among all players and game types
+     * Returns max score among available players (unassigned or assigned to empty slots)
      * @param {string} heroName - Hero name
      * @param {string} team - 'blue' or 'red'
+     * @param {Array} assignments - Array of player indices assigned to heroes (optional, defaults to excluding all assigned)
      * @returns {number} MMR score (0-100+)
      */
-    getPlayerMMRScore(heroName, team) {
+    getPlayerMMRScore(heroName, team, assignments = null) {
         const playerData = this.playerStats[team];
         
         if (!playerData || !Array.isArray(playerData) || playerData.length === 0) {
             return 0;
         }
         
+        // If assignments provided, use them to filter out assigned players
+        // If not provided, check the draft assignments
+        const currentAssignments = assignments !== null ? assignments : (this.draft[team].assignments || []);
+        const picks = this.draft[team].picks;
+        
         let maxScore = 0;
         
-        for (const player of playerData) {
+        for (let i = 0; i < playerData.length; i++) {
+            const player = playerData[i];
             // Skip empty slots
             if (!player || !player.data) {
+                continue;
+            }
+            
+            // Check if player is assigned to a slot with a hero
+            // A player is only "taken" if they're assigned to a slot that has a hero picked
+            let isAssignedToHero = false;
+            currentAssignments.forEach((assignedPlayerIdx, slotIdx) => {
+                if (assignedPlayerIdx === i && picks[slotIdx] !== null) {
+                    isAssignedToHero = true;
+                }
+            });
+            
+            // Skip if player is already assigned to a hero
+            if (isAssignedToHero) {
                 continue;
             }
             
@@ -956,7 +1377,7 @@ class DraftManager {
                 const mmr = heroStats.mmr || 0;
                 const score = ((mmr - 1700) / 1000) * 100;
                 
-                // Use max score among all players and game types
+                // Use max score among available players and game types
                 maxScore = Math.max(maxScore, score);
             }
         }
@@ -996,6 +1417,14 @@ class DraftManager {
         const emptySlotIndex = this.draft[team].picks.findIndex(slot => slot === null);
         if (emptySlotIndex !== -1) {
             this.draft[team].picks[emptySlotIndex] = hero;
+            // Only preserve the assignment if it was manually set by the user
+            // Otherwise, auto-assign based on MMR
+            if (!this.draft[team].manualAssignments[emptySlotIndex]) {
+                // Auto-assign only this new hero based on MMR
+                this.assignSingleHero(team, emptySlotIndex, hero);
+            }
+            // Fill any empty slots with sequential assignments
+            this.fillEmptySlots(team);
             this.renderDraft();
             this.renderRecommendations();
         } else {
@@ -1016,6 +1445,228 @@ class DraftManager {
         } else {
             alert(`${team === 'blue' ? 'Blue' : 'Red'} team has no empty ban slots!`);
         }
+    }
+
+    /**
+     * Get player MMR for a specific hero
+     * @param {Object} player - Player data object
+     * @param {string} heroName - Hero name
+     * @returns {number} MMR value (0 if not found or insufficient games)
+     */
+    getPlayerHeroMMR(player, heroName) {
+        if (!player || !player.data) {
+            return 0;
+        }
+
+        let maxMMR = 0;
+        const gameTypes = ['Quick Match', 'Storm League'];
+
+        for (const gameType of gameTypes) {
+            const gameTypeData = player.data[gameType];
+            if (!gameTypeData || !gameTypeData[heroName]) {
+                continue;
+            }
+
+            const heroStats = gameTypeData[heroName];
+            if (heroStats.games_played >= 25) {
+                const mmr = Math.round(heroStats.mmr || 0);
+                maxMMR = Math.max(maxMMR, mmr);
+            }
+        }
+
+        return maxMMR;
+    }
+
+    /**
+     * Assign a single hero to the best available player based on MMR
+     * @param {string} team - 'blue' or 'red'
+     * @param {number} slotIndex - The slot index to assign
+     * @param {Object} hero - The hero object
+     */
+    assignSingleHero(team, slotIndex, hero) {
+        const players = this.playerStats[team] || [];
+        const validPlayers = players.filter(p => p && p.data);
+        
+        if (validPlayers.length === 0) {
+            return;
+        }
+
+        const assignments = this.draft[team].assignments;
+        let bestPlayerIndex = -1;
+        let bestMMR = -1;
+
+        // Find the best available player for this hero
+        validPlayers.forEach((player, playerIndex) => {
+            // Skip if this player is already assigned to another hero (not just any slot)
+            const alreadyAssigned = assignments.some((assignedIdx, idx) => 
+                idx !== slotIndex && assignedIdx === playerIndex && this.draft[team].picks[idx] !== null
+            );
+            if (alreadyAssigned) {
+                return;
+            }
+
+            const mmr = this.getPlayerHeroMMR(player, hero.name);
+            if (mmr > bestMMR) {
+                bestMMR = mmr;
+                bestPlayerIndex = playerIndex;
+            }
+        });
+
+        // Assign to best player with swap if needed
+        if (bestMMR > 0) {
+            // Check if this player is currently assigned to a different slot (without a hero)
+            const currentSlotOfPlayer = assignments.findIndex((assignedIdx, idx) => 
+                idx !== slotIndex && assignedIdx === bestPlayerIndex
+            );
+            
+            // If the player we want to assign is in another slot, swap assignments
+            if (currentSlotOfPlayer !== -1) {
+                const playerInCurrentSlot = assignments[slotIndex];
+                assignments[currentSlotOfPlayer] = playerInCurrentSlot;
+            }
+            
+            assignments[slotIndex] = bestPlayerIndex;
+        } else {
+            // No player has MMR for this hero, assign to first available
+            const availablePlayerIndex = validPlayers.findIndex((_, idx) => 
+                !assignments.some((assignedIdx, slotIdx) => 
+                    slotIdx !== slotIndex && assignedIdx === idx && this.draft[team].picks[slotIdx] !== null
+                )
+            );
+            if (availablePlayerIndex !== -1) {
+                // Swap if needed
+                const currentSlotOfPlayer = assignments.findIndex((assignedIdx, idx) => 
+                    idx !== slotIndex && assignedIdx === availablePlayerIndex
+                );
+                
+                if (currentSlotOfPlayer !== -1) {
+                    const playerInCurrentSlot = assignments[slotIndex];
+                    assignments[currentSlotOfPlayer] = playerInCurrentSlot;
+                }
+                
+                assignments[slotIndex] = availablePlayerIndex;
+            }
+        }
+    }
+
+    /**
+     * Fill empty slots with sequential player assignments
+     * Only considers a player as "assigned" if they're assigned to a slot with a hero
+     * @param {string} team - 'blue' or 'red'
+     */
+    fillEmptySlots(team) {
+        const players = this.playerStats[team] || [];
+        const validPlayers = players.filter(p => p && p.data);
+        
+        if (validPlayers.length === 0) {
+            return;
+        }
+
+        const assignments = this.draft[team].assignments;
+        const picks = this.draft[team].picks;
+        
+        for (let slotIndex = 0; slotIndex < 5; slotIndex++) {
+            if (assignments[slotIndex] === null && slotIndex < validPlayers.length) {
+                // Find first unassigned player (only consider assigned if they have a hero)
+                const availablePlayerIndex = validPlayers.findIndex((_, playerIdx) => 
+                    !assignments.some((assignedPlayerIdx, slotIdx) => 
+                        assignedPlayerIdx === playerIdx && picks[slotIdx] !== null
+                    )
+                );
+                if (availablePlayerIndex !== -1) {
+                    assignments[slotIndex] = availablePlayerIndex;
+                } else {
+                    // Fallback to sequential if all players are assigned to heroes
+                    assignments[slotIndex] = slotIndex;
+                }
+            }
+        }
+    }
+
+    /**
+     * Assign heroes to players based on MMR
+     * For slots with heroes: assign to unassigned player with highest MMR
+     * For empty slots: assign in sequential order
+     * Preserves manual assignments when re-assigning
+     * @param {string} team - 'blue' or 'red'
+     */
+    assignHeroesToPlayers(team) {
+        const players = this.playerStats[team] || [];
+        const validPlayers = players.filter(p => p && p.data);
+
+        // If no players, clear assignments
+        if (validPlayers.length === 0) {
+            this.draft[team].assignments = [null, null, null, null, null];
+            this.draft[team].manualAssignments = [false, false, false, false, false];
+            return;
+        }
+
+        const picks = this.draft[team].picks;
+        const currentAssignments = this.draft[team].assignments || [null, null, null, null, null];
+        const manualAssignments = this.draft[team].manualAssignments || [false, false, false, false, false];
+        const assignments = [null, null, null, null, null];
+
+        // First pass: preserve manual assignments
+        for (let slotIndex = 0; slotIndex < 5; slotIndex++) {
+            if (manualAssignments[slotIndex] && picks[slotIndex]) {
+                assignments[slotIndex] = currentAssignments[slotIndex];
+            }
+        }
+
+        // Second pass: auto-assign heroes based on MMR
+        picks.forEach((hero, slotIndex) => {
+            if (hero && assignments[slotIndex] === null) {
+                // Find the best available player for this hero
+                let bestPlayerIndex = -1;
+                let bestMMR = -1;
+
+                validPlayers.forEach((player, playerIndex) => {
+                    // Skip if this player is already assigned
+                    const alreadyAssigned = assignments.some((assignedIdx) => assignedIdx === playerIndex);
+                    if (alreadyAssigned) {
+                        return;
+                    }
+
+                    const mmr = this.getPlayerHeroMMR(player, hero.name);
+                    if (mmr > bestMMR) {
+                        bestMMR = mmr;
+                        bestPlayerIndex = playerIndex;
+                    }
+                });
+
+                // Assign to best player, or first available if no MMR found
+                if (bestMMR > 0) {
+                    assignments[slotIndex] = bestPlayerIndex;
+                } else {
+                    // No player has MMR for this hero, assign to first available
+                    const availablePlayerIndex = validPlayers.findIndex((_, idx) => 
+                        !assignments.some((assignedIdx) => assignedIdx === idx)
+                    );
+                    if (availablePlayerIndex !== -1) {
+                        assignments[slotIndex] = availablePlayerIndex;
+                    }
+                }
+            }
+        });
+
+        // Third pass: fill empty slots with sequential assignment
+        for (let slotIndex = 0; slotIndex < 5; slotIndex++) {
+            if (assignments[slotIndex] === null && slotIndex < validPlayers.length) {
+                // Find first unassigned player
+                const availablePlayerIndex = validPlayers.findIndex((_, idx) => 
+                    !assignments.some((assignedIdx) => assignedIdx === idx)
+                );
+                if (availablePlayerIndex !== -1) {
+                    assignments[slotIndex] = availablePlayerIndex;
+                } else {
+                    // Fallback to sequential if all players are assigned
+                    assignments[slotIndex] = slotIndex;
+                }
+            }
+        }
+
+        // Update assignments
+        this.draft[team].assignments = assignments;
     }
 
     /**
@@ -1053,8 +1704,9 @@ class DraftManager {
         };
         const tags = [];
 
-        // 1. Player MMR Score
-        const mmrScore = this.getPlayerMMRScore(heroData.name, team);
+        // 1. Player MMR Score (only considers unassigned players)
+        const assignments = this.draft[team].assignments || [];
+        const mmrScore = this.getPlayerMMRScore(heroData.name, team, assignments);
         if (isIllidan) {
             console.log('\n1. PLAYER MMR SCORE:');
             console.log('   MMR Score:', mmrScore);
@@ -1064,14 +1716,30 @@ class DraftManager {
             breakdown.playerMMR = mmrScore;
             if (mmrScore >= 50) {
                 const heroName = heroData.name;
-                // Find which player has this hero
+                // Find which unassigned player has this hero
                 const playerData = this.playerStats[team];
                 let bestPlayer = null;
                 let bestMMR = 0;
                 
-                for (const player of playerData) {
+                // Only check players who are not assigned to a hero
+                const picks = this.draft[team].picks;
+                for (let i = 0; i < playerData.length; i++) {
+                    const player = playerData[i];
                     // Skip empty slots
                     if (!player || !player.data) {
+                        continue;
+                    }
+                    
+                    // Check if player is assigned to a slot with a hero
+                    let isAssignedToHero = false;
+                    assignments.forEach((assignedPlayerIdx, slotIdx) => {
+                        if (assignedPlayerIdx === i && picks[slotIdx] !== null) {
+                            isAssignedToHero = true;
+                        }
+                    });
+                    
+                    // Skip if player is already assigned to a hero
+                    if (isAssignedToHero) {
                         continue;
                     }
                     
@@ -1324,6 +1992,12 @@ class DraftManager {
         const recommendations = [];
         this.heroes.forEach(hero => {
             if (!unavailableHeroes.has(hero.slug)) {
+                // Filter by role if specific roles are selected
+                // If selectedRoles is empty (size === 0), show all roles
+                if (this.selectedRoles[team].size > 0 && hero.role && !this.selectedRoles[team].has(hero.role)) {
+                    return; // Skip heroes whose role is not selected
+                }
+                
                 const score = this.calculateHeroScore(hero.slug, team);
                 // Include hero if it has any non-zero breakdown component
                 const hasScore = Object.values(score.breakdown).some(val => val !== 0);
@@ -1339,7 +2013,7 @@ class DraftManager {
         // Sort by total score (descending)
         recommendations.sort((a, b) => b.total - a.total);
 
-        return recommendations.slice(0, 15); // Top 15 recommendations
+        return recommendations; // Return all recommendations (no limit)
     }
 
     /**
@@ -1370,12 +2044,26 @@ class DraftManager {
                 img.alt = rec.hero.name;
                 img.className = 'rec-hero-img';
 
+                const nameDiv = document.createElement('div');
+                nameDiv.style.display = 'flex';
+                nameDiv.style.flexDirection = 'column';
+                nameDiv.style.gap = '2px';
+                
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'rec-hero-name';
                 nameSpan.textContent = rec.hero.name;
+                
+                const roleSpan = document.createElement('span');
+                roleSpan.className = 'rec-hero-role';
+                roleSpan.textContent = rec.hero.role || 'Unknown';
+
+                nameDiv.appendChild(nameSpan);
+                if (rec.hero.role) {
+                    nameDiv.appendChild(roleSpan);
+                }
 
                 heroInfo.appendChild(img);
-                heroInfo.appendChild(nameSpan);
+                heroInfo.appendChild(nameDiv);
 
                 // Score
                 const scoreSpan = document.createElement('span');

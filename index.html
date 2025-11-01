@@ -21,6 +21,16 @@
                 <div class="team-profiles blue-profiles">
                     <h3 class="team-profiles-header blue">Team Blue</h3>
                     
+                    <!-- Recent Teams Row -->
+                    <div class="recent-teams-row">
+                        <select class="recent-teams-select" data-team="blue">
+                            <option value="">-- Load saved team --</option>
+                        </select>
+                        <input type="text" class="team-name-input" data-team="blue" placeholder="Team name (required to save)">
+                        <button class="save-team-btn" data-team="blue" title="Enter a name and click to save">Save Team</button>
+                        <button class="clear-team-btn" data-team="blue" title="Clear all players">Clear</button>
+                    </div>
+                    
                     <!-- Add Player Input -->
                 <div class="add-player-row">
                     <input type="text" class="battletag-input-add" data-team="blue" placeholder="Enter battletag (e.g., oldpa#21616)">
@@ -35,6 +45,16 @@
                 <!-- Team Red Players -->
                 <div class="team-profiles red-profiles">
                     <h3 class="team-profiles-header red">Team Red</h3>
+                    
+                    <!-- Recent Teams Row -->
+                    <div class="recent-teams-row">
+                        <select class="recent-teams-select" data-team="red">
+                            <option value="">-- Load saved team --</option>
+                        </select>
+                        <input type="text" class="team-name-input" data-team="red" placeholder="Team name (required to save)">
+                        <button class="save-team-btn" data-team="red" title="Enter a name and click to save">Save Team</button>
+                        <button class="clear-team-btn" data-team="red" title="Clear all players">Clear</button>
+                    </div>
                     
                     <!-- Add Player Input -->
                 <div class="add-player-row">
@@ -100,6 +120,15 @@
                 <!-- Blue Recommendations -->
                 <div class="recommendations-section team-blue">
                     <h3>Recommendations</h3>
+                    <div class="role-filters" data-team="blue">
+                        <button class="role-filter-btn role-all active" data-role="All">All</button>
+                        <button class="role-filter-btn" data-role="Tank">Tank</button>
+                        <button class="role-filter-btn" data-role="Bruiser">Bruiser</button>
+                        <button class="role-filter-btn" data-role="Melee Assassin">Melee</button>
+                        <button class="role-filter-btn" data-role="Ranged Assassin">Ranged</button>
+                        <button class="role-filter-btn" data-role="Healer">Healer</button>
+                        <button class="role-filter-btn" data-role="Support">Support</button>
+                    </div>
                     <div id="recommendations-blue" class="recommendations-content">
                         <p class="recommendations-placeholder">Select heroes and map for recommendations</p>
                     </div>
@@ -124,6 +153,15 @@
                 <!-- Red Recommendations -->
                 <div class="recommendations-section team-red">
                     <h3>Recommendations</h3>
+                    <div class="role-filters" data-team="red">
+                        <button class="role-filter-btn role-all active" data-role="All">All</button>
+                        <button class="role-filter-btn" data-role="Tank">Tank</button>
+                        <button class="role-filter-btn" data-role="Bruiser">Bruiser</button>
+                        <button class="role-filter-btn" data-role="Melee Assassin">Melee</button>
+                        <button class="role-filter-btn" data-role="Ranged Assassin">Ranged</button>
+                        <button class="role-filter-btn" data-role="Healer">Healer</button>
+                        <button class="role-filter-btn" data-role="Support">Support</button>
+                    </div>
                     <div id="recommendations-red" class="recommendations-content">
                         <p class="recommendations-placeholder">Select heroes and map for recommendations</p>
                     </div>

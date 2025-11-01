@@ -277,6 +277,98 @@ header h1 {
   color: white;
 }
 
+/* Recent Teams Row */
+.recent-teams-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.recent-teams-select {
+  flex: 1.5;
+  min-width: 0;
+  max-width: 300px;
+  padding: 8px 10px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recent-teams-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: #2c313a;
+}
+
+.recent-teams-select option {
+  background: var(--bg-medium);
+  color: var(--text-light);
+}
+
+.team-name-input {
+  flex: 1;
+  padding: 8px 10px;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.team-name-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background: #2c313a;
+}
+
+.team-name-input::placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.save-team-btn,
+.clear-team-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.save-team-btn {
+  background: #38a169;
+  color: white;
+}
+
+.save-team-btn:hover {
+  background: #2f855a;
+}
+
+.save-team-btn:disabled {
+  background: #4a5568;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.clear-team-btn {
+  background: #e53e3e;
+  color: white;
+}
+
+.clear-team-btn:hover {
+  background: #c53030;
+}
+
 /* Add Player Row */
 .add-player-row {
   display: flex;
@@ -635,6 +727,55 @@ header h1 {
   object-fit: cover;
 }
 
+.pick-slot-compact .hero-player-assignment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 2px 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: white;
+  background: rgba(0, 0, 0, 0.85);
+  text-align: center;
+  z-index: 10;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+}
+
+.pick-slot-compact .hero-player-assignment:hover {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.pick-slot-compact[data-team="blue"] .hero-player-assignment {
+  background: rgba(30, 136, 229, 0.85);
+}
+
+.pick-slot-compact[data-team="blue"] .hero-player-assignment:hover {
+  background: rgba(30, 136, 229, 0.95);
+}
+
+.pick-slot-compact[data-team="red"] .hero-player-assignment {
+  background: rgba(229, 57, 53, 0.85);
+}
+
+.pick-slot-compact[data-team="red"] .hero-player-assignment:hover {
+  background: rgba(229, 57, 53, 0.95);
+}
+
+.pick-slot-compact .hero-player-assignment option {
+  background: var(--bg-medium);
+  color: var(--text-light);
+  padding: 4px;
+}
+
 .pick-slot-compact .hero-name {
   position: absolute;
   bottom: 0;
@@ -671,6 +812,55 @@ header h1 {
   margin-bottom: 10px;
   font-size: 1rem;
   font-weight: 600;
+}
+
+/* Role Filter Buttons */
+.role-filters {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.role-filter-btn {
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--slot-empty);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-filter-btn:hover {
+  border-color: var(--accent);
+  background: var(--slot-hover);
+}
+
+.role-filter-btn.active {
+  background: var(--accent);
+  color: var(--bg-dark);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.role-filter-btn.active:hover {
+  background: #00e0ff;
+  border-color: #00e0ff;
+}
+
+.role-filter-btn.role-all {
+  font-weight: 700;
+  border-width: 2px;
+}
+
+.role-filter-btn.role-all.active {
+  background: linear-gradient(135deg, var(--team-blue), var(--team-red));
+  border-color: var(--accent);
 }
 
 .recommendations-content {
@@ -727,6 +917,14 @@ header h1 {
   font-weight: 600;
   color: var(--text-light);
   font-size: 0.95rem;
+}
+
+.rec-hero-role {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .rec-score {

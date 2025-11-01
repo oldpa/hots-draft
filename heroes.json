@@ -2,426 +2,511 @@
   {
     "name": "Abathur",
     "slug": "abathur",
-    "url": "https://www.heroescounters.com/hero/abathur"
+    "url": "https://www.heroescounters.com/hero/abathur",
+    "role": "Support"
   },
   {
     "name": "Alarak",
     "slug": "alarak",
-    "url": "https://www.heroescounters.com/hero/alarak"
+    "url": "https://www.heroescounters.com/hero/alarak",
+    "role": "Melee Assassin"
   },
   {
     "name": "Alexstrasza",
     "slug": "alexstrasza",
-    "url": "https://www.heroescounters.com/hero/alexstrasza"
+    "url": "https://www.heroescounters.com/hero/alexstrasza",
+    "role": "Healer"
   },
   {
     "name": "Ana",
     "slug": "ana",
-    "url": "https://www.heroescounters.com/hero/ana"
+    "url": "https://www.heroescounters.com/hero/ana",
+    "role": "Healer"
   },
   {
     "name": "Anduin",
     "slug": "anduin",
-    "url": "https://www.heroescounters.com/hero/anduin"
+    "url": "https://www.heroescounters.com/hero/anduin",
+    "role": "Healer"
   },
   {
     "name": "Anub'arak",
     "slug": "anubarak",
-    "url": "https://www.heroescounters.com/hero/anubarak"
+    "url": "https://www.heroescounters.com/hero/anubarak",
+    "role": "Tank"
   },
   {
     "name": "Artanis",
     "slug": "artanis",
-    "url": "https://www.heroescounters.com/hero/artanis"
+    "url": "https://www.heroescounters.com/hero/artanis",
+    "role": "Bruiser"
   },
   {
     "name": "Arthas",
     "slug": "arthas",
-    "url": "https://www.heroescounters.com/hero/arthas"
+    "url": "https://www.heroescounters.com/hero/arthas",
+    "role": "Tank"
   },
   {
     "name": "Auriel",
     "slug": "auriel",
-    "url": "https://www.heroescounters.com/hero/auriel"
+    "url": "https://www.heroescounters.com/hero/auriel",
+    "role": "Healer"
   },
   {
     "name": "Azmodan",
     "slug": "azmodan",
-    "url": "https://www.heroescounters.com/hero/azmodan"
+    "url": "https://www.heroescounters.com/hero/azmodan",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Blaze",
     "slug": "blaze",
-    "url": "https://www.heroescounters.com/hero/blaze"
+    "url": "https://www.heroescounters.com/hero/blaze",
+    "role": "Tank"
   },
   {
     "name": "Brightwing",
     "slug": "brightwing",
-    "url": "https://www.heroescounters.com/hero/brightwing"
+    "url": "https://www.heroescounters.com/hero/brightwing",
+    "role": "Healer"
   },
   {
     "name": "Cassia",
     "slug": "cassia",
-    "url": "https://www.heroescounters.com/hero/cassia"
+    "url": "https://www.heroescounters.com/hero/cassia",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Chen",
     "slug": "chen",
-    "url": "https://www.heroescounters.com/hero/chen"
+    "url": "https://www.heroescounters.com/hero/chen",
+    "role": "Bruiser"
   },
   {
     "name": "Cho'gall",
     "slug": "chogall",
-    "url": "https://www.heroescounters.com/hero/chogall"
+    "url": "https://www.heroescounters.com/hero/chogall",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Chromie",
     "slug": "chromie",
-    "url": "https://www.heroescounters.com/hero/chromie"
+    "url": "https://www.heroescounters.com/hero/chromie",
+    "role": "Ranged Assassin"
   },
   {
     "name": "D.Va",
     "slug": "dva",
-    "url": "https://www.heroescounters.com/hero/dva"
+    "url": "https://www.heroescounters.com/hero/dva",
+    "role": "Bruiser"
   },
   {
     "name": "Deckard",
     "slug": "deckard",
-    "url": "https://www.heroescounters.com/hero/deckard"
+    "url": "https://www.heroescounters.com/hero/deckard",
+    "role": "Healer"
   },
   {
     "name": "Dehaka",
     "slug": "dehaka",
-    "url": "https://www.heroescounters.com/hero/dehaka"
+    "url": "https://www.heroescounters.com/hero/dehaka",
+    "role": "Bruiser"
   },
   {
     "name": "Diablo",
     "slug": "diablo",
-    "url": "https://www.heroescounters.com/hero/diablo"
+    "url": "https://www.heroescounters.com/hero/diablo",
+    "role": "Tank"
   },
   {
     "name": "E.T.C.",
     "slug": "etc",
-    "url": "https://www.heroescounters.com/hero/etc"
+    "url": "https://www.heroescounters.com/hero/etc",
+    "role": "Tank"
   },
   {
     "name": "Falstad",
     "slug": "falstad",
-    "url": "https://www.heroescounters.com/hero/falstad"
+    "url": "https://www.heroescounters.com/hero/falstad",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Fenix",
     "slug": "fenix",
-    "url": "https://www.heroescounters.com/hero/fenix"
+    "url": "https://www.heroescounters.com/hero/fenix",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Garrosh",
     "slug": "garrosh",
-    "url": "https://www.heroescounters.com/hero/garrosh"
+    "url": "https://www.heroescounters.com/hero/garrosh",
+    "role": "Tank"
   },
   {
     "name": "Gazlowe",
     "slug": "gazlowe",
-    "url": "https://www.heroescounters.com/hero/gazlowe"
+    "url": "https://www.heroescounters.com/hero/gazlowe",
+    "role": "Bruiser"
   },
   {
     "name": "Genji",
     "slug": "genji",
-    "url": "https://www.heroescounters.com/hero/genji"
+    "url": "https://www.heroescounters.com/hero/genji",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Greymane",
     "slug": "greymane",
-    "url": "https://www.heroescounters.com/hero/greymane"
+    "url": "https://www.heroescounters.com/hero/greymane",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Gul'dan",
     "slug": "guldan",
-    "url": "https://www.heroescounters.com/hero/guldan"
+    "url": "https://www.heroescounters.com/hero/guldan",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Hanzo",
     "slug": "hanzo",
-    "url": "https://www.heroescounters.com/hero/hanzo"
+    "url": "https://www.heroescounters.com/hero/hanzo",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Illidan",
     "slug": "illidan",
-    "url": "https://www.heroescounters.com/hero/illidan"
+    "url": "https://www.heroescounters.com/hero/illidan",
+    "role": "Melee Assassin"
   },
   {
     "name": "Imperius",
     "slug": "imperius",
-    "url": "https://www.heroescounters.com/hero/imperius"
+    "url": "https://www.heroescounters.com/hero/imperius",
+    "role": "Bruiser"
   },
   {
     "name": "Jaina",
     "slug": "jaina",
-    "url": "https://www.heroescounters.com/hero/jaina"
+    "url": "https://www.heroescounters.com/hero/jaina",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Johanna",
     "slug": "johanna",
-    "url": "https://www.heroescounters.com/hero/johanna"
+    "url": "https://www.heroescounters.com/hero/johanna",
+    "role": "Tank"
   },
   {
     "name": "Junkrat",
     "slug": "junkrat",
-    "url": "https://www.heroescounters.com/hero/junkrat"
+    "url": "https://www.heroescounters.com/hero/junkrat",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Kael'thas",
     "slug": "kaelthas",
-    "url": "https://www.heroescounters.com/hero/kaelthas"
+    "url": "https://www.heroescounters.com/hero/kaelthas",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Kel'Thuzad",
     "slug": "kelthuzad",
-    "url": "https://www.heroescounters.com/hero/kelthuzad"
+    "url": "https://www.heroescounters.com/hero/kelthuzad",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Kerrigan",
     "slug": "kerrigan",
-    "url": "https://www.heroescounters.com/hero/kerrigan"
+    "url": "https://www.heroescounters.com/hero/kerrigan",
+    "role": "Melee Assassin"
   },
   {
     "name": "Kharazim",
     "slug": "kharazim",
-    "url": "https://www.heroescounters.com/hero/kharazim"
+    "url": "https://www.heroescounters.com/hero/kharazim",
+    "role": "Healer"
   },
   {
     "name": "Leoric",
     "slug": "leoric",
-    "url": "https://www.heroescounters.com/hero/leoric"
+    "url": "https://www.heroescounters.com/hero/leoric",
+    "role": "Bruiser"
   },
   {
     "name": "Li Li",
     "slug": "lili",
-    "url": "https://www.heroescounters.com/hero/lili"
+    "url": "https://www.heroescounters.com/hero/lili",
+    "role": "Healer"
   },
   {
     "name": "Li-Ming",
     "slug": "li-ming",
-    "url": "https://www.heroescounters.com/hero/li-ming"
+    "url": "https://www.heroescounters.com/hero/li-ming",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Lt. Morales",
     "slug": "ltmorales",
-    "url": "https://www.heroescounters.com/hero/ltmorales"
+    "url": "https://www.heroescounters.com/hero/ltmorales",
+    "role": "Healer"
   },
   {
     "name": "Lúcio",
     "slug": "lucio",
-    "url": "https://www.heroescounters.com/hero/lucio"
+    "url": "https://www.heroescounters.com/hero/lucio",
+    "role": "Healer"
   },
   {
     "name": "Lunara",
     "slug": "lunara",
-    "url": "https://www.heroescounters.com/hero/lunara"
+    "url": "https://www.heroescounters.com/hero/lunara",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Maiev",
     "slug": "maiev",
-    "url": "https://www.heroescounters.com/hero/maiev"
+    "url": "https://www.heroescounters.com/hero/maiev",
+    "role": "Melee Assassin"
   },
   {
     "name": "Mal'Ganis",
     "slug": "malganis",
-    "url": "https://www.heroescounters.com/hero/malganis"
+    "url": "https://www.heroescounters.com/hero/malganis",
+    "role": "Tank"
   },
   {
     "name": "Malfurion",
     "slug": "malfurion",
-    "url": "https://www.heroescounters.com/hero/malfurion"
+    "url": "https://www.heroescounters.com/hero/malfurion",
+    "role": "Healer"
   },
   {
     "name": "Malthael",
     "slug": "malthael",
-    "url": "https://www.heroescounters.com/hero/malthael"
+    "url": "https://www.heroescounters.com/hero/malthael",
+    "role": "Bruiser"
   },
   {
     "name": "Medivh",
     "slug": "medivh",
-    "url": "https://www.heroescounters.com/hero/medivh"
+    "url": "https://www.heroescounters.com/hero/medivh",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Mephisto",
     "slug": "mephisto",
-    "url": "https://www.heroescounters.com/hero/mephisto"
+    "url": "https://www.heroescounters.com/hero/mephisto",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Muradin",
     "slug": "muradin",
-    "url": "https://www.heroescounters.com/hero/muradin"
+    "url": "https://www.heroescounters.com/hero/muradin",
+    "role": "Tank"
   },
   {
     "name": "Murky",
     "slug": "murky",
-    "url": "https://www.heroescounters.com/hero/murky"
+    "url": "https://www.heroescounters.com/hero/murky",
+    "role": "Melee Assassin"
   },
   {
     "name": "Nazeebo",
     "slug": "nazeebo",
-    "url": "https://www.heroescounters.com/hero/nazeebo"
+    "url": "https://www.heroescounters.com/hero/nazeebo",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Nova",
     "slug": "nova",
-    "url": "https://www.heroescounters.com/hero/nova"
+    "url": "https://www.heroescounters.com/hero/nova",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Orphea",
     "slug": "orphea",
-    "url": "https://www.heroescounters.com/hero/orphea"
+    "url": "https://www.heroescounters.com/hero/orphea",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Probius",
     "slug": "probius",
-    "url": "https://www.heroescounters.com/hero/probius"
+    "url": "https://www.heroescounters.com/hero/probius",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Ragnaros",
     "slug": "ragnaros",
-    "url": "https://www.heroescounters.com/hero/ragnaros"
+    "url": "https://www.heroescounters.com/hero/ragnaros",
+    "role": "Bruiser"
   },
   {
     "name": "Raynor",
     "slug": "raynor",
-    "url": "https://www.heroescounters.com/hero/raynor"
+    "url": "https://www.heroescounters.com/hero/raynor",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Rehgar",
     "slug": "rehgar",
-    "url": "https://www.heroescounters.com/hero/rehgar"
+    "url": "https://www.heroescounters.com/hero/rehgar",
+    "role": "Healer"
   },
   {
     "name": "Rexxar",
     "slug": "rexxar",
-    "url": "https://www.heroescounters.com/hero/rexxar"
+    "url": "https://www.heroescounters.com/hero/rexxar",
+    "role": "Bruiser"
   },
   {
     "name": "Samuro",
     "slug": "samuro",
-    "url": "https://www.heroescounters.com/hero/samuro"
+    "url": "https://www.heroescounters.com/hero/samuro",
+    "role": "Melee Assassin"
   },
   {
     "name": "Sgt. Hammer",
     "slug": "sgthammer",
-    "url": "https://www.heroescounters.com/hero/sgthammer"
+    "url": "https://www.heroescounters.com/hero/sgthammer",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Sonya",
     "slug": "sonya",
-    "url": "https://www.heroescounters.com/hero/sonya"
+    "url": "https://www.heroescounters.com/hero/sonya",
+    "role": "Bruiser"
   },
   {
     "name": "Stitches",
     "slug": "stitches",
-    "url": "https://www.heroescounters.com/hero/stitches"
+    "url": "https://www.heroescounters.com/hero/stitches",
+    "role": "Tank"
   },
   {
     "name": "Stukov",
     "slug": "stukov",
-    "url": "https://www.heroescounters.com/hero/stukov"
+    "url": "https://www.heroescounters.com/hero/stukov",
+    "role": "Healer"
   },
   {
     "name": "Sylvanas",
     "slug": "sylvanas",
-    "url": "https://www.heroescounters.com/hero/sylvanas"
+    "url": "https://www.heroescounters.com/hero/sylvanas",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Tassadar",
     "slug": "tassadar",
-    "url": "https://www.heroescounters.com/hero/tassadar"
+    "url": "https://www.heroescounters.com/hero/tassadar",
+    "role": "Ranged Assassin"
   },
   {
     "name": "The Butcher",
     "slug": "thebutcher",
-    "url": "https://www.heroescounters.com/hero/thebutcher"
+    "url": "https://www.heroescounters.com/hero/thebutcher",
+    "role": "Melee Assassin"
   },
   {
     "name": "The Lost Vikings",
     "slug": "thelostvikings",
-    "url": "https://www.heroescounters.com/hero/thelostvikings"
+    "url": "https://www.heroescounters.com/hero/thelostvikings",
+    "role": "Melee Assassin"
   },
   {
     "name": "Thrall",
     "slug": "thrall",
-    "url": "https://www.heroescounters.com/hero/thrall"
+    "url": "https://www.heroescounters.com/hero/thrall",
+    "role": "Bruiser"
   },
   {
     "name": "Tracer",
     "slug": "tracer",
-    "url": "https://www.heroescounters.com/hero/tracer"
+    "url": "https://www.heroescounters.com/hero/tracer",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Tychus",
     "slug": "tychus",
-    "url": "https://www.heroescounters.com/hero/tychus"
+    "url": "https://www.heroescounters.com/hero/tychus",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Tyrael",
     "slug": "tyrael",
-    "url": "https://www.heroescounters.com/hero/tyrael"
+    "url": "https://www.heroescounters.com/hero/tyrael",
+    "role": "Tank"
   },
   {
     "name": "Tyrande",
     "slug": "tyrande",
-    "url": "https://www.heroescounters.com/hero/tyrande"
+    "url": "https://www.heroescounters.com/hero/tyrande",
+    "role": "Healer"
   },
   {
     "name": "Uther",
     "slug": "uther",
-    "url": "https://www.heroescounters.com/hero/uther"
+    "url": "https://www.heroescounters.com/hero/uther",
+    "role": "Healer"
   },
   {
     "name": "Valeera",
     "slug": "valeera",
-    "url": "https://www.heroescounters.com/hero/valeera"
+    "url": "https://www.heroescounters.com/hero/valeera",
+    "role": "Melee Assassin"
   },
   {
     "name": "Valla",
     "slug": "valla",
-    "url": "https://www.heroescounters.com/hero/valla"
+    "url": "https://www.heroescounters.com/hero/valla",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Varian",
     "slug": "varian",
-    "url": "https://www.heroescounters.com/hero/varian"
+    "url": "https://www.heroescounters.com/hero/varian",
+    "role": "Bruiser"
   },
   {
     "name": "Whitemane",
     "slug": "whitemane",
-    "url": "https://www.heroescounters.com/hero/whitemane"
+    "url": "https://www.heroescounters.com/hero/whitemane",
+    "role": "Healer"
   },
   {
     "name": "Xul",
     "slug": "xul",
-    "url": "https://www.heroescounters.com/hero/xul"
+    "url": "https://www.heroescounters.com/hero/xul",
+    "role": "Melee Assassin"
   },
   {
     "name": "Yrel",
     "slug": "yrel",
-    "url": "https://www.heroescounters.com/hero/yrel"
+    "url": "https://www.heroescounters.com/hero/yrel",
+    "role": "Bruiser"
   },
   {
     "name": "Zagara",
     "slug": "zagara",
-    "url": "https://www.heroescounters.com/hero/zagara"
+    "url": "https://www.heroescounters.com/hero/zagara",
+    "role": "Ranged Assassin"
   },
   {
     "name": "Zarya",
     "slug": "zarya",
-    "url": "https://www.heroescounters.com/hero/zarya"
+    "url": "https://www.heroescounters.com/hero/zarya",
+    "role": "Support"
   },
   {
     "name": "Zeratul",
     "slug": "zeratul",
-    "url": "https://www.heroescounters.com/hero/zeratul"
+    "url": "https://www.heroescounters.com/hero/zeratul",
+    "role": "Melee Assassin"
   },
   {
     "name": "Zul'jin",
     "slug": "zuljin",
-    "url": "https://www.heroescounters.com/hero/zuljin"
+    "url": "https://www.heroescounters.com/hero/zuljin",
+    "role": "Ranged Assassin"
   }
 ]
