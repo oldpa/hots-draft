@@ -320,15 +320,22 @@ class DraftManager {
         });
 
         // Close panels on escape (check debug panel first, then hero selection)
+        // Also handle Enter to select first highlighted hero
         document.addEventListener('keydown', (e) => {
+            const debugPanel = document.getElementById('debug-panel');
+            const heroPanel = document.getElementById('hero-selection-panel');
+            
             if (e.key === 'Escape') {
-                const debugPanel = document.getElementById('debug-panel');
-                const heroPanel = document.getElementById('hero-selection-panel');
-                
                 if (debugPanel.classList.contains('active')) {
                     this.closeDebugPanel();
                 } else if (heroPanel.classList.contains('active')) {
                     this.hideHeroSelection();
+                }
+            } else if (e.key === 'Enter' && heroPanel.classList.contains('active')) {
+                // Select the first highlighted hero if available
+                if (this.firstSelectableHero) {
+                    e.preventDefault();
+                    this.selectHero(this.firstSelectableHero);
                 }
             }
         });
@@ -617,19 +624,41 @@ class DraftManager {
 
         // Filter heroes by search query
         const filteredHeroes = this.heroes.filter(hero => {
-            if (this.searchQuery && !hero.name.toLowerCase().includes(this.searchQuery)) {
+            if (this.searchQuery && !hero.slug.includes(this.searchQuery)) {
                 return false;
             }
             return true;
         });
 
+        // Sort by relevance: heroes starting with search query first, then alphabetically
+        filteredHeroes.sort((a, b) => {
+            if (this.searchQuery) {
+                const aStartsWith = a.slug.startsWith(this.searchQuery);
+                const bStartsWith = b.slug.startsWith(this.searchQuery);
+                
+                if (aStartsWith && !bStartsWith) return -1;
+                if (!aStartsWith && bStartsWith) return 1;
+            }
+            
+            // Alphabetically by name
+            return a.name.localeCompare(b.name);
+        });
+
         // Render hero options
-        filteredHeroes.forEach(hero => {
+        let firstSelectableHero = null;
+        filteredHeroes.forEach((hero, index) => {
             const heroOption = document.createElement('div');
             heroOption.className = 'hero-option';
             
-            if (unavailableHeroes.has(hero.slug)) {
+            const isDisabled = unavailableHeroes.has(hero.slug);
+            if (isDisabled) {
                 heroOption.classList.add('disabled');
+            }
+
+            // Highlight first selectable hero
+            if (!isDisabled && firstSelectableHero === null) {
+                firstSelectableHero = hero;
+                heroOption.classList.add('highlighted');
             }
 
             const img = document.createElement('img');
@@ -644,7 +673,7 @@ class DraftManager {
             heroOption.appendChild(img);
             heroOption.appendChild(nameLabel);
 
-            if (!unavailableHeroes.has(hero.slug)) {
+            if (!isDisabled) {
                 heroOption.addEventListener('click', () => {
                     this.selectHero(hero);
                 });
@@ -652,6 +681,9 @@ class DraftManager {
 
             heroGrid.appendChild(heroOption);
         });
+
+        // Store reference to first selectable hero for Enter key handling
+        this.firstSelectableHero = firstSelectableHero;
     }
 
     showHeroSelection() {
