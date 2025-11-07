@@ -3,85 +3,360 @@
     "name": "Abathur",
     "slug": "abathur",
     "url": "https://www.heroescounters.com/hero/abathur",
-    "role": "Support"
+    "role": "Support",
+    "id": 1,
+    "short_name": "abathur",
+    "new_role": "Support",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Abat",
+    "build_copy_name": "Abathur",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "abathur",
+      "abatur",
+      "абатур",
+      "아바투르",
+      "阿巴瑟"
+    ]
   },
   {
     "name": "Alarak",
     "slug": "alarak",
     "url": "https://www.heroescounters.com/hero/alarak",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 2,
+    "short_name": "alarak",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2016-09-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Alar",
+    "build_copy_name": "Alarak",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "alarak",
+      "аларак",
+      "알라라크",
+      "亞拉瑞克",
+      "阿拉纳克"
+    ]
   },
   {
     "name": "Alexstrasza",
     "slug": "alexstrasza",
     "url": "https://www.heroescounters.com/hero/alexstrasza",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 74,
+    "short_name": "alexstrasza",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2017-11-14 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Alex",
+    "build_copy_name": "Alexstrasza",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "alexstrasza",
+      "alexstraza",
+      "алекстраза",
+      "알렉스트라자",
+      "阿莱克丝塔萨",
+      "雅立史卓莎"
+    ]
   },
   {
     "name": "Ana",
     "slug": "ana",
     "url": "https://www.heroescounters.com/hero/ana",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 72,
+    "short_name": "ana",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2017-09-26 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "HANA",
+    "build_copy_name": "Ana",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "ana",
+      "ана",
+      "아나",
+      "安娜"
+    ]
   },
   {
     "name": "Anduin",
     "slug": "anduin",
     "url": "https://www.heroescounters.com/hero/anduin",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 87,
+    "short_name": "anduin",
+    "alt_name": "",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2019-04-30 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Andu",
+    "build_copy_name": "Anduin",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Андуин",
+      "안두인",
+      "安度因",
+      "安杜因"
+    ]
   },
   {
     "name": "Anub'arak",
     "slug": "anubarak",
     "url": "https://www.heroescounters.com/hero/anubarak",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 3,
+    "short_name": "anubarak",
+    "alt_name": "Anubarak",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-10-07 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Anub",
+    "build_copy_name": "Anubarak",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "anub'arak",
+      "Anub’arak",
+      "anub’arak",
+      "ануб'арак",
+      "아눕아락",
+      "阿努巴拉克"
+    ]
   },
   {
     "name": "Artanis",
     "slug": "artanis",
     "url": "https://www.heroescounters.com/hero/artanis",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 4,
+    "short_name": "artanis",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2015-10-20 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Arts",
+    "build_copy_name": "Artanis",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "artanis",
+      "артанис",
+      "아르타니스",
+      "亞坦尼斯",
+      "阿塔尼斯"
+    ]
   },
   {
     "name": "Arthas",
     "slug": "arthas",
     "url": "https://www.heroescounters.com/hero/arthas",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 5,
+    "short_name": "arthas",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Arth",
+    "build_copy_name": "Arthas",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "arthas",
+      "артас",
+      "아서스",
+      "阿尔萨斯",
+      "阿薩斯"
+    ]
   },
   {
     "name": "Auriel",
     "slug": "auriel",
     "url": "https://www.heroescounters.com/hero/auriel",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 6,
+    "short_name": "auriel",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2016-08-09 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Auri",
+    "build_copy_name": "Auriel",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "auriel",
+      "Ауриэль",
+      "ауриэль",
+      "아우리엘",
+      "奥莉尔",
+      "奧莉爾"
+    ]
   },
   {
     "name": "Azmodan",
     "slug": "azmodan",
     "url": "https://www.heroescounters.com/hero/azmodan",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 7,
+    "short_name": "azmodan",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-10-07 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Azmo",
+    "build_copy_name": "Azmodan",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Asmodan",
+      "asmodan",
+      "azmadan",
+      "azmodan",
+      "azmodán",
+      "азмодан",
+      "아즈모단",
+      "阿兹莫丹",
+      "阿茲莫丹"
+    ]
   },
   {
     "name": "Blaze",
     "slug": "blaze",
     "url": "https://www.heroescounters.com/hero/blaze",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 77,
+    "short_name": "blaze",
+    "alt_name": "Firebat",
+    "new_role": "Tank",
+    "type": "Ranged",
+    "release_date": "2018-01-09 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Fire",
+    "build_copy_name": "Blaze",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "blaze",
+      "firebat",
+      "kramer",
+      "pożarsky",
+      "vulcano",
+      "блэйз",
+      "블레이즈",
+      "布雷泽",
+      "爆焰"
+    ]
   },
   {
     "name": "Brightwing",
     "slug": "brightwing",
     "url": "https://www.heroescounters.com/hero/brightwing",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 8,
+    "short_name": "brightwing",
+    "alt_name": "FaerieDragon",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2014-04-15 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Faer",
+    "build_copy_name": "Brightwing",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Alachiara",
+      "alachiara",
+      "alafeliz",
+      "alasol",
+      "asaluz",
+      "brightwing",
+      "Funkelchen",
+      "funkelchen",
+      "jasnoskrzydła",
+      "Luisaile",
+      "luisaile",
+      "светик",
+      "빛나래",
+      "亮翼",
+      "光明之翼"
+    ]
   },
   {
     "name": "Cassia",
     "slug": "cassia",
     "url": "https://www.heroescounters.com/hero/cassia",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 9,
+    "short_name": "cassia",
+    "alt_name": "Amazon",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-04-04 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Amaz",
+    "build_copy_name": "Cassia",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "cassia",
+      "cássia",
+      "kasja",
+      "кассия",
+      "카시아",
+      "卡西娅",
+      "卡西雅"
+    ]
   },
   {
     "name": "Chen",
     "slug": "chen",
     "url": "https://www.heroescounters.com/hero/chen",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 10,
+    "short_name": "chen",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2014-09-10 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Chen",
+    "build_copy_name": "Chen",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "chen",
+      "czen",
+      "чэнь",
+      "첸",
+      "老陳",
+      "陈"
+    ]
+  },
+  {
+    "name": "Cho",
+    "slug": "cho",
+    "id": 11,
+    "short_name": "cho",
+    "role": "Warrior",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2015-11-17 00:00:00",
+    "last_change_patch_version": "2.55.3.91093",
+    "attribute_id": "CCho",
+    "build_copy_name": "Chogall",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "cha",
+      "che",
+      "cho",
+      "czo",
+      "чо",
+      "초",
+      "丘",
+      "古"
+    ]
   },
   {
     "name": "Cho'gall",
@@ -93,420 +368,1783 @@
     "name": "Chromie",
     "slug": "chromie",
     "url": "https://www.heroescounters.com/hero/chromie",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 12,
+    "short_name": "chromie",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2016-05-17 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Chro",
+    "build_copy_name": "Chromie",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "chromie",
+      "chronia",
+      "Cromi",
+      "cromi",
+      "cromie",
+      "Crona",
+      "crona",
+      "хроми",
+      "크로미",
+      "克罗米",
+      "克羅米"
+    ]
   },
   {
     "name": "D.Va",
     "slug": "dva",
     "url": "https://www.heroescounters.com/hero/dva",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 13,
+    "short_name": "dva",
+    "alt_name": "DVa",
+    "new_role": "Bruiser",
+    "type": "Ranged",
+    "release_date": "2017-05-16 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "DVA0",
+    "build_copy_name": "DVa",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "d.va"
+    ]
+  },
+  {
+    "name": "Deathwing",
+    "slug": "deathwing",
+    "id": 89,
+    "short_name": "deathwing",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2019-12-03 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "DEAT",
+    "build_copy_name": "Deathwing",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Aile de mort",
+      "Alamorte",
+      "Alamuerte",
+      "Asa da Morte",
+      "Śmiercioskrzydły",
+      "Todesschwinge",
+      "Смертокрыл",
+      "데스윙",
+      "死亡之翼"
+    ]
   },
   {
     "name": "Deckard",
     "slug": "deckard",
     "url": "https://www.heroescounters.com/hero/deckard",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 80,
+    "short_name": "deckard",
+    "new_role": "Healer",
+    "type": "Melee",
+    "release_date": "2018-04-24 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "DECK",
+    "build_copy_name": "Deckard",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "deckard",
+      "декард",
+      "데커드",
+      "凱恩",
+      "迪卡德"
+    ]
   },
   {
     "name": "Dehaka",
     "slug": "dehaka",
     "url": "https://www.heroescounters.com/hero/dehaka",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 14,
+    "short_name": "dehaka",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2016-03-29 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Deha",
+    "build_copy_name": "Dehaka",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "dehaka",
+      "дехака",
+      "데하카",
+      "德哈卡"
+    ]
   },
   {
     "name": "Diablo",
     "slug": "diablo",
     "url": "https://www.heroescounters.com/hero/diablo",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 15,
+    "short_name": "diablo",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Diab",
+    "build_copy_name": "Diablo",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "diablo",
+      "диабло",
+      "노전수",
+      "디아블로",
+      "迪亚波罗",
+      "迪亞布羅"
+    ]
   },
   {
     "name": "E.T.C.",
     "slug": "etc",
     "url": "https://www.heroescounters.com/hero/etc",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 16,
+    "short_name": "etc",
+    "alt_name": "L90ETC",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "L90E",
+    "build_copy_name": "ETC",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "c.t.e.",
+      "e.t.c.",
+      "etc",
+      "정예 타우렌 족장",
+      "精英牛头人酋长",
+      "精英牛頭大佬"
+    ]
   },
   {
     "name": "Falstad",
     "slug": "falstad",
     "url": "https://www.heroescounters.com/hero/falstad",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 17,
+    "short_name": "falstad",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Fals",
+    "build_copy_name": "Falstad",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "falstad",
+      "фалстад",
+      "폴스타트",
+      "弗斯塔德"
+    ]
   },
   {
     "name": "Fenix",
     "slug": "fenix",
     "url": "https://www.heroescounters.com/hero/fenix",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 79,
+    "short_name": "fenix",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2018-03-27 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "FENX",
+    "build_copy_name": "Fenix",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "Fénix",
+      "fenix",
+      "fénix",
+      "феникс",
+      "피닉스",
+      "菲尼克斯"
+    ]
+  },
+  {
+    "name": "Gall",
+    "slug": "gall",
+    "id": 18,
+    "short_name": "gall",
+    "role": "Assassin",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2015-11-17 00:00:00",
+    "last_change_patch_version": "2.52.1.82169",
+    "attribute_id": "Gall",
+    "build_copy_name": "Gall",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "gal",
+      "gall",
+      "галл",
+      "갈",
+      "加利",
+      "加尔"
+    ]
   },
   {
     "name": "Garrosh",
     "slug": "garrosh",
     "url": "https://www.heroescounters.com/hero/garrosh",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 19,
+    "short_name": "garrosh",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2017-08-08 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Garr",
+    "build_copy_name": "Garrosh",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "garosz",
+      "garrosh",
+      "Гаррош",
+      "гаррош",
+      "가로쉬",
+      "加尔鲁什",
+      "卡爾洛斯"
+    ]
   },
   {
     "name": "Gazlowe",
     "slug": "gazlowe",
     "url": "https://www.heroescounters.com/hero/gazlowe",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 20,
+    "short_name": "gazlowe",
+    "alt_name": "Tinker",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Tink",
+    "build_copy_name": "Gazlowe",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "gasganete",
+      "gazleu",
+      "gazlowe",
+      "gazol",
+      "sparachiodi",
+      "газлоу",
+      "가즈로",
+      "加兹鲁维",
+      "加茲魯維"
+    ]
   },
   {
     "name": "Genji",
     "slug": "genji",
     "url": "https://www.heroescounters.com/hero/genji",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 21,
+    "short_name": "genji",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-04-25 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Genj",
+    "build_copy_name": "Genji",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "genji",
+      "гэндзи",
+      "겐지",
+      "源氏"
+    ]
   },
   {
     "name": "Greymane",
     "slug": "greymane",
     "url": "https://www.heroescounters.com/hero/greymane",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 22,
+    "short_name": "greymane",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2016-01-12 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Genn",
+    "build_copy_name": "Greymane",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "Cringris",
+      "cringris",
+      "cringrís",
+      "graumähne",
+      "greymane",
+      "grisetête",
+      "mantogrigio",
+      "Szarogrzywy",
+      "szarogrzywy",
+      "седогрив",
+      "그레이메인",
+      "格雷迈恩",
+      "葛雷邁恩"
+    ]
   },
   {
     "name": "Gul'dan",
     "slug": "guldan",
     "url": "https://www.heroescounters.com/hero/guldan",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 23,
+    "short_name": "guldan",
+    "alt_name": "Guldan",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2016-07-12 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Guld",
+    "build_copy_name": "Guldan",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "gul'dan",
+      "gul’dan",
+      "Гул'дан",
+      "гул'дан",
+      "굴단",
+      "古尔丹",
+      "古爾丹"
+    ]
   },
   {
     "name": "Hanzo",
     "slug": "hanzo",
     "url": "https://www.heroescounters.com/hero/hanzo",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 75,
+    "short_name": "hanzo",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-12-12 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Hanz",
+    "build_copy_name": "Hanzo",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "hanzo",
+      "хандзо",
+      "한조",
+      "半藏"
+    ]
+  },
+  {
+    "name": "Hogger",
+    "slug": "hogger",
+    "id": 91,
+    "short_name": "hogger",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2020-12-01 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "HOGG",
+    "build_copy_name": "Hogger",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Boccalarga",
+      "Lardeur",
+      "Wyżer",
+      "Дробитель",
+      "들창코",
+      "霍格"
+    ]
   },
   {
     "name": "Illidan",
     "slug": "illidan",
     "url": "https://www.heroescounters.com/hero/illidan",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 24,
+    "short_name": "illidan",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Illi",
+    "build_copy_name": "Illidan",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "illidan",
+      "иллидан",
+      "일리단",
+      "伊利丹"
+    ]
   },
   {
     "name": "Imperius",
     "slug": "imperius",
     "url": "https://www.heroescounters.com/hero/imperius",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 86,
+    "short_name": "imperius",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2019-01-08 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "IMPE",
+    "build_copy_name": "Imperius",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Impérius",
+      "Империй",
+      "임페리우스",
+      "英普瑞斯"
+    ]
   },
   {
     "name": "Jaina",
     "slug": "jaina",
     "url": "https://www.heroescounters.com/hero/jaina",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 25,
+    "short_name": "jaina",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-12-02 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Jain",
+    "build_copy_name": "Jaina",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "jaina",
+      "джайна",
+      "제이나",
+      "吉安娜",
+      "珍娜"
+    ]
   },
   {
     "name": "Johanna",
     "slug": "johanna",
     "url": "https://www.heroescounters.com/hero/johanna",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 26,
+    "short_name": "johanna",
+    "alt_name": "Crusader",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2015-06-02 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Crus",
+    "build_copy_name": "Johanna",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "johanna",
+      "джоанна",
+      "요한나",
+      "乔汉娜",
+      "喬安娜"
+    ]
   },
   {
     "name": "Junkrat",
     "slug": "junkrat",
     "url": "https://www.heroescounters.com/hero/junkrat",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 73,
+    "short_name": "junkrat",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-10-17 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Junk",
+    "build_copy_name": "Junkrat",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "chacal",
+      "junkrat",
+      "Złomiarz",
+      "złomiarz",
+      "крысавчик",
+      "정크랫",
+      "炸彈鼠",
+      "狂鼠"
+    ]
   },
   {
     "name": "Kael'thas",
     "slug": "kaelthas",
     "url": "https://www.heroescounters.com/hero/kaelthas",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 27,
+    "short_name": "kaelthas",
+    "alt_name": "Kaelthas",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2015-05-12 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Kael",
+    "build_copy_name": "Kaelthas",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "kael'thas",
+      "Kael’thas",
+      "kael’thas",
+      "Кель'тас",
+      "кель'тас",
+      "캘타스",
+      "凯尔萨斯",
+      "凱爾薩斯"
+    ]
   },
   {
     "name": "Kel'Thuzad",
     "slug": "kelthuzad",
     "url": "https://www.heroescounters.com/hero/kelthuzad",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 71,
+    "short_name": "kelthuzad",
+    "alt_name": "KelThuzad",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-09-05 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "KelT",
+    "build_copy_name": "KelThuzad",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "kel'thuzad",
+      "kel’thuzad",
+      "кел'тузад",
+      "켈투자드",
+      "克尔苏加德",
+      "科爾蘇加德"
+    ]
   },
   {
     "name": "Kerrigan",
     "slug": "kerrigan",
     "url": "https://www.heroescounters.com/hero/kerrigan",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 28,
+    "short_name": "kerrigan",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Kerr",
+    "build_copy_name": "Kerrigan",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "kerrigan",
+      "керриган",
+      "케리건",
+      "凯瑞甘",
+      "凱莉根"
+    ]
   },
   {
     "name": "Kharazim",
     "slug": "kharazim",
     "url": "https://www.heroescounters.com/hero/kharazim",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 29,
+    "short_name": "kharazim",
+    "alt_name": "Monk",
+    "new_role": "Healer",
+    "type": "Melee",
+    "release_date": "2015-08-18 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Monk",
+    "build_copy_name": "Kharazim",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "kharazim",
+      "каразим",
+      "카라짐",
+      "克拉辛",
+      "卡拉辛姆"
+    ]
   },
   {
     "name": "Leoric",
     "slug": "leoric",
     "url": "https://www.heroescounters.com/hero/leoric",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 30,
+    "short_name": "leoric",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2015-07-21 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Leor",
+    "build_copy_name": "Leoric",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Léoric",
+      "leoric",
+      "léoric",
+      "Leoryk",
+      "leoryk",
+      "леорик",
+      "레오릭",
+      "李奥瑞克",
+      "李奧瑞克"
+    ]
   },
   {
     "name": "Li Li",
     "slug": "lili",
     "url": "https://www.heroescounters.com/hero/lili",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 31,
+    "short_name": "lili",
+    "alt_name": "LiLi",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2014-04-15 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "LiLi",
+    "build_copy_name": "LiLi",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "li li",
+      "Ли Ли",
+      "ли ли",
+      "리 리",
+      "丽丽",
+      "莉莉"
+    ]
   },
   {
     "name": "Li-Ming",
     "slug": "li-ming",
     "url": "https://www.heroescounters.com/hero/li-ming",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 32,
+    "short_name": "liming",
+    "alt_name": "Wizard",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2016-02-02 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Wiza",
+    "build_copy_name": "LiMing",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "li-ming",
+      "ли-мин",
+      "리밍",
+      "李敏"
+    ]
   },
   {
     "name": "Lt. Morales",
     "slug": "ltmorales",
     "url": "https://www.heroescounters.com/hero/ltmorales",
-    "role": "Healer"
-  },
-  {
-    "name": "Lúcio",
-    "slug": "lucio",
-    "url": "https://www.heroescounters.com/hero/lucio",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 33,
+    "short_name": "ltmorales",
+    "alt_name": "Medic",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2015-10-06 00:00:00",
+    "last_change_patch_version": "2.54.3.86223",
+    "attribute_id": "Medi",
+    "build_copy_name": "LtMorales",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "lt morales",
+      "lt. morales",
+      "por. morales",
+      "ten. morales",
+      "teniente morales",
+      "tte. morales",
+      "лейтенант моралес",
+      "모랄레스 중위",
+      "莫拉莉斯中尉",
+      "莫拉萊斯中尉"
+    ]
   },
   {
     "name": "Lunara",
     "slug": "lunara",
     "url": "https://www.heroescounters.com/hero/lunara",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 35,
+    "short_name": "lunara",
+    "alt_name": "Dryad",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2015-12-15 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Drya",
+    "build_copy_name": "Lunara",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "ayhapa",
+      "lunara",
+      "Лунара",
+      "лунара",
+      "루나라",
+      "露娜拉"
+    ]
+  },
+  {
+    "name": "Lúcio",
+    "slug": "lucio",
+    "url": "https://www.heroescounters.com/hero/lucio",
+    "role": "Healer",
+    "new_role": "Healer"
   },
   {
     "name": "Maiev",
     "slug": "maiev",
     "url": "https://www.heroescounters.com/hero/maiev",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 78,
+    "short_name": "maiev",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2018-02-06 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Maie",
+    "build_copy_name": "Maiev",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "maiev",
+      "майев",
+      "마이에브",
+      "玛维",
+      "瑪翼夫"
+    ]
   },
   {
     "name": "Mal'Ganis",
     "slug": "malganis",
     "url": "https://www.heroescounters.com/hero/malganis",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 84,
+    "short_name": "malganis",
+    "alt_name": "MalGanis",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2018-10-16 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "MalG",
+    "build_copy_name": "MalGanis",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Mal'Ganis",
+      "Mal’Ganis",
+      "Mal`Ganis",
+      "Мал'Ганис",
+      "말가니스",
+      "玛尔加尼斯",
+      "瑪爾加尼斯"
+    ]
   },
   {
     "name": "Malfurion",
     "slug": "malfurion",
     "url": "https://www.heroescounters.com/hero/malfurion",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 36,
+    "short_name": "malfurion",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Malf",
+    "build_copy_name": "Malfurion",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "malfurion",
+      "малфурион",
+      "말퓨리온",
+      "玛法里奥",
+      "瑪法里恩"
+    ]
   },
   {
     "name": "Malthael",
     "slug": "malthael",
     "url": "https://www.heroescounters.com/hero/malthael",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 37,
+    "short_name": "malthael",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2017-06-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "MALT",
+    "build_copy_name": "Malthael",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "maltael",
+      "malthael",
+      "malthaël",
+      "малтаэль",
+      "말티엘",
+      "瑪瑟爾",
+      "马萨伊尔"
+    ]
   },
   {
     "name": "Medivh",
     "slug": "medivh",
     "url": "https://www.heroescounters.com/hero/medivh",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 38,
+    "short_name": "medivh",
+    "new_role": "Support",
+    "type": "Ranged",
+    "release_date": "2016-06-14 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Mdvh",
+    "build_copy_name": "Medivh",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "medivh",
+      "медив",
+      "메디브",
+      "麥迪文",
+      "麦迪文"
+    ]
+  },
+  {
+    "name": "Mei",
+    "slug": "mei",
+    "id": 90,
+    "short_name": "mei",
+    "alt_name": "MeiOW",
+    "new_role": "Tank",
+    "type": "Ranged",
+    "release_date": "2020-06-23 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "HMEI",
+    "build_copy_name": "Mei",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Мэй",
+      "메이",
+      "小美",
+      "美"
+    ]
   },
   {
     "name": "Mephisto",
     "slug": "mephisto",
     "url": "https://www.heroescounters.com/hero/mephisto",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 83,
+    "short_name": "mephisto",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2018-09-03 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "MEPH",
+    "build_copy_name": "Mephisto",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Mefisto",
+      "Mephisto",
+      "Méphisto",
+      "Мефисто",
+      "메피스토",
+      "墨菲斯托"
+    ]
   },
   {
     "name": "Muradin",
     "slug": "muradin",
     "url": "https://www.heroescounters.com/hero/muradin",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 39,
+    "short_name": "muradin",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Mura",
+    "build_copy_name": "Muradin",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "muradin",
+      "Мурадин",
+      "мурадин",
+      "무라딘",
+      "穆拉丁"
+    ]
   },
   {
     "name": "Murky",
     "slug": "murky",
     "url": "https://www.heroescounters.com/hero/murky",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 40,
+    "short_name": "murky",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2014-05-22 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Murk",
+    "build_copy_name": "Murky",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "bourbie",
+      "fosky",
+      "męcik",
+      "murky",
+      "murquinho",
+      "мурчаль",
+      "머키",
+      "奔波尔霸",
+      "莫奇",
+      "鱼人"
+    ]
   },
   {
     "name": "Nazeebo",
     "slug": "nazeebo",
     "url": "https://www.heroescounters.com/hero/nazeebo",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 41,
+    "short_name": "nazeebo",
+    "alt_name": "WitchDoctor",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Witc",
+    "build_copy_name": "Nazeebo",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "féticheur",
+      "hexendoktor",
+      "medico brujo",
+      "Nasibo",
+      "nasibo",
+      "nazebo",
+      "nazeebo",
+      "nazibo",
+      "sciamano",
+      "szaman",
+      "witch doctor",
+      "назибо",
+      "나지보",
+      "納奇班",
+      "纳兹波"
+    ]
   },
   {
     "name": "Nova",
     "slug": "nova",
     "url": "https://www.heroescounters.com/hero/nova",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 42,
+    "short_name": "nova",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Nova",
+    "build_copy_name": "Nova",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "nova",
+      "нова",
+      "노바",
+      "諾娃",
+      "诺娃"
+    ]
   },
   {
     "name": "Orphea",
     "slug": "orphea",
     "url": "https://www.heroescounters.com/hero/orphea",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 85,
+    "short_name": "orphea",
+    "alt_name": "",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2018-11-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "ORPH",
+    "build_copy_name": "Orphea",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Orfea",
+      "Orféa",
+      "Orphéa",
+      "orphea",
+      "Орфея",
+      "오르피아",
+      "奥菲娅",
+      "歐菲亞"
+    ]
   },
   {
     "name": "Probius",
     "slug": "probius",
     "url": "https://www.heroescounters.com/hero/probius",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 43,
+    "short_name": "probius",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-03-14 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Prob",
+    "build_copy_name": "Probius",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "edn-os",
+      "probius",
+      "probiusz",
+      "sondius",
+      "пробиус",
+      "프로비우스",
+      "普罗比斯",
+      "普羅比斯"
+    ]
+  },
+  {
+    "name": "Qhira",
+    "slug": "qhira",
+    "id": 88,
+    "short_name": "qhira",
+    "alt_name": "NexusHunter",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2019-08-06 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "NXHU",
+    "build_copy_name": "Qhira",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Кахира",
+      "키히라",
+      "奇菈",
+      "琪拉"
+    ]
   },
   {
     "name": "Ragnaros",
     "slug": "ragnaros",
     "url": "https://www.heroescounters.com/hero/ragnaros",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 44,
+    "short_name": "ragnaros",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2016-12-14 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Ragn",
+    "build_copy_name": "Ragnaros",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "ragnaros",
+      "рагнарос",
+      "라그나로스",
+      "拉格納羅斯",
+      "拉格纳罗斯"
+    ]
   },
   {
     "name": "Raynor",
     "slug": "raynor",
     "url": "https://www.heroescounters.com/hero/raynor",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 45,
+    "short_name": "raynor",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Rayn",
+    "build_copy_name": "Raynor",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "raynor",
+      "рейнор",
+      "레이너",
+      "雷諾",
+      "雷诺"
+    ]
   },
   {
     "name": "Rehgar",
     "slug": "rehgar",
     "url": "https://www.heroescounters.com/hero/rehgar",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 46,
+    "short_name": "rehgar",
+    "new_role": "Healer",
+    "type": "Melee",
+    "release_date": "2014-07-23 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Rehg",
+    "build_copy_name": "Rehgar",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "rehgar",
+      "регар",
+      "레가르",
+      "雷加",
+      "雷加尔"
+    ]
   },
   {
     "name": "Rexxar",
     "slug": "rexxar",
     "url": "https://www.heroescounters.com/hero/rexxar",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 47,
+    "short_name": "rexxar",
+    "new_role": "Bruiser",
+    "type": "Ranged",
+    "release_date": "2015-09-08 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Rexx",
+    "build_copy_name": "Rexxar",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "rexxar",
+      "рексар",
+      "렉사르",
+      "雷克萨",
+      "雷克薩"
+    ]
   },
   {
     "name": "Samuro",
     "slug": "samuro",
     "url": "https://www.heroescounters.com/hero/samuro",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 48,
+    "short_name": "samuro",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2016-10-18 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Samu",
+    "build_copy_name": "Samuro",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "samura",
+      "samuro",
+      "самуро",
+      "사무로",
+      "萨穆罗",
+      "薩姆羅"
+    ]
   },
   {
     "name": "Sgt. Hammer",
     "slug": "sgthammer",
     "url": "https://www.heroescounters.com/hero/sgthammer",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 49,
+    "short_name": "sgthammer",
+    "alt_name": "SgtHammer",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.2.87774",
+    "attribute_id": "Sgth",
+    "build_copy_name": "SgtHammer",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "sargento maza",
+      "sergeant hammer",
+      "sergente hammer",
+      "sgt marteau",
+      "sgt. hammer",
+      "sgt. marreta",
+      "sgto. hammer",
+      "sgto. martillo",
+      "sierż. petarda",
+      "sierżant petarda",
+      "сержант кувалда",
+      "해머 상사",
+      "榔頭中士",
+      "重锤军士"
+    ]
   },
   {
     "name": "Sonya",
     "slug": "sonya",
     "url": "https://www.heroescounters.com/hero/sonya",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 50,
+    "short_name": "sonya",
+    "alt_name": "Barbarian",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Barb",
+    "build_copy_name": "Sonya",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "bárbara",
+      "barbare",
+      "barbarian",
+      "barbarin",
+      "sonia",
+      "sonya",
+      "соня",
+      "소냐",
+      "야만용사",
+      "桑娅",
+      "桑雅",
+      "野蛮人",
+      "野蠻人"
+    ]
   },
   {
     "name": "Stitches",
     "slug": "stitches",
     "url": "https://www.heroescounters.com/hero/stitches",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 51,
+    "short_name": "stitches",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Stit",
+    "build_copy_name": "Stitches",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Balafré",
+      "balafré",
+      "kleiner",
+      "puntos",
+      "stitches",
+      "suturino",
+      "tritacarne",
+      "Zszywaniec",
+      "zszywaniec",
+      "стежок",
+      "누더기",
+      "縫合怪",
+      "缝合怪"
+    ]
   },
   {
     "name": "Stukov",
     "slug": "stukov",
     "url": "https://www.heroescounters.com/hero/stukov",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 52,
+    "short_name": "stukov",
+    "new_role": "Healer",
+    "type": "Melee",
+    "release_date": "2017-07-11 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "STUK",
+    "build_copy_name": "Stukov",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "stiukow",
+      "stukov",
+      "стуков",
+      "스투코프",
+      "斯托科夫",
+      "斯杜科夫"
+    ]
   },
   {
     "name": "Sylvanas",
     "slug": "sylvanas",
     "url": "https://www.heroescounters.com/hero/sylvanas",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 53,
+    "short_name": "sylvanas",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2015-03-24 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Sylv",
+    "build_copy_name": "Sylvanas",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "sylvana",
+      "sylvanas",
+      "sylwana",
+      "сильвана",
+      "실바나스",
+      "希尔瓦娜斯",
+      "希瓦娜斯"
+    ]
   },
   {
     "name": "Tassadar",
     "slug": "tassadar",
     "url": "https://www.heroescounters.com/hero/tassadar",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 54,
+    "short_name": "tassadar",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Tass",
+    "build_copy_name": "Tassadar",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "tassadar",
+      "тассадар",
+      "태사다르",
+      "塔萨达尔",
+      "塔薩達"
+    ]
   },
   {
     "name": "The Butcher",
     "slug": "thebutcher",
     "url": "https://www.heroescounters.com/hero/thebutcher",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 55,
+    "short_name": "thebutcher",
+    "alt_name": "Butcher",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2015-06-30 00:00:00",
+    "last_change_patch_version": "2.49.4.78679",
+    "attribute_id": "Butc",
+    "build_copy_name": "TheButcher",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "Der Schlächter",
+      "der schlächter",
+      "el carnicero",
+      "Le Boucher",
+      "le boucher",
+      "macellaio",
+      "o açougueiro",
+      "rzeźnik",
+      "the butcher",
+      "Мясник",
+      "мясник",
+      "도살자",
+      "屠夫"
+    ]
   },
   {
     "name": "The Lost Vikings",
     "slug": "thelostvikings",
     "url": "https://www.heroescounters.com/hero/thelostvikings",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 56,
+    "short_name": "thelostvikings",
+    "alt_name": "LostVikings",
+    "new_role": "Support",
+    "type": "Melee",
+    "release_date": "2015-02-10 00:00:00",
+    "last_change_patch_version": "2.55.3.91093",
+    "attribute_id": "Lost",
+    "build_copy_name": "LostVikings",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "les vikings perdus",
+      "los vikingos perdidos",
+      "lost vikings",
+      "os vikings perdidos",
+      "the lost vikings",
+      "vichinghi sperduti",
+      "zaginieni wikingowie",
+      "потерявшиеся викинги",
+      "길 잃은 바이킹",
+      "失落的維京人",
+      "失落的维京人"
+    ]
   },
   {
     "name": "Thrall",
     "slug": "thrall",
     "url": "https://www.heroescounters.com/hero/thrall",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 57,
+    "short_name": "thrall",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2015-01-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Thra",
+    "build_copy_name": "Thrall",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "thrall",
+      "Тралл",
+      "тралл",
+      "스랄",
+      "索爾",
+      "萨尔"
+    ]
   },
   {
     "name": "Tracer",
     "slug": "tracer",
     "url": "https://www.heroescounters.com/hero/tracer",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 58,
+    "short_name": "tracer",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2016-04-19 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Tra0",
+    "build_copy_name": "Tracer",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Smuga",
+      "smuga",
+      "tracer",
+      "трейсер",
+      "트레이서",
+      "猎空",
+      "閃光"
+    ]
   },
   {
     "name": "Tychus",
     "slug": "tychus",
     "url": "https://www.heroescounters.com/hero/tychus",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 59,
+    "short_name": "tychus",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-18 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Tych",
+    "build_copy_name": "Tychus",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "tychus",
+      "Тайкус",
+      "тайкус",
+      "타이커스",
+      "泰凯斯",
+      "泰科斯"
+    ]
   },
   {
     "name": "Tyrael",
     "slug": "tyrael",
     "url": "https://www.heroescounters.com/hero/tyrael",
-    "role": "Tank"
+    "role": "Tank",
+    "id": 60,
+    "short_name": "tyrael",
+    "new_role": "Tank",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Tyrl",
+    "build_copy_name": "Tyrael",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "tyrael",
+      "tyraël",
+      "тираэль",
+      "티리엘",
+      "泰瑞尔",
+      "泰瑞爾"
+    ]
   },
   {
     "name": "Tyrande",
     "slug": "tyrande",
     "url": "https://www.heroescounters.com/hero/tyrande",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 61,
+    "short_name": "tyrande",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Tyrd",
+    "build_copy_name": "Tyrande",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "tyrande",
+      "тиранда",
+      "티란데",
+      "泰兰德",
+      "泰蘭妲"
+    ]
   },
   {
     "name": "Uther",
     "slug": "uther",
     "url": "https://www.heroescounters.com/hero/uther",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 62,
+    "short_name": "uther",
+    "new_role": "Healer",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Uthe",
+    "build_copy_name": "Uther",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "uther",
+      "утер",
+      "우서",
+      "乌瑟尔",
+      "烏瑟"
+    ]
   },
   {
     "name": "Valeera",
     "slug": "valeera",
     "url": "https://www.heroescounters.com/hero/valeera",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 63,
+    "short_name": "valeera",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2017-01-24 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "VALE",
+    "build_copy_name": "Valeera",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "valeera",
+      "valira",
+      "валира",
+      "발리라",
+      "瓦莉拉",
+      "瓦麗拉"
+    ]
   },
   {
     "name": "Valla",
     "slug": "valla",
     "url": "https://www.heroescounters.com/hero/valla",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 64,
+    "short_name": "valla",
+    "alt_name": "DemonHunter",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Demo",
+    "build_copy_name": "Valla",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "caçadora de demônios",
+      "cacciatrice di demoni",
+      "cazadora de demonios",
+      "chasseuse de demons",
+      "dämonenjägerin",
+      "demon hunter",
+      "łowczyni demonów",
+      "tyla",
+      "vala",
+      "valla",
+      "валла",
+      "발라",
+      "악마사냥꾼",
+      "狩魔獵人",
+      "猎魔人",
+      "維拉",
+      "维拉"
+    ]
   },
   {
     "name": "Varian",
     "slug": "varian",
     "url": "https://www.heroescounters.com/hero/varian",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 65,
+    "short_name": "varian",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2016-11-15 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Vari",
+    "build_copy_name": "Varian",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "varian",
+      "Вариан",
+      "вариан",
+      "바리안",
+      "바리인",
+      "瓦里安"
+    ]
   },
   {
     "name": "Whitemane",
     "slug": "whitemane",
     "url": "https://www.heroescounters.com/hero/whitemane",
-    "role": "Healer"
+    "role": "Healer",
+    "id": 82,
+    "short_name": "whitemane",
+    "new_role": "Healer",
+    "type": "Ranged",
+    "release_date": "2018-08-05 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "WHIT",
+    "build_copy_name": "Whitemane",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "Białowłosa",
+      "Biancachioma",
+      "Blanchetête",
+      "Cristalba",
+      "Melenablanca",
+      "Weißsträhne",
+      "whitemane",
+      "Вайтмейн",
+      "화이트메인",
+      "怀特迈恩",
+      "懷特邁恩"
+    ]
   },
   {
     "name": "Xul",
     "slug": "xul",
     "url": "https://www.heroescounters.com/hero/xul",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 66,
+    "short_name": "xul",
+    "alt_name": "Necromancer",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2016-03-01 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "Necr",
+    "build_copy_name": "Xul",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "xul",
+      "зул",
+      "줄",
+      "祖尔",
+      "蘇爾"
+    ]
   },
   {
     "name": "Yrel",
     "slug": "yrel",
     "url": "https://www.heroescounters.com/hero/yrel",
-    "role": "Bruiser"
+    "role": "Bruiser",
+    "id": 81,
+    "short_name": "yrel",
+    "new_role": "Bruiser",
+    "type": "Melee",
+    "release_date": "2018-06-12 00:00:00",
+    "last_change_patch_version": "2.55.4.91368",
+    "attribute_id": "YREL",
+    "build_copy_name": "Yrel",
+    "last_updated": "2024-02-02 15:34:06",
+    "translations": [
+      "yrel",
+      "ирель",
+      "이렐",
+      "伊瑞尔",
+      "伊芮爾"
+    ]
   },
   {
     "name": "Zagara",
     "slug": "zagara",
     "url": "https://www.heroescounters.com/hero/zagara",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 67,
+    "short_name": "zagara",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2014-06-25 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Zaga",
+    "build_copy_name": "Zagara",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "zagara",
+      "загара",
+      "자가라",
+      "扎加拉",
+      "札迦拉"
+    ]
   },
   {
     "name": "Zarya",
     "slug": "zarya",
     "url": "https://www.heroescounters.com/hero/zarya",
-    "role": "Support"
+    "role": "Support",
+    "id": 68,
+    "short_name": "zarya",
+    "new_role": "Support",
+    "type": "Ranged",
+    "release_date": "2016-09-27 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Zary",
+    "build_copy_name": "Zarya",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "zaria",
+      "zarya",
+      "заря",
+      "자라야",
+      "자리야",
+      "札莉雅",
+      "查莉娅"
+    ]
   },
   {
     "name": "Zeratul",
     "slug": "zeratul",
     "url": "https://www.heroescounters.com/hero/zeratul",
-    "role": "Melee Assassin"
+    "role": "Melee Assassin",
+    "id": 69,
+    "short_name": "zeratul",
+    "new_role": "Melee Assassin",
+    "type": "Melee",
+    "release_date": "2014-03-13 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "Zera",
+    "build_copy_name": "Zeratul",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "zeratul",
+      "зератул",
+      "제라툴",
+      "泽拉图",
+      "澤拉圖"
+    ]
   },
   {
     "name": "Zul'jin",
     "slug": "zuljin",
     "url": "https://www.heroescounters.com/hero/zuljin",
-    "role": "Ranged Assassin"
+    "role": "Ranged Assassin",
+    "id": 70,
+    "short_name": "zuljin",
+    "alt_name": "Zuljin",
+    "new_role": "Ranged Assassin",
+    "type": "Ranged",
+    "release_date": "2017-01-04 00:00:00",
+    "last_change_patch_version": "2.55.4.91769",
+    "attribute_id": "ZULJ",
+    "build_copy_name": "Zuljin",
+    "last_updated": "2024-02-06 18:32:51",
+    "translations": [
+      "zul'jin",
+      "zul’jin",
+      "зул'джин",
+      "줄진",
+      "祖尔金",
+      "祖爾金"
+    ]
   }
 ]

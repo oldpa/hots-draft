@@ -9,8 +9,13 @@
 <body>
     <div class="container">
         <header>
-            <h1>Heroes of the Storm - Team Picker</h1>
-            <p class="subtitle">Select map, ban heroes, and pick your team composition</p>
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Heroes of the Storm - Team Picker</h1>
+                    <p class="subtitle">Select map, ban heroes, and pick your team composition</p>
+                </div>
+                <a href="hero.html" class="hero-details-link" title="View detailed hero statistics and matchups">Hero Details →</a>
+            </div>
         </header>
 
         <!-- Player Battle Tags Section -->
@@ -106,6 +111,7 @@
             <div class="team-column blue-column">
                 <div class="team-header blue">
                     <h2>Team Blue</h2>
+                    <div class="team-winrate" data-team="blue"></div>
                 </div>
                 
                 <!-- Blue Picks -->
@@ -139,6 +145,7 @@
             <div class="team-column red-column">
                 <div class="team-header red">
                     <h2>Team Red</h2>
+                    <div class="team-winrate" data-team="red"></div>
                 </div>
                 
                 <!-- Red Picks -->

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Details - Heroes of the Storm</title>
+    <link rel="stylesheet" href="hero-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1>Hero Details</h1>
+            <a href="index.html" class="back-link">← Back to Draft Tool</a>
+        </header>
+
+        <!-- Hero Selector (shown when no hero is selected) -->
+        <div id="hero-selector" class="hero-selector">
+            <div class="selector-header">
+                <h2>Select a Hero</h2>
+                <input type="text" id="hero-search" class="hero-search-input" placeholder="Search heroes...">
+            </div>
+            <div id="hero-grid" class="hero-grid"></div>
+        </div>
+
+        <!-- Hero Details (shown when hero is selected) -->
+        <div id="hero-details" class="hero-details" style="display: none;">
+            <!-- Hero Header -->
+            <div class="hero-header">
+                <img id="hero-image" class="hero-image" src="" alt="">
+                <div class="hero-header-info">
+                    <h1 id="hero-name" class="hero-title"></h1>
+                    <div id="hero-role" class="hero-role"></div>
+                    <button id="change-hero-btn" class="change-hero-btn">Change Hero</button>
+                </div>
+            </div>
+
+            <!-- Global Stats -->
+            <section class="stats-section">
+                <h2 class="section-title">Global Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Win Rate</div>
+                        <div id="global-winrate" class="stat-value"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Win Rate Delta</div>
+                        <div id="global-delta" class="stat-value"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Games Played</div>
+                        <div id="global-games" class="stat-value"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Popularity</div>
+                        <div id="global-popularity" class="stat-value"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Map Statistics -->
+            <section class="stats-section">
+                <h2 class="section-title">Map Performance</h2>
+                <div class="map-stats-container">
+                    <table id="map-stats-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Map</th>
+                                <th>Win Rate</th>
+                                <th>Delta</th>
+                                <th>Games</th>
+                            </tr>
+                        </thead>
+                        <tbody id="map-stats-body">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Matchup Statistics -->
+            <section class="stats-section">
+                <h2 class="section-title">Hero Matchups</h2>
+                
+                <!-- Combined Matchups -->
+                <div class="matchup-subsection">
+                    <div class="matchup-filter">
+                        <div class="filter-group">
+                            <strong>Against Enemies:</strong>
+                            <label>
+                                <input type="checkbox" id="filter-counters" checked>
+                                Counters (+)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-weaknesses" checked>
+                                Weaknesses (−)
+                            </label>
+                            <label>
+                                Min Δ: 
+                                <input type="number" id="min-enemy-delta" min="0" max="10" step="0.5" value="0" style="width: 60px;">%
+                            </label>
+                        </div>
+                        <div class="filter-group">
+                            <strong>With Allies:</strong>
+                            <label>
+                                <input type="checkbox" id="filter-synergies" checked>
+                                Synergies (+)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-antisynergies" checked>
+                                Anti-synergies (−)
+                            </label>
+                            <label>
+                                Min Δ: 
+                                <input type="number" id="min-ally-delta" min="0" max="10" step="0.5" value="0" style="width: 60px;">%
+                            </label>
+                        </div>
+                    </div>
+                    <div class="matchup-table-container" id="combined-matchups"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p>Loading hero data...</p>
+        </div>
+    </div>
+
+    <script src="hero.js"></script>
+</body>
+</html>
+

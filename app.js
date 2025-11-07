@@ -232,20 +232,46 @@ class DraftManager {
             this.heroes = await heroesResponse.json();
             console.log(`Loaded ${this.heroes.length} heroes`);
 
-            // Load detailed hero data (matchups, synergies, etc.)
-            const heroesDataResponse = await fetch('all_heroes_data.json');
-            this.heroesData = await heroesDataResponse.json();
-            console.log(`Loaded detailed data for ${Object.keys(this.heroesData).length} heroes`);
+            // Load combined hero data (stats + matchups with deltas)
+            const combinedDataResponse = await fetch('data/hero_data_combined.json');
+            const combinedData = await combinedDataResponse.json();
+            this.heroesData = combinedData.heroes;
+            console.log(`Loaded combined data for ${Object.keys(this.heroesData).length} heroes`);
+            console.log(`Patch: ${combinedData.metadata.minor_patch}`);
 
-            // Load maps
-            const mapsResponse = await fetch('all_maps_data.json');
-            const mapsData = await mapsResponse.json();
-            this.maps = Object.values(mapsData);
-            console.log(`Loaded ${this.maps.length} maps`);
+            // Extract map names from hero data
+            this.maps = this.extractMapNames(this.heroesData);
+            console.log(`Extracted ${this.maps.length} maps from hero data`);
         } catch (error) {
             console.error('Error loading data:', error);
             alert('Failed to load game data. Please ensure all JSON files are available.');
         }
+    }
+
+    /**
+     * Extract unique map names from hero data
+     * @param {Object} heroesData - Combined hero data
+     * @returns {Array} Array of map objects with name and slug
+     */
+    extractMapNames(heroesData) {
+        const mapSet = new Set();
+        
+        // Get maps from first hero that has map data
+        for (const heroName in heroesData) {
+            const hero = heroesData[heroName];
+            if (hero.maps && Object.keys(hero.maps).length > 0) {
+                Object.keys(hero.maps).forEach(mapName => {
+                    mapSet.add(mapName);
+                });
+                break; // One hero is enough to get all map names
+            }
+        }
+        
+        // Convert to array of map objects
+        return Array.from(mapSet).map(name => ({
+            name: name,
+            slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '')
+        })).sort((a, b) => a.name.localeCompare(b.name));
     }
 
     setupEventListeners() {
@@ -320,15 +346,22 @@ class DraftManager {
         });
 
         // Close panels on escape (check debug panel first, then hero selection)
+        // Also handle Enter to select first highlighted hero
         document.addEventListener('keydown', (e) => {
+            const debugPanel = document.getElementById('debug-panel');
+            const heroPanel = document.getElementById('hero-selection-panel');
+            
             if (e.key === 'Escape') {
-                const debugPanel = document.getElementById('debug-panel');
-                const heroPanel = document.getElementById('hero-selection-panel');
-                
                 if (debugPanel.classList.contains('active')) {
                     this.closeDebugPanel();
                 } else if (heroPanel.classList.contains('active')) {
                     this.hideHeroSelection();
+                }
+            } else if (e.key === 'Enter' && heroPanel.classList.contains('active')) {
+                // Select the first highlighted hero if available
+                if (this.firstSelectableHero) {
+                    e.preventDefault();
+                    this.selectHero(this.firstSelectableHero);
                 }
             }
         });
@@ -587,16 +620,207 @@ class DraftManager {
                     const img = document.createElement('img');
                     img.src = `images/heroes/${hero.slug}.jpg`;
                     img.alt = hero.name;
-                    img.title = hero.name;
                     slot.appendChild(img);
                     
                     const nameDiv = document.createElement('div');
                     nameDiv.className = 'hero-name';
                     nameDiv.textContent = hero.name;
                     slot.appendChild(nameDiv);
+
+                    // Add hover tooltip with breakdown
+                    this.addHeroTooltip(slot, hero, team);
                 }
             });
         });
+
+        // Update team win rates
+        this.updateTeamWinRates();
+    }
+
+    /**
+     * Add hover tooltip to a hero slot showing delta breakdown
+     * @param {HTMLElement} slot - The hero slot element
+     * @param {Object} hero - Hero object
+     * @param {string} team - 'blue' or 'red'
+     */
+    addHeroTooltip(slot, hero, team) {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'hero-tooltip';
+        
+        // Calculate score for this hero
+        const score = this.calculateHeroScore(hero.name, team);
+        const enemyTeam = team === 'blue' ? 'red' : 'blue';
+        const ownPicks = this.getPickedHeroes(team).filter(h => h.name !== hero.name);
+        const enemyPicks = this.getPickedHeroes(enemyTeam);
+        
+        // Get assigned player info
+        const slotIndex = this.draft[team].picks.indexOf(hero);
+        const playerIndex = this.draft[team].assignments[slotIndex];
+        const playerData = this.playerStats[team];
+        let assignedPlayer = null;
+        let playerDelta = 0;
+        
+        if (playerIndex !== null && playerData && playerData[playerIndex]) {
+            assignedPlayer = playerData[playerIndex];
+            playerDelta = this.getPlayerHeroWinRateDelta(assignedPlayer, hero.name);
+        }
+        
+        let html = `<div class="hero-tooltip-title">${hero.name}</div>`;
+        html += `<div class="hero-tooltip-winrate">Expected WR: ${score.expectedWinRate.toFixed(1)}%</div>`;
+        html += '<div class="hero-tooltip-divider"></div>';
+        
+        // Global
+        html += `<div class="hero-tooltip-row">`;
+        html += `<span class="hero-tooltip-label">Global:</span>`;
+        html += `<span class="hero-tooltip-value ${this.getDeltaClass(score.breakdown.global)}">${this.formatDelta(score.breakdown.global)}</span>`;
+        html += `</div>`;
+        
+        // Map
+        if (this.selectedMap) {
+            const mapName = this.maps.find(m => m.slug === this.selectedMap)?.name || 'Selected Map';
+            html += `<div class="hero-tooltip-row">`;
+            html += `<span class="hero-tooltip-label">${mapName}:</span>`;
+            html += `<span class="hero-tooltip-value ${this.getDeltaClass(score.breakdown.map)}">${this.formatDelta(score.breakdown.map)}</span>`;
+            html += `</div>`;
+        }
+        
+        // Player (if assigned and has data)
+        if (assignedPlayer && playerDelta !== 0) {
+            const playerName = assignedPlayer.battletag.split('#')[0];
+            html += `<div class="hero-tooltip-row">`;
+            html += `<span class="hero-tooltip-label">Player (${playerName}):</span>`;
+            html += `<span class="hero-tooltip-value ${this.getDeltaClass(playerDelta)}">${this.formatDelta(playerDelta)}</span>`;
+            html += `</div>`;
+        }
+        
+        // Allies
+        if (ownPicks.length > 0) {
+            html += '<div class="hero-tooltip-section">With Allies:</div>';
+            const heroData = this.heroesData[hero.name];
+            ownPicks.forEach(ally => {
+                const matchup = heroData?.matchups?.[ally.name];
+                if (matchup?.ally?.confidence_adjusted_delta !== undefined) {
+                    const delta = matchup.ally.confidence_adjusted_delta;
+                    html += `<div class="hero-tooltip-row hero-tooltip-sub">`;
+                    html += `<span class="hero-tooltip-label">+ ${ally.name}:</span>`;
+                    html += `<span class="hero-tooltip-value ${this.getDeltaClass(delta)}">${this.formatDelta(delta)}</span>`;
+                    html += `</div>`;
+                }
+            });
+        }
+        
+        // Enemies
+        if (enemyPicks.length > 0) {
+            html += '<div class="hero-tooltip-section">Vs Enemies:</div>';
+            const heroData = this.heroesData[hero.name];
+            enemyPicks.forEach(enemy => {
+                const matchup = heroData?.matchups?.[enemy.name];
+                if (matchup?.enemy?.confidence_adjusted_delta !== undefined) {
+                    const delta = matchup.enemy.confidence_adjusted_delta;
+                    html += `<div class="hero-tooltip-row hero-tooltip-sub">`;
+                    html += `<span class="hero-tooltip-label">vs ${enemy.name}:</span>`;
+                    html += `<span class="hero-tooltip-value ${this.getDeltaClass(delta)}">${this.formatDelta(delta)}</span>`;
+                    html += `</div>`;
+                }
+            });
+        }
+        
+        // Total
+        html += '<div class="hero-tooltip-divider"></div>';
+        html += `<div class="hero-tooltip-row hero-tooltip-total">`;
+        html += `<span class="hero-tooltip-label">Total Delta:</span>`;
+        html += `<span class="hero-tooltip-value ${this.getDeltaClass(score.total)}">${this.formatDelta(score.total)}</span>`;
+        html += `</div>`;
+        
+        tooltip.innerHTML = html;
+        slot.appendChild(tooltip);
+    }
+
+
+    /**
+     * Format delta value for display
+     * @param {number} delta - Delta value
+     * @returns {string} Formatted delta string
+     */
+    formatDelta(delta) {
+        if (delta === 0) return '0.0%';
+        const sign = delta > 0 ? '+' : '';
+        return `${sign}${delta.toFixed(1)}%`;
+    }
+
+    /**
+     * Get CSS class for delta value
+     * @param {number} delta - Delta value
+     * @returns {string} CSS class name
+     */
+    getDeltaClass(delta) {
+        if (delta >= 3) return 'delta-high-positive';
+        if (delta > 0) return 'delta-positive';
+        if (delta <= -3) return 'delta-high-negative';
+        if (delta < 0) return 'delta-negative';
+        return 'delta-neutral';
+    }
+
+    /**
+     * Calculate and update team win rates
+     */
+    updateTeamWinRates() {
+        // Calculate raw win rates for both teams
+        const blueWinRate = this.calculateTeamWinRate('blue');
+        const redWinRate = this.calculateTeamWinRate('red');
+        
+        // If both teams have picks, normalize so they sum to 100%
+        let normalizedBlue = blueWinRate;
+        let normalizedRed = redWinRate;
+        
+        if (blueWinRate !== null && redWinRate !== null) {
+            const total = blueWinRate + redWinRate;
+            if (total > 0) {
+                normalizedBlue = (blueWinRate / total) * 100;
+                normalizedRed = (redWinRate / total) * 100;
+            }
+        }
+        
+        // Update display for each team
+        ['blue', 'red'].forEach(team => {
+            const teamWinRate = team === 'blue' ? normalizedBlue : normalizedRed;
+            const container = document.querySelector(`.team-winrate[data-team="${team}"]`);
+            
+            if (container) {
+                if (teamWinRate !== null) {
+                    const delta = teamWinRate - 50;
+                    container.innerHTML = `
+                        <div class="team-winrate-label">Team Win Rate:</div>
+                        <div class="team-winrate-value ${delta >= 5 ? 'high' : delta <= -5 ? 'low' : ''}">${teamWinRate.toFixed(1)}%</div>
+                        <div class="team-winrate-delta">(${this.formatDelta(delta)})</div>
+                    `;
+                    container.style.display = 'flex';
+                } else {
+                    container.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    /**
+     * Calculate team win rate based on all picked heroes
+     * Sums the deltas from all heroes and adds to 50%
+     * @param {string} team - 'blue' or 'red'
+     * @returns {number|null} Team win rate or null if no picks
+     */
+    calculateTeamWinRate(team) {
+        const picks = this.getPickedHeroes(team);
+        if (picks.length === 0) return null;
+        
+        let totalDelta = 0;
+        
+        picks.forEach(hero => {
+            const score = this.calculateHeroScore(hero.name, team);
+            totalDelta += score.total;
+        });
+        
+        // Sum of all deltas, then add to 50%
+        return 50 + totalDelta;
     }
 
     renderHeroGrid() {
@@ -617,19 +841,41 @@ class DraftManager {
 
         // Filter heroes by search query
         const filteredHeroes = this.heroes.filter(hero => {
-            if (this.searchQuery && !hero.name.toLowerCase().includes(this.searchQuery)) {
+            if (this.searchQuery && !hero.slug.includes(this.searchQuery)) {
                 return false;
             }
             return true;
         });
 
+        // Sort by relevance: heroes starting with search query first, then alphabetically
+        filteredHeroes.sort((a, b) => {
+            if (this.searchQuery) {
+                const aStartsWith = a.slug.startsWith(this.searchQuery);
+                const bStartsWith = b.slug.startsWith(this.searchQuery);
+                
+                if (aStartsWith && !bStartsWith) return -1;
+                if (!aStartsWith && bStartsWith) return 1;
+            }
+            
+            // Alphabetically by name
+            return a.name.localeCompare(b.name);
+        });
+
         // Render hero options
-        filteredHeroes.forEach(hero => {
+        let firstSelectableHero = null;
+        filteredHeroes.forEach((hero, index) => {
             const heroOption = document.createElement('div');
             heroOption.className = 'hero-option';
             
-            if (unavailableHeroes.has(hero.slug)) {
+            const isDisabled = unavailableHeroes.has(hero.slug);
+            if (isDisabled) {
                 heroOption.classList.add('disabled');
+            }
+
+            // Highlight first selectable hero
+            if (!isDisabled && firstSelectableHero === null) {
+                firstSelectableHero = hero;
+                heroOption.classList.add('highlighted');
             }
 
             const img = document.createElement('img');
@@ -644,7 +890,7 @@ class DraftManager {
             heroOption.appendChild(img);
             heroOption.appendChild(nameLabel);
 
-            if (!unavailableHeroes.has(hero.slug)) {
+            if (!isDisabled) {
                 heroOption.addEventListener('click', () => {
                     this.selectHero(hero);
                 });
@@ -652,6 +898,9 @@ class DraftManager {
 
             heroGrid.appendChild(heroOption);
         });
+
+        // Store reference to first selectable hero for Enter key handling
+        this.firstSelectableHero = firstSelectableHero;
     }
 
     showHeroSelection() {
@@ -847,27 +1096,29 @@ class DraftManager {
         // Helper function to process heroes from a game type
         const processGameType = (gameTypeData, gameTypeName) => {
             for (const [heroName, stats] of Object.entries(gameTypeData)) {
-                const mmr = Math.round(stats.mmr || 0);
-                const score = ((mmr - 1700) / 1000) * 100;
+                const winRate = parseFloat(stats.win_rate || 50);
+                let delta = winRate - 50;
+                // Cap at ±5%
+                delta = Math.max(-5, Math.min(5, delta));
                 
-                // If hero already exists, use the higher MMR/score
+                // If hero already exists, use the one with more games
                 if (heroMap.has(heroName)) {
                     const existing = heroMap.get(heroName);
-                    if (score > existing.score) {
+                    if (stats.games_played > existing.games) {
                         heroMap.set(heroName, {
                             name: heroName,
-                            mmr: mmr,
+                            winRate: winRate,
                             games: stats.games_played,
-                            score: score,
+                            delta: delta,
                             gameType: gameTypeName
                         });
                     }
                 } else {
                     heroMap.set(heroName, {
                         name: heroName,
-                        mmr: mmr,
+                        winRate: winRate,
                         games: stats.games_played,
-                        score: score,
+                        delta: delta,
                         gameType: gameTypeName
                     });
                 }
@@ -891,8 +1142,8 @@ class DraftManager {
             heroList.sort((a, b) => b.games - a.games);
             displayList = heroList.slice(0, 3);
         } else {
-            // Sort by score, take top 10
-            heroesWithMinGames.sort((a, b) => b.score - a.score);
+            // Sort by games played, take top 10
+            heroesWithMinGames.sort((a, b) => b.games - a.games);
             displayList = heroesWithMinGames.slice(0, 10);
         }
         
@@ -912,11 +1163,14 @@ class DraftManager {
             const card = document.createElement('div');
             card.className = 'hero-stat-card';
             
+            const deltaSign = hero.delta >= 0 ? '+' : '';
+            const deltaColor = hero.delta >= 0 ? '#66bb6a' : '#ef5350';
+            
             card.innerHTML = `
                 <div class="hero-stat-tooltip">
                     <div class="tooltip-row">
-                        <span class="tooltip-label">MMR:</span>
-                        <span class="tooltip-mmr">${hero.mmr}</span>
+                        <span class="tooltip-label">Win Rate:</span>
+                        <span class="tooltip-mmr">${hero.winRate.toFixed(1)}%</span>
                     </div>
                     <div class="tooltip-row">
                         <span class="tooltip-label">Games:</span>
@@ -929,7 +1183,7 @@ class DraftManager {
                 </div>
                 <div class="hero-stat-img-container">
                     <img class="hero-stat-img" src="images/heroes/${slug}.jpg" alt="${hero.name}">
-                    <div class="hero-stat-score-overlay">+${hero.score.toFixed(0)}</div>
+                    <div class="hero-stat-score-overlay" style="color: ${deltaColor}">${deltaSign}${hero.delta.toFixed(1)}%</div>
                 </div>
                 <div class="hero-stat-name">${hero.name}</div>
             `;
@@ -1224,27 +1478,29 @@ class DraftManager {
         // Helper function to process heroes from a game type
         const processGameType = (gameTypeData, gameTypeName) => {
             for (const [heroName, stats] of Object.entries(gameTypeData)) {
-                const mmr = Math.round(stats.mmr || 0);
-                const score = ((mmr - 1700) / 1000) * 100;
+                const winRate = parseFloat(stats.win_rate || 50);
+                let delta = winRate - 50;
+                // Cap at ±5%
+                delta = Math.max(-5, Math.min(5, delta));
                 
-                // If hero already exists, use the higher MMR/score
+                // If hero already exists, use the one with more games
                 if (heroMap.has(heroName)) {
                     const existing = heroMap.get(heroName);
-                    if (score > existing.score) {
+                    if (stats.games_played > existing.games) {
                         heroMap.set(heroName, {
                             name: heroName,
-                            mmr: mmr,
+                            winRate: winRate,
                             games: stats.games_played,
-                            score: score,
+                            delta: delta,
                             gameType: gameTypeName
                         });
                     }
                 } else {
                     heroMap.set(heroName, {
                         name: heroName,
-                        mmr: mmr,
+                        winRate: winRate,
                         games: stats.games_played,
-                        score: score,
+                        delta: delta,
                         gameType: gameTypeName
                     });
                 }
@@ -1268,8 +1524,8 @@ class DraftManager {
             heroList.sort((a, b) => b.games - a.games);
             displayList = heroList.slice(0, 3);
         } else {
-            // Sort by score, take top 10
-            heroesWithMinGames.sort((a, b) => b.score - a.score);
+            // Sort by games played, take top 10
+            heroesWithMinGames.sort((a, b) => b.games - a.games);
             displayList = heroesWithMinGames.slice(0, 10);
         }
 
@@ -1286,11 +1542,14 @@ class DraftManager {
             const card = document.createElement('div');
             card.className = 'hero-stat-card';
 
+            const deltaSign = hero.delta >= 0 ? '+' : '';
+            const deltaColor = hero.delta >= 0 ? '#66bb6a' : '#ef5350';
+
             card.innerHTML = `
                 <div class="hero-stat-tooltip">
                     <div class="tooltip-row">
-                        <span class="tooltip-label">MMR:</span>
-                        <span class="tooltip-mmr">${hero.mmr}</span>
+                        <span class="tooltip-label">Win Rate:</span>
+                        <span class="tooltip-mmr">${hero.winRate.toFixed(1)}%</span>
                     </div>
                     <div class="tooltip-row">
                         <span class="tooltip-label">Games:</span>
@@ -1303,7 +1562,7 @@ class DraftManager {
                 </div>
                 <div class="hero-stat-img-container">
                     <img class="hero-stat-img" src="images/heroes/${slug}.jpg" alt="${hero.name}">
-                    <div class="hero-stat-score-overlay">+${hero.score.toFixed(0)}</div>
+                    <div class="hero-stat-score-overlay" style="color: ${deltaColor}">${deltaSign}${hero.delta.toFixed(1)}%</div>
                 </div>
                 <div class="hero-stat-name">${hero.name}</div>
             `;
@@ -1322,7 +1581,7 @@ class DraftManager {
      * @param {Array} assignments - Array of player indices assigned to heroes (optional, defaults to excluding all assigned)
      * @returns {number} MMR score (0-100+)
      */
-    getPlayerMMRScore(heroName, team, assignments = null) {
+    getPlayerWinRateDelta(heroName, team, assignments = null) {
         const playerData = this.playerStats[team];
         
         if (!playerData || !Array.isArray(playerData) || playerData.length === 0) {
@@ -1334,7 +1593,7 @@ class DraftManager {
         const currentAssignments = assignments !== null ? assignments : (this.draft[team].assignments || []);
         const picks = this.draft[team].picks;
         
-        let maxScore = 0;
+        let bestDelta = 0;
         
         for (let i = 0; i < playerData.length; i++) {
             const player = playerData[i];
@@ -1357,32 +1616,16 @@ class DraftManager {
                 continue;
             }
             
-            // Check both Quick Match and Storm League data
-            const gameTypes = ['Quick Match', 'Storm League'];
+            // Get win rate delta for this player (already handles game types and capping)
+            const delta = this.getPlayerHeroWinRateDelta(player, heroName);
             
-            for (const gameType of gameTypes) {
-                const gameTypeData = player.data[gameType];
-                if (!gameTypeData || !gameTypeData[heroName]) {
-                    continue;
-                }
-                
-                const heroStats = gameTypeData[heroName];
-                
-                // Only consider heroes with 25+ games
-                if (heroStats.games_played < 25) {
-                    continue;
-                }
-                
-                // Map MMR to score: 1700 = 0, 2700 = 100
-                const mmr = heroStats.mmr || 0;
-                const score = ((mmr - 1700) / 1000) * 100;
-                
-                // Use max score among available players and game types
-                maxScore = Math.max(maxScore, score);
+            // Use the best delta among available players
+            if (Math.abs(delta) > Math.abs(bestDelta)) {
+                bestDelta = delta;
             }
         }
         
-        return maxScore;
+        return bestDelta;
     }
 
     getBannedHeroes() {
@@ -1448,17 +1691,18 @@ class DraftManager {
     }
 
     /**
-     * Get player MMR for a specific hero
+     * Get player win rate delta for a specific hero
      * @param {Object} player - Player data object
      * @param {string} heroName - Hero name
-     * @returns {number} MMR value (0 if not found or insufficient games)
+     * @returns {number} Win rate delta from 50% (capped at ±5%, 0 if not found or insufficient games)
      */
-    getPlayerHeroMMR(player, heroName) {
+    getPlayerHeroWinRateDelta(player, heroName) {
         if (!player || !player.data) {
             return 0;
         }
 
-        let maxMMR = 0;
+        let bestDelta = 0;
+        let maxGames = 0;
         const gameTypes = ['Quick Match', 'Storm League'];
 
         for (const gameType of gameTypes) {
@@ -1468,17 +1712,30 @@ class DraftManager {
             }
 
             const heroStats = gameTypeData[heroName];
-            if (heroStats.games_played >= 25) {
-                const mmr = Math.round(heroStats.mmr || 0);
-                maxMMR = Math.max(maxMMR, mmr);
+            const games = heroStats.games_played || 0;
+            
+            // Only consider heroes with 25+ games
+            if (games >= 25) {
+                // Calculate win rate delta from 50%
+                const winRate = parseFloat(heroStats.win_rate || 50);
+                let delta = winRate - 50;
+                
+                // Cap delta at ±5%
+                delta = Math.max(-5, Math.min(5, delta));
+                
+                // Use the delta from the game type with most games
+                if (games > maxGames) {
+                    maxGames = games;
+                    bestDelta = delta;
+                }
             }
         }
 
-        return maxMMR;
+        return bestDelta;
     }
 
     /**
-     * Assign a single hero to the best available player based on MMR
+     * Assign a single hero to the best available player based on win rate delta
      * @param {string} team - 'blue' or 'red'
      * @param {number} slotIndex - The slot index to assign
      * @param {Object} hero - The hero object
@@ -1493,7 +1750,7 @@ class DraftManager {
 
         const assignments = this.draft[team].assignments;
         let bestPlayerIndex = -1;
-        let bestMMR = -1;
+        let bestDelta = -999; // Start with very low value
 
         // Find the best available player for this hero
         validPlayers.forEach((player, playerIndex) => {
@@ -1505,15 +1762,15 @@ class DraftManager {
                 return;
             }
 
-            const mmr = this.getPlayerHeroMMR(player, hero.name);
-            if (mmr > bestMMR) {
-                bestMMR = mmr;
+            const delta = this.getPlayerHeroWinRateDelta(player, hero.name);
+            if (delta > bestDelta) {
+                bestDelta = delta;
                 bestPlayerIndex = playerIndex;
             }
         });
 
         // Assign to best player with swap if needed
-        if (bestMMR > 0) {
+        if (bestDelta > -999) {
             // Check if this player is currently assigned to a different slot (without a hero)
             const currentSlotOfPlayer = assignments.findIndex((assignedIdx, idx) => 
                 idx !== slotIndex && assignedIdx === bestPlayerIndex
@@ -1566,18 +1823,31 @@ class DraftManager {
         const picks = this.draft[team].picks;
         
         for (let slotIndex = 0; slotIndex < 5; slotIndex++) {
-            if (assignments[slotIndex] === null && slotIndex < validPlayers.length) {
-                // Find first unassigned player (only consider assigned if they have a hero)
-                const availablePlayerIndex = validPlayers.findIndex((_, playerIdx) => 
-                    !assignments.some((assignedPlayerIdx, slotIdx) => 
-                        assignedPlayerIdx === playerIdx && picks[slotIdx] !== null
-                    )
-                );
-                if (availablePlayerIndex !== -1) {
-                    assignments[slotIndex] = availablePlayerIndex;
+            if (assignments[slotIndex] === null && slotIndex < players.length) {
+                // Find first player that isn't assigned to any slot yet
+                let foundPlayerIndex = -1;
+                for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
+                    // Skip if no player data in this slot
+                    if (!players[playerIdx] || !players[playerIdx].data) {
+                        continue;
+                    }
+                    
+                    // Check if this player is already assigned to any slot
+                    const isAlreadyAssigned = assignments.some((assignedIdx, idx) => 
+                        idx !== slotIndex && assignedIdx === playerIdx
+                    );
+                    
+                    if (!isAlreadyAssigned) {
+                        foundPlayerIndex = playerIdx;
+                        break;
+                    }
+                }
+                
+                if (foundPlayerIndex !== -1) {
+                    assignments[slotIndex] = foundPlayerIndex;
                 } else {
-                    // Fallback to sequential if all players are assigned to heroes
-                    assignments[slotIndex] = slotIndex;
+                    // Fallback to sequential if all players are assigned
+                    assignments[slotIndex] = slotIndex < players.length ? slotIndex : null;
                 }
             }
         }
@@ -1613,12 +1883,12 @@ class DraftManager {
             }
         }
 
-        // Second pass: auto-assign heroes based on MMR
+        // Second pass: auto-assign heroes based on win rate delta
         picks.forEach((hero, slotIndex) => {
             if (hero && assignments[slotIndex] === null) {
                 // Find the best available player for this hero
                 let bestPlayerIndex = -1;
-                let bestMMR = -1;
+                let bestDelta = -999;
 
                 validPlayers.forEach((player, playerIndex) => {
                     // Skip if this player is already assigned
@@ -1627,18 +1897,18 @@ class DraftManager {
                         return;
                     }
 
-                    const mmr = this.getPlayerHeroMMR(player, hero.name);
-                    if (mmr > bestMMR) {
-                        bestMMR = mmr;
+                    const delta = this.getPlayerHeroWinRateDelta(player, hero.name);
+                    if (delta > bestDelta) {
+                        bestDelta = delta;
                         bestPlayerIndex = playerIndex;
                     }
                 });
 
-                // Assign to best player, or first available if no MMR found
-                if (bestMMR > 0) {
+                // Assign to best player, or first available if no data found
+                if (bestDelta > -999) {
                     assignments[slotIndex] = bestPlayerIndex;
                 } else {
-                    // No player has MMR for this hero, assign to first available
+                    // No player has data for this hero, assign to first available
                     const availablePlayerIndex = validPlayers.findIndex((_, idx) => 
                         !assignments.some((assignedIdx) => assignedIdx === idx)
                     );
@@ -1670,67 +1940,126 @@ class DraftManager {
     }
 
     /**
-     * Calculate score for a hero based on map, counters, weaknesses, and synergies
-     * @param {string} heroSlug - The slug of the hero to score
+     * Calculate win rate delta for a hero based on map, matchups, and synergies
+     * Returns delta in percentage points (e.g., +5 means 5% higher win rate)
+     * @param {string} heroName - The name of the hero to score
      * @param {string} team - 'blue' or 'red'
-     * @returns {Object} Score breakdown with total and individual components
+     * @returns {Object} Delta breakdown with total and individual components
      */
-    calculateHeroScore(heroSlug, team) {
-        const heroData = this.heroesData[heroSlug];
+    calculateHeroScore(heroName, team) {
+        // Find hero by name in the heroesData
+        const heroData = this.heroesData[heroName];
         if (!heroData) {
-            return { total: 0, breakdown: {}, tags: [] };
+            return { total: 0, breakdown: {}, tags: [], expectedWinRate: 50 };
         }
 
         const enemyTeam = team === 'blue' ? 'red' : 'blue';
         const ownPicks = this.getPickedHeroes(team);
         const enemyPicks = this.getPickedHeroes(enemyTeam);
 
-        // Debug flag for Illidan
-        const isIllidan = heroData.name === 'Illidan';
-        
-        if (isIllidan) {
-            console.log('=== ILLIDAN SCORE CALCULATION START ===');
-            console.log('Team:', team);
-            console.log('Own Picks:', ownPicks.map(h => h.name));
-            console.log('Enemy Picks:', enemyPicks.map(h => h.name));
-        }
-
         const breakdown = {
+            global: 0,
             map: 0,
-            strongAgainst: 0,
-            weakAgainst: 0,
-            synergy: 0,
-            playerMMR: 0
+            vsEnemy: 0,
+            withAllies: 0,
+            playerDelta: 0
         };
         const tags = [];
 
-        // 1. Player MMR Score (only considers unassigned players)
-        const assignments = this.draft[team].assignments || [];
-        const mmrScore = this.getPlayerMMRScore(heroData.name, team, assignments);
-        if (isIllidan) {
-            console.log('\n1. PLAYER MMR SCORE:');
-            console.log('   MMR Score:', mmrScore);
+        // 1. Global win rate delta (baseline)
+        if (heroData.global && heroData.global.confidence_adjusted_delta !== undefined) {
+            breakdown.global = heroData.global.confidence_adjusted_delta;
         }
-        
-        if (mmrScore > 0) {
-            breakdown.playerMMR = mmrScore;
-            if (mmrScore >= 50) {
-                const heroName = heroData.name;
+
+        // 2. Map delta (if map is selected)
+        if (this.selectedMap && heroData.maps) {
+            // Find the map by matching slug
+            const selectedMapData = this.maps.find(m => m.slug === this.selectedMap);
+            if (selectedMapData && heroData.maps[selectedMapData.name]) {
+                const mapData = heroData.maps[selectedMapData.name];
+                if (mapData.confidence_adjusted_delta !== undefined) {
+                    breakdown.map = mapData.confidence_adjusted_delta;
+                    
+                    // Add tag for significant map advantage/disadvantage
+                    if (Math.abs(breakdown.map) >= 3) {
+                        const mapWinRate = (heroData.global.win_rate || 50) + breakdown.map;
+                        tags.push({
+                            text: breakdown.map > 0 
+                                ? `Good on ${selectedMapData.name}` 
+                                : `Weak on ${selectedMapData.name}`,
+                            score: breakdown.map,
+                            winRate: mapWinRate,
+                            type: 'map'
+                        });
+                    }
+                }
+            }
+        }
+
+        // 3. Enemy matchup deltas (vs each enemy pick)
+        if (enemyPicks.length > 0 && heroData.matchups) {
+            enemyPicks.forEach(enemyHero => {
+                const matchup = heroData.matchups[enemyHero.name];
+                if (matchup && matchup.enemy && matchup.enemy.confidence_adjusted_delta !== undefined) {
+                    const delta = matchup.enemy.confidence_adjusted_delta;
+                    breakdown.vsEnemy += delta;
+                    
+                    // Add tag for significant matchups
+                    if (Math.abs(delta) >= 3) {
+                        const matchupWinRate = (heroData.global.win_rate || 50) + delta;
+                        tags.push({
+                            text: delta > 0 
+                                ? `Counters ${enemyHero.name}` 
+                                : `Countered by ${enemyHero.name}`,
+                            score: delta,
+                            winRate: matchupWinRate,
+                            type: delta > 0 ? 'counter' : 'weakness'
+                        });
+                    }
+                }
+            });
+        }
+
+        // 4. Ally synergy deltas (with each ally pick)
+        if (ownPicks.length > 0 && heroData.matchups) {
+            ownPicks.forEach(ally => {
+                const matchup = heroData.matchups[ally.name];
+                if (matchup && matchup.ally && matchup.ally.confidence_adjusted_delta !== undefined) {
+                    const delta = matchup.ally.confidence_adjusted_delta;
+                    breakdown.withAllies += delta;
+                    
+                    // Add tag for significant synergies
+                    if (Math.abs(delta) >= 3) {
+                        const synergyWinRate = (heroData.global.win_rate || 50) + delta;
+                        tags.push({
+                            text: delta > 0 
+                                ? `Synergy with ${ally.name}` 
+                                : `Anti-synergy with ${ally.name}`,
+                            score: delta,
+                            winRate: synergyWinRate,
+                            type: delta > 0 ? 'synergy' : 'antisynergy'
+                        });
+                    }
+                }
+            });
+        }
+
+        // 5. Player win rate delta (capped at ±5%)
+        const assignments = this.draft[team].assignments || [];
+        const playerDelta = this.getPlayerWinRateDelta(heroName, team, assignments);
+        if (playerDelta !== 0) {
+            breakdown.playerDelta = playerDelta;
+            if (Math.abs(playerDelta) >= 1) {
                 // Find which unassigned player has this hero
                 const playerData = this.playerStats[team];
                 let bestPlayer = null;
-                let bestMMR = 0;
+                let bestWinRate = 0;
                 
-                // Only check players who are not assigned to a hero
                 const picks = this.draft[team].picks;
                 for (let i = 0; i < playerData.length; i++) {
                     const player = playerData[i];
-                    // Skip empty slots
-                    if (!player || !player.data) {
-                        continue;
-                    }
+                    if (!player || !player.data) continue;
                     
-                    // Check if player is assigned to a slot with a hero
                     let isAssignedToHero = false;
                     assignments.forEach((assignedPlayerIdx, slotIdx) => {
                         if (assignedPlayerIdx === i && picks[slotIdx] !== null) {
@@ -1738,20 +2067,16 @@ class DraftManager {
                         }
                     });
                     
-                    // Skip if player is already assigned to a hero
-                    if (isAssignedToHero) {
-                        continue;
-                    }
+                    if (isAssignedToHero) continue;
                     
-                    // Check both Quick Match and Storm League
                     const gameTypes = ['Quick Match', 'Storm League'];
                     for (const gameType of gameTypes) {
                         const gameTypeData = player.data[gameType];
                         if (gameTypeData && gameTypeData[heroName] && gameTypeData[heroName].games_played >= 25) {
-                            const mmr = Math.round(gameTypeData[heroName].mmr || 0);
-                            if (mmr > bestMMR) {
-                                bestMMR = mmr;
-                                bestPlayer = player.battletag.split('#')[0]; // Get name part only
+                            const winRate = parseFloat(gameTypeData[heroName].win_rate || 50);
+                            if (Math.abs(winRate - 50) > Math.abs(bestWinRate - 50)) {
+                                bestWinRate = winRate;
+                                bestPlayer = player.battletag.split('#')[0];
                             }
                         }
                     }
@@ -1759,212 +2084,32 @@ class DraftManager {
                 
                 if (bestPlayer) {
                     tags.push({ 
-                        text: `${bestPlayer} ${bestMMR} MMR`, 
-                        score: mmrScore,
-                        type: 'mmr' 
+                        text: `${bestPlayer} ${bestWinRate.toFixed(1)}% WR`, 
+                        score: playerDelta,
+                        type: 'player' 
                     });
-                    
-                    if (isIllidan) {
-                        console.log('   Best Player:', bestPlayer, 'with MMR:', bestMMR);
-                    }
                 }
             }
         }
 
-        // 2. Map Score
-        if (isIllidan) {
-            console.log('\n2. MAP SCORE:');
-            console.log('   Selected Map:', this.selectedMap);
-        }
-        
-        if (this.selectedMap && heroData.best_maps) {
-            // Find the map name from slug
-            const selectedMapData = this.maps.find(m => m.slug === this.selectedMap);
-            if (selectedMapData) {
-                const mapScore = heroData.best_maps.find(m => m.map === selectedMapData.name);
-                if (isIllidan) {
-                    console.log('   Map Data:', selectedMapData.name);
-                    console.log('   Map Score Object:', mapScore);
-                }
-                
-                if (mapScore && mapScore.score) {
-                    // Use the score directly (0-100 scale)
-                    breakdown.map = mapScore.score;
-                    
-                    if (isIllidan) {
-                        console.log('   Final Map Score:', breakdown.map);
-                    }
-                    
-                    if (breakdown.map >= 80) {
-                        tags.push({ text: `Strong on ${selectedMapData.name}`, score: breakdown.map, type: 'map' });
-                    }
-                }
-            }
-        }
+        // Calculate total delta and expected win rate
+        const totalDelta = Object.values(breakdown).reduce((sum, val) => sum + val, 0);
+        const baseWinRate = heroData.global && heroData.global.win_rate ? heroData.global.win_rate : 50;
+        const expectedWinRate = 50 + totalDelta; // Start from 50% and add all deltas
 
-        // 3. Strong Against (counters enemy picks)
-        if (isIllidan) {
-            console.log('\n3. STRONG AGAINST (Countering Enemy):');
-            console.log('   Enemy Picks Count:', enemyPicks.length);
-            console.log('   Has strong_against data:', !!heroData.strong_against);
-        }
-        
-        if (enemyPicks.length > 0 && heroData.strong_against) {
-            let totalScore = 0;
-            let matchCount = 0;
-
-            enemyPicks.forEach(enemyHero => {
-                const matchup = heroData.strong_against.find(m => m.hero === enemyHero.name);
-                
-                if (isIllidan) {
-                    console.log(`   Checking vs ${enemyHero.name}:`, matchup);
-                }
-                
-                if (matchup && matchup.score) {
-                    // Use score directly (0-100 scale, consistent with map score)
-                    totalScore += matchup.score;
-                    matchCount++;
-
-                    if (isIllidan) {
-                        console.log(`      Score: ${matchup.score}`);
-                        console.log(`      Running total: ${totalScore}`);
-                    }
-
-                    if (matchup.score >= 60) { // High counter score
-                        tags.push({ 
-                            text: `Strong vs ${enemyHero.name}`, 
-                            score: matchup.score,
-                            type: 'counter' 
-                        });
-                    }
-                }
-            });
-
-            if (matchCount > 0) {
-                breakdown.strongAgainst = totalScore; // Sum, not average
-                
-                if (isIllidan) {
-                    console.log(`   Final Strong Against Score: ${breakdown.strongAgainst} (sum of ${matchCount} matchups)`);
-                }
-            }
-        }
-
-        // 4. Weak Against (subtract score for bad matchups)
-        if (isIllidan) {
-            console.log('\n4. WEAK AGAINST:');
-            console.log('   Enemy Picks Count:', enemyPicks.length);
-            console.log('   Has weak_against data:', !!heroData.weak_against);
-        }
-        
-        if (enemyPicks.length > 0 && heroData.weak_against) {
-            let totalScore = 0;
-            let matchCount = 0;
-
-            enemyPicks.forEach(enemyHero => {
-                const matchup = heroData.weak_against.find(m => m.hero === enemyHero.name);
-                
-                if (isIllidan) {
-                    console.log(`   Checking vs ${enemyHero.name}:`, matchup);
-                }
-                
-                if (matchup && matchup.score) {
-                    // Only factor in if score is above 50 (significant weakness)
-                    if (matchup.score > 50) {
-                        totalScore += matchup.score;
-                        matchCount++;
-
-                        if (isIllidan) {
-                            console.log(`      Score: ${matchup.score} (above 50, counting as weakness)`);
-                            console.log(`      Running total: ${totalScore}`);
-                        }
-
-                        if (matchup.score >= 60) { // High weakness score
-                            tags.push({ 
-                                text: `Weak vs ${enemyHero.name}`, 
-                                score: matchup.score,
-                                type: 'weakness' 
-                            });
-                        }
-                    } else if (isIllidan) {
-                        console.log(`      Score: ${matchup.score} (below 50, ignoring)`);
-                    }
-                }
-            });
-
-            if (matchCount > 0) {
-                breakdown.weakAgainst = -totalScore; // Negative sum (weakness is bad)
-                
-                if (isIllidan) {
-                    console.log(`   Final Weak Against Score: ${breakdown.weakAgainst} (sum of ${matchCount} weaknesses, negated)`);
-                }
-            }
-        }
-
-        // 5. Synergy (good with own team)
-        if (isIllidan) {
-            console.log('\n5. SYNERGY (Team Synergy):');
-            console.log('   Own Picks Count:', ownPicks.length);
-            console.log('   Has good_team_with data:', !!heroData.good_team_with);
-        }
-        
-        if (ownPicks.length > 0 && heroData.good_team_with) {
-            let totalScore = 0;
-            let matchCount = 0;
-
-            ownPicks.forEach(teammate => {
-                const synergy = heroData.good_team_with.find(m => m.hero === teammate.name);
-                
-                if (isIllidan) {
-                    console.log(`   Checking with ${teammate.name}:`, synergy);
-                }
-                
-                if (synergy && synergy.score) {
-                    // Use score directly (0-100 scale, consistent with map score)
-                    totalScore += synergy.score;
-                    matchCount++;
-
-                    if (isIllidan) {
-                        console.log(`      Score: ${synergy.score}`);
-                        console.log(`      Running total: ${totalScore}`);
-                    }
-
-                    if (synergy.score >= 60) { // High synergy score
-                        tags.push({ 
-                            text: `Synergy with ${teammate.name}`, 
-                            score: synergy.score,
-                            type: 'synergy' 
-                        });
-                    }
-                }
-            });
-
-            if (matchCount > 0) {
-                breakdown.synergy = totalScore; // Sum, not average
-                
-                if (isIllidan) {
-                    console.log(`   Final Synergy Score: ${breakdown.synergy} (sum of ${matchCount} synergies)`);
-                }
-            }
-        }
-
-        // Calculate total score
-        const total = Object.values(breakdown).reduce((sum, val) => sum + val, 0);
-
-        if (isIllidan) {
-            console.log('\n=== FINAL BREAKDOWN ===');
-            console.log('Breakdown:', breakdown);
-            console.log('Total Score:', total);
-            console.log('Tags:', tags);
-            console.log('=== END ILLIDAN CALCULATION ===\n');
-        }
-
-        return { total, breakdown, tags };
+        return { 
+            total: totalDelta, 
+            breakdown, 
+            tags, 
+            expectedWinRate,
+            baseWinRate
+        };
     }
 
     /**
      * Get hero recommendations for a team
      * @param {string} team - 'blue' or 'red'
-     * @returns {Array} Sorted array of hero recommendations
+     * @returns {Array} Sorted array of hero recommendations with expected win rates
      */
     getRecommendations(team) {
         // Only show recommendations if we have something to base them on
@@ -1988,17 +2133,16 @@ class DraftManager {
             });
         });
 
-        // Calculate scores for all available heroes
+        // Calculate win rate deltas for all available heroes
         const recommendations = [];
         this.heroes.forEach(hero => {
             if (!unavailableHeroes.has(hero.slug)) {
                 // Filter by role if specific roles are selected
-                // If selectedRoles is empty (size === 0), show all roles
-                if (this.selectedRoles[team].size > 0 && hero.role && !this.selectedRoles[team].has(hero.role)) {
-                    return; // Skip heroes whose role is not selected
+                if (this.selectedRoles[team].size > 0 && hero.new_role && !this.selectedRoles[team].has(hero.new_role)) {
+                    return;
                 }
                 
-                const score = this.calculateHeroScore(hero.slug, team);
+                const score = this.calculateHeroScore(hero.name, team);
                 // Include hero if it has any non-zero breakdown component
                 const hasScore = Object.values(score.breakdown).some(val => val !== 0);
                 if (hasScore) {
@@ -2010,10 +2154,10 @@ class DraftManager {
             }
         });
 
-        // Sort by total score (descending)
-        recommendations.sort((a, b) => b.total - a.total);
+        // Sort by expected win rate (descending)
+        recommendations.sort((a, b) => b.expectedWinRate - a.expectedWinRate);
 
-        return recommendations; // Return all recommendations (no limit)
+        return recommendations;
     }
 
     /**
@@ -2034,6 +2178,7 @@ class DraftManager {
             recommendations.forEach((rec, index) => {
                 const recItem = document.createElement('div');
                 recItem.className = 'recommendation-item';
+                recItem.style.position = 'relative'; // For tooltip positioning
 
                 // Hero image and name
                 const heroInfo = document.createElement('div');
@@ -2055,22 +2200,40 @@ class DraftManager {
                 
                 const roleSpan = document.createElement('span');
                 roleSpan.className = 'rec-hero-role';
-                roleSpan.textContent = rec.hero.role || 'Unknown';
+                roleSpan.textContent = rec.hero.new_role || 'Unknown';
 
                 nameDiv.appendChild(nameSpan);
-                if (rec.hero.role) {
+                if (rec.hero.new_role) {
                     nameDiv.appendChild(roleSpan);
                 }
 
                 heroInfo.appendChild(img);
                 heroInfo.appendChild(nameDiv);
 
-                // Score
-                const scoreSpan = document.createElement('span');
-                scoreSpan.className = 'rec-score';
-                scoreSpan.textContent = rec.total.toFixed(1);
-                if (rec.total > 10) scoreSpan.classList.add('high');
-                else if (rec.total < 0) scoreSpan.classList.add('negative');
+                // Win Rate Display
+                const winRateContainer = document.createElement('div');
+                winRateContainer.className = 'rec-winrate-container';
+                winRateContainer.style.display = 'flex';
+                winRateContainer.style.flexDirection = 'column';
+                winRateContainer.style.alignItems = 'flex-end';
+                winRateContainer.style.gap = '2px';
+
+                const winRateSpan = document.createElement('span');
+                winRateSpan.className = 'rec-score';
+                winRateSpan.textContent = `${rec.expectedWinRate.toFixed(1)}%`;
+                winRateSpan.title = `Expected Win Rate: ${rec.expectedWinRate.toFixed(1)}%`;
+                if (rec.expectedWinRate >= 55) winRateSpan.classList.add('high');
+                else if (rec.expectedWinRate <= 45) winRateSpan.classList.add('negative');
+
+                const deltaSpan = document.createElement('span');
+                deltaSpan.style.fontSize = '0.7rem';
+                deltaSpan.style.color = 'var(--text-secondary)';
+                const deltaSign = rec.total >= 0 ? '+' : '';
+                deltaSpan.textContent = `(${deltaSign}${rec.total.toFixed(1)}%)`;
+                deltaSpan.title = `Win Rate Delta: ${deltaSign}${rec.total.toFixed(1)}%`;
+
+                winRateContainer.appendChild(winRateSpan);
+                winRateContainer.appendChild(deltaSpan);
 
                 // Action buttons
                 const actionsDiv = document.createElement('div');
@@ -2099,7 +2262,7 @@ class DraftManager {
                 actionsDiv.appendChild(banBtn);
 
                 recItem.appendChild(heroInfo);
-                recItem.appendChild(scoreSpan);
+                recItem.appendChild(winRateContainer);
                 recItem.appendChild(actionsDiv);
 
                 // Tags
@@ -2141,15 +2304,15 @@ class DraftManager {
     }
 
     /**
-     * Get individual player MMR scores for a hero
-     * Returns an array of scores, one per player on the team
+     * Get individual player win rate deltas for a hero
+     * Returns an array of deltas, one per player on the team
      * @param {string} heroName - Hero name
      * @param {string} team - 'blue' or 'red'
-     * @returns {Array} Array of player scores
+     * @returns {Array} Array of player deltas
      */
     getIndividualPlayerScores(heroName, team) {
         const playerData = this.playerStats[team];
-        const playerScores = [];
+        const playerDeltas = [];
         
         if (!playerData || !Array.isArray(playerData)) {
             return [];
@@ -2158,7 +2321,7 @@ class DraftManager {
         for (let i = 0; i < playerData.length; i++) {
             const player = playerData[i];
             
-            // If no player in this slot, add 0
+            // If no player in this slot, skip
             if (!player || !player.data) {
                 if (i === 0 || playerData.some((p, idx) => idx < i && p)) {
                     // Only add 0 if there's at least one player before this slot
@@ -2167,35 +2330,16 @@ class DraftManager {
                 continue;
             }
 
-            let maxScore = 0;
-            const gameTypes = ['Quick Match', 'Storm League'];
+            // Get delta for this player using the same function as scoring
+            const delta = this.getPlayerHeroWinRateDelta(player, heroName);
             
-            for (const gameType of gameTypes) {
-                const gameTypeData = player.data[gameType];
-                if (!gameTypeData || !gameTypeData[heroName]) {
-                    continue;
-                }
-                
-                const heroStats = gameTypeData[heroName];
-                
-                // Only consider heroes with 25+ games
-                if (heroStats.games_played < 25) {
-                    continue;
-                }
-                
-                // Map MMR to score: 1700 = 0, 2700 = 100
-                const mmr = heroStats.mmr || 0;
-                const score = ((mmr - 1700) / 1000) * 100;
-                maxScore = Math.max(maxScore, score);
-            }
-            
-            playerScores.push({
+            playerDeltas.push({
                 battletag: player.battletag,
-                score: maxScore
+                score: delta // Keep property name 'score' for compatibility with display code
             });
         }
         
-        return playerScores;
+        return playerDeltas;
     }
 
     /**
@@ -2221,7 +2365,7 @@ class DraftManager {
         // Calculate scores for all heroes
         this.heroes.forEach(hero => {
             // Calculate using the EXACT SAME method as recommendations
-            const scoreData = this.calculateHeroScore(hero.slug, team);
+            const scoreData = this.calculateHeroScore(hero.name, team);
             
             // Get individual player scores
             const playerScores = this.getIndividualPlayerScores(hero.name, team);
@@ -2230,13 +2374,14 @@ class DraftManager {
                 hero,
                 breakdown: scoreData.breakdown,
                 total: scoreData.total,
+                expectedWinRate: scoreData.expectedWinRate,
                 playerScores: playerScores,
                 unavailable: unavailableHeroes.has(hero.slug)
             });
         });
 
-        // Sort by total score descending
-        debugData.sort((a, b) => b.total - a.total);
+        // Sort by expected win rate descending
+        debugData.sort((a, b) => b.expectedWinRate - a.expectedWinRate);
 
         return debugData;
     }
@@ -2269,10 +2414,10 @@ class DraftManager {
         // Build table HTML
         let html = '<table class="debug-table"><thead><tr>';
         html += '<th>Hero</th>';
-        html += '<th title="Map synergy score">Map</th>';
-        html += '<th title="Average score against enemy picks">vs Enemy</th>';
-        html += '<th title="Average weakness against enemy picks (negative)">Weak vs</th>';
-        html += '<th title="Average synergy with team picks">Synergy</th>';
+        html += '<th title="Global win rate delta">Global Δ</th>';
+        html += '<th title="Map win rate delta">Map Δ</th>';
+        html += '<th title="Win rate delta vs enemy picks">vs Enemy Δ</th>';
+        html += '<th title="Win rate delta with allies">Ally Δ</th>';
         
         // Add player columns
         players.forEach((player, idx) => {
@@ -2280,13 +2425,14 @@ class DraftManager {
             html += `<th class="debug-player-columns" title="Player MMR score for ${player.battletag}">${shortTag}</th>`;
         });
         
-        html += '<th title="Combined total score from all players">Player Total</th>';
-        html += '<th title="Final total score">Total</th>';
+        html += '<th title="Combined total from all players">Player</th>';
+        html += '<th title="Total delta (sum of all deltas)">Total Δ</th>';
+        html += '<th title="Expected win rate">Win Rate</th>';
         html += '</tr></thead><tbody>';
 
         // Add rows for each hero
         debugData.forEach(data => {
-            const { hero, breakdown, total, playerScores, unavailable } = data;
+            const { hero, breakdown, total, expectedWinRate, playerScores, unavailable } = data;
             
             html += '<tr>';
             
@@ -2299,17 +2445,17 @@ class DraftManager {
             }
             html += '</div></td>';
             
-            // Map score
+            // Global delta
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.global)}">${this.formatScore(breakdown.global)}</td>`;
+            
+            // Map delta
             html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.map)}">${this.formatScore(breakdown.map)}</td>`;
             
-            // Strong against
-            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.strongAgainst)}">${this.formatScore(breakdown.strongAgainst)}</td>`;
+            // vs Enemy delta
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.vsEnemy)}">${this.formatScore(breakdown.vsEnemy)}</td>`;
             
-            // Weak against
-            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.weakAgainst)}">${this.formatScore(breakdown.weakAgainst)}</td>`;
-            
-            // Synergy
-            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.synergy)}">${this.formatScore(breakdown.synergy)}</td>`;
+            // Ally delta
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.withAllies)}">${this.formatScore(breakdown.withAllies)}</td>`;
             
             // Individual player scores
             players.forEach((player, idx) => {
@@ -2318,11 +2464,15 @@ class DraftManager {
                 html += `<td class="debug-score-cell debug-player-columns ${this.getScoreClass(score)}">${this.formatScore(score)}</td>`;
             });
             
-            // Player total (from breakdown.playerMMR which is max of all players)
-            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.playerMMR)}">${this.formatScore(breakdown.playerMMR)}</td>`;
+            // Player total (from breakdown.playerDelta which is best player's win rate delta)
+            html += `<td class="debug-score-cell ${this.getScoreClass(breakdown.playerDelta)}">${this.formatScore(breakdown.playerDelta)}</td>`;
             
-            // Total score
+            // Total delta
             html += `<td class="debug-score-cell debug-score-total ${this.getScoreClass(total)}">${this.formatScore(total)}</td>`;
+            
+            // Expected Win Rate
+            const winRateClass = expectedWinRate >= 55 ? 'debug-score-positive' : expectedWinRate <= 45 ? 'debug-score-negative' : 'debug-score-neutral';
+            html += `<td class="debug-score-cell debug-score-total ${winRateClass}">${expectedWinRate.toFixed(1)}%</td>`;
             
             html += '</tr>';
         });
@@ -2346,6 +2496,24 @@ class DraftManager {
         if (score > 0.5) return 'debug-score-positive';
         if (score < -0.5) return 'debug-score-negative';
         return 'debug-score-neutral';
+    }
+
+    /**
+     * Get URL for hero details page
+     * @param {Object|string} hero - Hero object or hero slug
+     * @returns {string} URL to hero details page
+     */
+    getHeroDetailsUrl(hero) {
+        const slug = typeof hero === 'string' ? hero : hero.slug;
+        return `hero.html?hero=${slug}`;
+    }
+
+    /**
+     * Navigate to hero details page
+     * @param {Object|string} hero - Hero object or hero slug
+     */
+    navigateToHeroDetails(hero) {
+        window.location.href = this.getHeroDetailsUrl(hero);
     }
 }
 
