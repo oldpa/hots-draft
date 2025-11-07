@@ -2053,7 +2053,7 @@ class DraftManager {
                 // Find which unassigned player has this hero
                 const playerData = this.playerStats[team];
                 let bestPlayer = null;
-                let bestWinRate = 0;
+                let bestWinRate = 50;
                 
                 const picks = this.draft[team].picks;
                 for (let i = 0; i < playerData.length; i++) {

@@ -243,18 +243,25 @@ class HeroDetailsManager {
             return;
         }
 
-        // Convert maps object to array and sort by delta (descending)
+        // Get hero's global win rate for delta calculation
+        const globalWinRate = heroData.global?.win_rate || 50;
+
+        // Convert maps object to array with calculated deltas
         const mapStats = [];
         for (const [mapName, stats] of Object.entries(heroData.maps)) {
+            const mapWinRate = stats.win_rate || 50;
+            const delta = mapWinRate - globalWinRate; // Delta from hero's global WR
+            
             mapStats.push({
                 name: mapName,
-                ...stats
+                win_rate: mapWinRate,
+                delta: delta,
+                games: stats.games
             });
         }
         
-        mapStats.sort((a, b) => 
-            (b.confidence_adjusted_delta || 0) - (a.confidence_adjusted_delta || 0)
-        );
+        // Sort by delta (descending - best maps first)
+        mapStats.sort((a, b) => b.delta - a.delta);
 
         // Render each map
         mapStats.forEach(map => {
@@ -266,22 +273,20 @@ class HeroDetailsManager {
             row.appendChild(nameCell);
 
             // Win rate
-            const winRate = map.win_rate || 50;
             const wrCell = document.createElement('td');
-            wrCell.textContent = `${winRate.toFixed(1)}%`;
-            wrCell.className = this.getWinRateClass(winRate);
+            wrCell.textContent = `${map.win_rate.toFixed(1)}%`;
+            wrCell.className = this.getWinRateClass(map.win_rate);
             row.appendChild(wrCell);
 
-            // Delta
-            const delta = map.confidence_adjusted_delta || 0;
+            // Delta (from hero's global win rate)
             const deltaCell = document.createElement('td');
-            deltaCell.textContent = this.formatDelta(delta);
-            deltaCell.className = this.getDeltaClass(delta);
+            deltaCell.textContent = this.formatDelta(map.delta);
+            deltaCell.className = this.getDeltaClass(map.delta);
             row.appendChild(deltaCell);
 
             // Games
             const gamesCell = document.createElement('td');
-            gamesCell.textContent = (map.games || 0).toLocaleString();
+            gamesCell.textContent = map.games.toLocaleString();
             row.appendChild(gamesCell);
 
             tbody.appendChild(row);
